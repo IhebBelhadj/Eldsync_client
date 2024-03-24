@@ -26,7 +26,7 @@ export class LayoutService {
     _config: AppConfig = {
         ripple: false,
         inputStyle: 'outlined',
-        menuMode: 'static',
+        menuMode: 'overlay',
         colorScheme: 'dark',
         theme: 'lara-dark-indigo',
         scale: 14,
@@ -70,6 +70,7 @@ export class LayoutService {
     }
 
     onMenuToggle() {
+        console.log('onMenuToggle');
         if (this.isOverlay()) {
             this.state.overlayMenuActive = !this.state.overlayMenuActive;
             if (this.state.overlayMenuActive) {
@@ -128,8 +129,8 @@ export class LayoutService {
                 el == this._config.theme
                     ? (el = config.theme)
                     : el == `theme-${this._config.colorScheme}`
-                    ? (el = `theme-${config.colorScheme}`)
-                    : el
+                        ? (el = `theme-${config.colorScheme}`)
+                        : el
             )
             .join('/');
 
