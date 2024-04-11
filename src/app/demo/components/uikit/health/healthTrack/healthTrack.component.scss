@@ -1,0 +1,25 @@
+.calendar {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.week {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.day {
+  flex: 1; /* Equal width for each day */
+  text-align: center;
+  padding: 15px;
+}
+
+.highlight {
+ color : green;
+}
+
+.custom-button {
+  width: 150%; /* Adjust the width as needed */
+  margin-right: 100px; /* Adjust the margin as needed */
+}
+
