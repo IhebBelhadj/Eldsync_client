@@ -1,0 +1,40 @@
+<div class="grid p-fluid">
+    <div class="col-12 md:col-7">
+        <div class="card">
+            <h5>Your Notes</h5>
+            <p-accordion>
+                <p-accordionTab *ngFor="let note of notes; let i = index"  [header]="note.header " class="line-height-3 m-0">
+                    <div class="header-container">
+                        <div class="flex align-items-center justify-content-between mb-0"  >
+
+                            <ng-template #viewMode >
+                                <h5 (dblclick)="editNoteHeader(i)">{{ note.header }}</h5>
+                                <p-menu #menu [popup]="true" [model]="cardMenu"></p-menu>
+                                <button pButton type="button" id="buttonEvent" icon="pi pi-plus" class="p-button-text"
+                                        (click)="menu.toggle($event)"></button>
+                            </ng-template>
+                            <span *ngIf="editingIndex === i; else viewMode">
+                                 <input id="headerName" type="text" [(ngModel)]="headerInput" (blur)="saveNoteHeader()"  pInputText>
+                            </span>
+
+                        </div>
+                    </div>
+                    <div class="note-content" (dblclick)="editNoteContent(i)">
+                        <ng-container *ngIf="editingIndex !== i; else editMode">
+                            <div [innerHTML]="note.content"></div>
+                        </ng-container>
+                        <ng-template #editMode>
+
+                        </ng-template>
+                    </div>
+
+                </p-accordionTab>
+            </p-accordion>
+
+        </div>
+    </div>
+    <div class="col-12 lg:col-5">
+        <p-editor [style]="{'height':'320px'}" #editor (keydown.enter)="addNote()"></p-editor>
+    </div>
+</div>
+

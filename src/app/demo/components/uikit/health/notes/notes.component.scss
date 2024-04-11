@@ -1,0 +1,24 @@
+.note-content {
+  max-height: 200px; /* Adjust as needed */
+  overflow: auto; /* Add scrollbars if content exceeds max-height */
+}
+.note-content::-webkit-scrollbar {
+  width: 0; /* Adjust as needed */
+}
+.card {
+  max-height: 390px; /* Adjust as needed */
+  overflow: auto;
+
+}
+.card::-webkit-scrollbar {
+  width: 0; /* Adjust as needed */
+}
+
+#headerName
+{
+  margin-bottom: 5px;
+}
+#buttonEvent
+{
+  margin-bottom: 5px;
+}
