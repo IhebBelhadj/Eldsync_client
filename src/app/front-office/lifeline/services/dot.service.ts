@@ -41,12 +41,12 @@ export class DotService {
     // Mutation to create a new dot
     createDot(dotData: DotInput, queryString: string): Observable<Dot> {
         const mutation = gql`
-      mutation CreateDot($dotData: DotInput!) {
-        createDot(dotData: $dotData) {
-          ${queryString}
-        }
-      }
-    `;
+            mutation CreateDot($dotData: DotInput!) {
+                createDot(dotData: $dotData) {
+                ${queryString}
+                }
+            }
+            `;
 
         return this.apollo
             .mutate<{ createDot: Dot }>({

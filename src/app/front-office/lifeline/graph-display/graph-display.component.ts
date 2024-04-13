@@ -1,6 +1,13 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
-// import { Application } from 'pixi.js';
-// import { Viewport } from 'pixi-viewport';
+import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import Phaser from 'phaser';
+
+import { EventBus } from "./EventBus";
+
+import { Boot } from './scenes/Boot';
+import { GraphScene } from './scenes/Graph';
+import { AUTO, Game } from 'phaser';
+import { Preloader } from './scenes/Preloader';
+
 @Component({
     selector: 'lifeline-graph',
     standalone: true,
@@ -8,47 +15,72 @@ import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
     templateUrl: './graph-display.component.html',
     styleUrl: './graph-display.component.scss'
 })
-export class GraphDisplayComponent implements AfterViewInit {
+export class GraphDisplayComponent implements OnInit {
 
-    @ViewChild('lifelineCanvas') lifelineCanvas: ElementRef;
+    scene: Phaser.Scene;
+    game: Phaser.Game;
 
-    // app: Application;
-    // viewport: Viewport;
+    sceneCallback: (scene: Phaser.Scene) => void;
+    parentElement: HTMLElement;
 
-    constructor() {
+    config: Phaser.Types.Core.GameConfig = {
+        type: AUTO,
+        backgroundColor: '#028af8',
+        scene: [
+            Boot,
+            Preloader,
+            GraphScene,
+        ]
+    };
+
+    constructor(private elementRef: ElementRef) { }
+
+    StartGame(parent: string) {
+        this.parentElement = this.elementRef.nativeElement.querySelector(`.${parent}`);
+
+        return new Game({
+            ...this.config,
+            width: this.parentElement ? this.parentElement.clientWidth : 1024,
+            height: this.parentElement ? this.parentElement.clientHeight : 768,
+            parent: this.parentElement
+        });
+
     }
 
-    ngAfterViewInit() {
-        // this.start();
+
+    ngOnInit() {
+        this.game = this.StartGame('graph-container');
+        console.log("game: ", this.game);
+
+        EventBus.on('current-scene-ready', (scene: Phaser.Scene) => {
+
+            this.scene = scene;
+
+            if (this.sceneCallback) {
+
+                this.sceneCallback(scene);
+
+            }
+
+        });
     }
 
-    // private async start() {
-    //     this.app = new Application();
-    //
-    //
-    //     this.app.view.style.height = "100%";
-    //     this.app.view.style.width = "100%";
-    //     this.lifelineCanvas.nativeElement.appendChild(this.app.view);
-    //
-    //     this.update();
-    // }
 
-    // private async update() {
-    //     this.createViewport();
-    //     requestAnimationFrame(() => this.update());
-    // }
+    // Component unmounted
+    ngOnDestroy() {
 
-    // private async createViewport() {
-    //     this.viewport = new Viewport({ events: this.app.renderer.events })
-    //
-    //     this.viewport
-    //         .drag()
-    //         .pinch()
-    //         .wheel()
-    //         .decelerate();
-    //
-    //     this.app.stage.addChild(this.viewport);
-    // }
+        if (this.game) {
 
+            this.game.destroy(true);
+
+        }
+    }
+
+    @HostListener('window:resize', ['$event'])
+    onResize() {
+        if (this.parentElement) {
+            this.game.scale.resize(this.parentElement.clientWidth, this.parentElement.clientHeight);
+        }
+    }
 
 }

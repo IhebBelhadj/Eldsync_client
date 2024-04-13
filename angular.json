@@ -30,9 +30,16 @@
                             "src/assets"
                         ],
                         "styles": [
-                            "src/styles.scss"
+                            "src/styles.scss",
+                            "node_modules/quill/dist/quill.core.css",
+                            "./node_modules/quill/dist/quill.bubble.css",
+                            "./node_modules/quill/dist/quill.snow.css",
+                            "node_modules/quill/dist/quill.snow.css",
+                            "node_modules/font-awesome/css/font-awesome.min.css"
                         ],
-                        "scripts": []
+                        "scripts": [
+                            "https://kit.fontawesome.com/42f3531965.js"
+                        ]
                     },
                     "configurations": {
                         "production": {
@@ -103,6 +110,6 @@
         }
     },
     "cli": {
-      "analytics": "66c0fe5b-031e-43b2-8e80-85cd5bc8f0e5"
+        "analytics": "66c0fe5b-031e-43b2-8e80-85cd5bc8f0e5"
     }
 }

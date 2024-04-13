@@ -1,12 +1,17 @@
-<div class="rightPanel fixed right-0 h-full flex align-items-center z-1 transition-duration-300 transition-ease-in-out">
-    <div class="rightPanelContent surface-50 w-full shadow-2 flex flex-column border-round-lg mx-4">
-        <div class="titleSection flex justify-content-between align-items-center p-3">
-            <h2 class="text-2xl font-bold text-gray-800">Create new dot</h2>
-            <button pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded" pTooltip="Delete dot"
-                tooltipPosition="top"></button>
-        </div>
-        <div class="contentSection">
+<p-dialog header="Create new dot" [closable]="false"
+    [breakpoints]="{'440px': '70vw', '1080px': '50vw', '1600px': '40vw'}" [resizable]="true"
+    [(visible)]="rightPanelOpen" position="right" [style]="{ width: '25vw', overflow: 'hidden' }">
 
-        </div>
-    </div>
-</div>
+    <lifeline-dot-form></lifeline-dot-form>
+</p-dialog>
+
+<!-- <div *ngIf="(lifelineStateService.rightPanelOpen$ | async);" [@slideInOut] -->
+<!--     class="panelContentWrapper fixed top-0 right-0 w-min h-screen "> -->
+<!--     <div -->
+<!--         class="rightPanel fixed right-0 top-0 h-full flex align-items-center z-1 transition-duration-300 transition-ease-in-out"> -->
+<!--         <div class="rightPanelContent surface-50 w-full shadow-2 flex flex-column border-round-lg mx-4"> -->
+<!--             <lifeline-dot-form></lifeline-dot-form> -->
+<!---->
+<!--         </div> -->
+<!--     </div> -->
+<!-- </div> -->
