@@ -1,18 +1,22 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { DotFormComponent } from '../dot-form/dot-form.component';
-import { LifelineStateService } from '../../state/lifeline-state.service';
+import { LifelineState, LifelineStateService } from '../../state/lifeline-state.service';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { DialogModule } from 'primeng/dialog';
 import { Subscription } from 'rxjs';
+import { TagModule } from 'primeng/tag';
+import { TooltipModule } from 'primeng/tooltip';
+import { EmotionState, emotionStates } from '../../state/emotion.states';
+import { EmotionType } from '../../models/emotionType';
 
 @Component({
     selector: 'lifeline-right-panel',
     standalone: true,
-    imports: [ButtonModule, DotFormComponent, CommonModule, DialogModule],
+    imports: [ButtonModule, DotFormComponent, CommonModule, DialogModule, TagModule, TooltipModule],
     templateUrl: './right-panel.component.html',
-    styleUrl: './right-panel.component.scss',
+    styleUrls: ['./right-panel.component.scss', '../../styles/lifeline.scss'],
     animations: [
         trigger('slideInOut', [
             transition(':enter', [
@@ -26,21 +30,44 @@ import { Subscription } from 'rxjs';
     ]
 
 })
-export class RightPanelComponent {
+export class RightPanelComponent implements OnInit, OnDestroy {
 
 
-    stateSubscription!: Subscription;
+    rightPanelSubscription!: Subscription;
     rightPanelOpen!: boolean;
+    stateSubscription!: Subscription;
+    emotionState: EmotionState;
+
+    selectedEmotion: EmotionType;
+    selectedEmotionIntensity: number;
+
 
     constructor(public lifelineService: LifelineStateService) { }
 
     ngOnInit() {
-        this.stateSubscription = this.lifelineService.rightPanelOpen$.subscribe((isOpen: boolean) => {
+        this.rightPanelSubscription = this.lifelineService.rightPanelOpen$.subscribe((isOpen: boolean) => {
             this.rightPanelOpen = isOpen;
+        });
+
+        this.stateSubscription = this.lifelineService.getState$().subscribe((state: LifelineState) => {
+            this.selectedEmotion = state.selectedEmotion;
+            this.selectedEmotionIntensity = state.selectedEmotionIntensity;
+
+            if (!this.selectedEmotion || this.selectedEmotionIntensity < 1) this.emotionState = null;
+
+            this.emotionState = emotionStates.find(
+                emotionState => emotionState.emotion === this.selectedEmotion
+            )?.states.find(
+                s => s.intensity === this.selectedEmotionIntensity
+            );
+            console.log(this.emotionState);
         });
     }
 
     ngOnDestroy() {
+        if (this.rightPanelSubscription) {
+            this.rightPanelSubscription.unsubscribe();
+        }
         if (this.stateSubscription) {
             this.stateSubscription.unsubscribe();
         }
@@ -54,4 +81,11 @@ export class RightPanelComponent {
     onShow() {
         this.lifelineService.setRightPanel(true);
     }
+
+    getEmotionClass(emotionType: EmotionType): string {
+        return emotionType ? `${emotionType as string}-tagBg` : '';
+
+    }
+
+
 }

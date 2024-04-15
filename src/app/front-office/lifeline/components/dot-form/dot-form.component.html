@@ -30,7 +30,10 @@
         </div>
 
         <div class="emotionIntensity m-4">
-            <p-slider [(ngModel)]="emotionIntensity" [step]="1" [max]="5"></p-slider>
+            <p-slider #slider [ext-tooltip]="emotionIntensity" stickTo=".p-slider-handle"
+                (onChange)="onIntensityChange()" tooltipPosition="top" [tooltipOptions]='sliderTooltipOptions'
+                [(ngModel)]="emotionIntensity" [step]="1" [max]="5" [min]='1' styleClass="genericSlider"
+                [appendTo]="sliderAppendTo"></p-slider>
         </div>
 
         <div class="timeSelection m-4">
@@ -93,6 +96,6 @@
 
     </div>
     <div class="validationSection flex justify-content-end m-4">
-        <p-button label="Submit" icon="pi pi-check" iconPos="left"></p-button>
+        <p-button label="Create dot" icon="pi pi-check" iconPos="left" styleClass="genericBtn"></p-button>
     </div>
 </div>

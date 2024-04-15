@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
     standalone: true,
     imports: [OverlayPanelModule, CommonModule, CalendarModule, FormsModule],
     templateUrl: './fast-travel.component.html',
-    styleUrl: './fast-travel.component.scss'
+    styleUrls: ['./fast-travel.component.scss', '../../styles/lifeline.scss']
 })
 export class FastTravelComponent implements OnInit, OnDestroy {
     @Input() appendToSelector: string | null = null;

@@ -37,9 +37,7 @@
                             "node_modules/quill/dist/quill.snow.css",
                             "node_modules/font-awesome/css/font-awesome.min.css"
                         ],
-                        "scripts": [
-                            "https://kit.fontawesome.com/42f3531965.js"
-                        ]
+                        "scripts": []
                     },
                     "configurations": {
                         "production": {

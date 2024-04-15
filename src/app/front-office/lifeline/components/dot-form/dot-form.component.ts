@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, OnDestroy, Renderer2, } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, Renderer2, ViewChild, } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AccordionModule } from 'primeng/accordion';
 import { ButtonModule } from 'primeng/button';
@@ -12,20 +12,29 @@ import { EmotionType } from '../../models/emotionType';
 import { NgxTiptapModule } from 'ngx-tiptap';
 import { Editor } from '@tiptap/core';
 import StarterKit from '@tiptap/starter-kit';
+import { ExtendedTooltipDirective } from '../../directives/extended-tooltip.directive';
+import { TooltipOptions } from 'chart.js';
+import { LifelineStateService } from '../../state/lifeline-state.service';
+import { first } from 'rxjs/operators';
 
 @Component({
     selector: 'lifeline-dot-form',
     standalone: true,
-    imports: [FormsModule, ButtonModule, EditorModule, SliderModule, CalendarModule, AccordionModule, TooltipModule, FileUploadModule, CommonModule, NgxTiptapModule],
+
+    imports: [FormsModule, ButtonModule, EditorModule, SliderModule, CalendarModule, AccordionModule, TooltipModule, FileUploadModule, CommonModule, NgxTiptapModule, ExtendedTooltipDirective],
     templateUrl: './dot-form.component.html',
-    styleUrl: './dot-form.component.scss'
+    styleUrls: ['./dot-form.component.scss', "../../styles/lifeline.scss"]
 })
-export class DotFormComponent implements OnDestroy {
-    dotDescription: string = 'Hello World!';
+export class DotFormComponent implements OnDestroy, AfterViewInit {
+
+    @ViewChild('slider') slider: ElementRef;
+
+    dotDescription: string = '';
     emotionIntensity: number = 0;
     eventDate: Date = new Date();
     selectedEmotion!: EmotionType
     uploadedFiles: any[] = [];
+
 
     editor = new Editor({
         extensions: [StarterKit],
@@ -33,7 +42,10 @@ export class DotFormComponent implements OnDestroy {
 
     value = '<p>What do you have in mind 💭</p>';
 
-    constructor(private renderer: Renderer2) {
+    sliderTooltipOptions!: TooltipOptions;
+    sliderAppendTo!: ElementRef;
+
+    constructor(private lifelineStateService: LifelineStateService, private renderer: Renderer2) {
 
     }
 
@@ -56,6 +68,8 @@ export class DotFormComponent implements OnDestroy {
 
         console.log(emotion);
 
+        this.lifelineStateService.setSelectedEmotion(emotion);
+
         const tiptapElement = document.querySelector('.tiptap');
         Object.values(EmotionType).forEach(emotionValue => {
             this.renderer.removeClass(tiptapElement, emotionValue + '-editor');
@@ -66,11 +80,29 @@ export class DotFormComponent implements OnDestroy {
 
     }
 
+    async onIntensityChange() {
+        if (!this.selectedEmotion) return;
+        const previousIntensity = await this.lifelineStateService.selectedEmotionIntensity$
+            .pipe(
+                first()
+            )
+            .toPromise();
+        if (this.emotionIntensity !== previousIntensity) {
+            this.lifelineStateService.setSelectedEmotionIntensity(this.emotionIntensity);
+            console.log(this.emotionIntensity);
+        }
+    }
+
     public get EmotionType() {
         return EmotionType;
     }
 
     ngOnDestroy(): void {
         this.editor.destroy();
+    }
+
+    ngAfterViewInit(): void {
+
+        console.log(this.slider.nativeElement);
     }
 }

@@ -1,10 +1,29 @@
 <div class="p-6">
 
-    <full-calendar [options]="calendarOptions">
-        <ng-template #eventContent let-arg>
-            <b>{{ arg.event.title }}</b>
-            {{arg.event | json}}
-        </ng-template>
-    </full-calendar>
+    <div class="calendarHeader">
+        <h1 class="calendarTitle">{{calendarTitle?.month}}</h1>
+        <h3 class="calendarSubtitle">{{calendarTitle?.year}}</h3>
+    </div>
+
+    <div class="calendarContentContainer flex w-full align-items-center gap-5">
+
+        <div class="leftHandle">
+            <button pButton pRipple type="button" icon="pi pi-angle-left"
+                class="p-button-rounded p-button-text navigationBtn" (click)="seekLeft()"></button>
+        </div>
+
+        <full-calendar #calendar style="flex: 1;" [options]="calendarOptions">
+            <ng-template #eventContent let-arg>
+                <!--content here for the event template-->
+            </ng-template>
+
+        </full-calendar>
+
+        <div class="rightHandle">
+            <button pButton pRipple type="button" icon="pi pi-angle-right"
+                class="p-button-rounded p-button-text navigationBtn" (click)="seekRight()"></button>
+        </div>
+    </div>
+
 
 </div>

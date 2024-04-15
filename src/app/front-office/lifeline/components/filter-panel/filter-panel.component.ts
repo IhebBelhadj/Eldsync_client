@@ -7,7 +7,6 @@ import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { MenuItem } from 'primeng/api';
-import { faCalendar } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
@@ -27,7 +26,6 @@ export class FilterPanelComponent implements OnInit, OnDestroy {
     filterPanelSubscription!: Subscription;
     filterOptions: MenuItem[] = [
         { label: 'Emotion', icon: 'fa-regular fa-face-smile' },
-        { label: 'Intensity', icon: "fa-solid fa-chevron-up" },
         { label: 'Peers', icon: 'pi pi-fw pi-users' },
     ];
 

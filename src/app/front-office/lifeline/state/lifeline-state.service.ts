@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from '@apollo/client/utilities';
 import { BehaviorSubject, map } from 'rxjs';
+import { EmotionType } from '../models/emotionType';
 
 export interface LifelineState {
     rightPanelOpen: boolean;
@@ -8,7 +9,12 @@ export interface LifelineState {
     filtersPanelOpen: boolean;
     settingsPanelOpen: boolean;
     rightPanelAction: string;
+
+    // emotion tracking
+    selectedEmotion: EmotionType;
+    selectedEmotionIntensity: number;
 }
+
 
 @Injectable({
     providedIn: 'root'
@@ -21,6 +27,8 @@ export class LifelineStateService {
         filtersPanelOpen: false,
         settingsPanelOpen: false,
         rightPanelAction: "add",
+        selectedEmotion: null,
+        selectedEmotionIntensity: 1,
     });
 
     constructor() { }
@@ -59,6 +67,18 @@ export class LifelineStateService {
         return this.stateSubject.asObservable().pipe(
             map(state => state.rightPanelAction)
         );
+    }
+
+    get selectedEmotion$(): any {
+        return this.stateSubject.asObservable().pipe(
+            map(state => state.selectedEmotion)
+        );
+    }
+
+    get selectedEmotionIntensity$(): any {
+        return this.stateSubject.asObservable().pipe(
+            map(state => state.selectedEmotionIntensity)
+        )
     }
 
     // Method to update state
@@ -112,5 +132,13 @@ export class LifelineStateService {
     // Method to set right panel content
     setRightPanelAction(content: string) {
         this.updateState({ rightPanelAction: content });
+    }
+
+    setSelectedEmotion(emotion: EmotionType) {
+        this.updateState({ selectedEmotion: emotion });
+    }
+
+    setSelectedEmotionIntensity(intensity: number) {
+        this.updateState({ selectedEmotionIntensity: intensity })
     }
 }

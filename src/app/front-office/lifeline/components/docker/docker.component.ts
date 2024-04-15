@@ -12,7 +12,7 @@ import { SettingsComponent } from '../settings/settings.component';
     standalone: true,
     imports: [CardModule, ButtonModule, TooltipModule, FastTravelComponent, FilterPanelComponent, SettingsComponent],
     templateUrl: './docker.component.html',
-    styleUrl: './docker.component.scss'
+    styleUrls: ['./docker.component.scss', '../../styles/lifeline.scss']
 })
 export class DockerComponent {
 

@@ -5,3 +5,5 @@ export enum EmotionType {
     GRATEFUL = "GRATEFUL",
     LOVING = "LOVING",
 }
+
+
