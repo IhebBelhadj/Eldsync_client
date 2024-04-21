@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from '@apollo/client/utilities';
 import { BehaviorSubject, map } from 'rxjs';
 import { EmotionType } from '../models/emotionType';
+import { DotForm, LifelineDataService } from './lifeline-data.service';
 
 export interface LifelineState {
     rightPanelOpen: boolean;
@@ -31,7 +32,16 @@ export class LifelineStateService {
         selectedEmotionIntensity: 1,
     });
 
-    constructor() { }
+    constructor(private lifelineData: LifelineDataService) {
+
+        this.lifelineData.dotForm$.subscribe((dotForm: DotForm) => {
+            if (this.stateSubject.getValue().rightPanelAction === "add")
+                this.updateState({
+                    selectedEmotion: dotForm.selectedEmotion,
+                    selectedEmotionIntensity: dotForm.emotionIntensity
+                });
+        });
+    }
 
     // Observable to subscribe to state changes
     getState$() {

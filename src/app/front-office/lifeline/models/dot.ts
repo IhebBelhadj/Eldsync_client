@@ -5,7 +5,7 @@ import { Peer } from "./peer";
 export interface Dot {
     idDot: string;
     elderId: number;
-    eventDate?: string;
+    eventDate?: Date;
     dotMarkdown: string;
     emotionType: EmotionType;
     emotionIntensity: number;

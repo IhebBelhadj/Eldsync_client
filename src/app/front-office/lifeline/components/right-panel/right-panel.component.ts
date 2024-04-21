@@ -10,6 +10,8 @@ import { TagModule } from 'primeng/tag';
 import { TooltipModule } from 'primeng/tooltip';
 import { EmotionState, emotionStates } from '../../state/emotion.states';
 import { EmotionType } from '../../models/emotionType';
+import { ConfirmationStateService } from '../../state/confirmation-state.service';
+import { LifelineDataService } from '../../state/lifeline-data.service';
 
 @Component({
     selector: 'lifeline-right-panel',
@@ -42,7 +44,11 @@ export class RightPanelComponent implements OnInit, OnDestroy {
     selectedEmotionIntensity: number;
 
 
-    constructor(public lifelineService: LifelineStateService) { }
+    constructor(
+        public lifelineService: LifelineStateService,
+        private lifelineData: LifelineDataService,
+        private confirmationService: ConfirmationStateService
+    ) { }
 
     ngOnInit() {
         this.rightPanelSubscription = this.lifelineService.rightPanelOpen$.subscribe((isOpen: boolean) => {
@@ -84,6 +90,36 @@ export class RightPanelComponent implements OnInit, OnDestroy {
 
     getEmotionClass(emotionType: EmotionType): string {
         return emotionType ? `${emotionType as string}-tagBg` : '';
+
+    }
+
+    removeDot() {
+
+        this.confirmationService.addToQueue('deleteDot', {
+            message: 'Are you sure you want to delete this dot?',
+        });
+
+        const resultSub = this.confirmationService.confirmationResult$
+            .subscribe(result => {
+                if (result.eventId === 'deleteDot') {
+                    if (result.result === 'success') {
+                        // Logic to delete the dot
+                        this.cancelDotCreation();
+                    } else {
+                        console.log('Dot deletion canceled');
+                    }
+                    resultSub.unsubscribe();
+                }
+            });
+    }
+
+    cancelDotCreation() {
+
+        console.log('removing dot from state');
+        this.lifelineService.setRightPanel(false);
+        this.lifelineData.resetDotForm();
+        this.lifelineService.setSelectedEmotion(null);
+        this.lifelineService.setSelectedEmotionIntensity(0);
 
     }
 

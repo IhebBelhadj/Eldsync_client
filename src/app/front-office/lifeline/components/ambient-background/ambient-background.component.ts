@@ -30,11 +30,14 @@ export class AmbientBackgroundComponent implements AfterViewInit, OnDestroy {
 
 
     private updateBackgroundClasses(emotion: EmotionType, intensity: number): void {
-        if (!emotion) return;
 
         Object.values(EmotionType).forEach(emotionValue => {
             this.ambientBackground.nativeElement.classList.remove(`${emotionValue}-ambientBg`);
         });
+
+
+        if (!emotion) return;
+
 
         this.ambientBackground.nativeElement.classList.add(`${emotion}-ambientBg`);
 

@@ -12,9 +12,15 @@
                 class="p-button-rounded p-button-text navigationBtn" (click)="seekLeft()"></button>
         </div>
 
-        <full-calendar #calendar style="flex: 1;" [options]="calendarOptions">
+        <full-calendar #calendar style="flex: 1;" [options]="calendarOptions" [events]="events">
             <ng-template #eventContent let-arg>
                 <!--content here for the event template-->
+                <div class="eventContent">
+                    <div class="eventTitle">{{arg.event.emotionType}}</div>
+                    <div>
+                        some content
+                    </div>
+                </div>
             </ng-template>
 
         </full-calendar>

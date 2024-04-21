@@ -1,8 +1,11 @@
 @import '../../styles/_variables.scss';
+
 ::ng-deep .fc .fc-toolbar.fc-header-toolbar {
     margin-bottom: 5.5rem!important;
 }
 ::ng-deep .fc-dayGridMonth-view {
+
+
 
     .fc-scrollgrid {
         border: none !important;
@@ -21,6 +24,11 @@
             border: none !important;
         }
         border: none !important;
+
+        .fc-day-today {
+        // background-color: inherit;
+        // border: 1px solid $black3;
+    }
 
         .fc-daygrid-day {
             padding: 0.5rem;

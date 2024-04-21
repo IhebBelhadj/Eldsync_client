@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { DotInput } from '../models/dot-input';
 import { Dot } from '../models/dot';
+import { DotSearchInput } from '../models/dot-search-input';
 
 @Injectable({
     providedIn: 'root'
@@ -36,6 +37,27 @@ export class DotService {
                     throw error;
                 })
             );
+    }
+
+    searchDots(dotSearchInput: DotSearchInput, queryString: String): Observable<Dot[]> {
+        const SEARCH_DOTS_QUERY = gql`
+            query SearchDots($dotSearchInput: DotSearchInput) {
+            searchDots(dotSearchInput: $dotSearchInput) {
+                ${queryString}
+            }}`;
+
+        console.log('SEARCH_DOTS_QUERY:', SEARCH_DOTS_QUERY);
+        return this.apollo.query<{ searchDots: [Dot] }>({
+            query: SEARCH_DOTS_QUERY,
+            variables: { dotSearchInput }
+        }).pipe(
+            map(result => result.data.searchDots),
+            catchError(error => {
+                console.error('Error searching dots:', error);
+                throw error;
+            })
+
+        );
     }
 
     // Mutation to create a new dot

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, OnDestroy, Renderer2, ViewChild, } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild, } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AccordionModule } from 'primeng/accordion';
 import { ButtonModule } from 'primeng/button';
@@ -16,6 +16,8 @@ import { ExtendedTooltipDirective } from '../../directives/extended-tooltip.dire
 import { TooltipOptions } from 'chart.js';
 import { LifelineStateService } from '../../state/lifeline-state.service';
 import { first } from 'rxjs/operators';
+import { DotForm, LifelineDataService } from '../../state/lifeline-data.service';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'lifeline-dot-form',
@@ -25,19 +27,14 @@ import { first } from 'rxjs/operators';
     templateUrl: './dot-form.component.html',
     styleUrls: ['./dot-form.component.scss', "../../styles/lifeline.scss"]
 })
-export class DotFormComponent implements OnDestroy, AfterViewInit {
+export class DotFormComponent implements OnDestroy, AfterViewInit, OnInit {
 
     @ViewChild('slider') slider: ElementRef;
-
-    dotDescription: string = '';
-    emotionIntensity: number = 0;
-    eventDate: Date = new Date();
-    selectedEmotion!: EmotionType
-    uploadedFiles: any[] = [];
 
 
     editor = new Editor({
         extensions: [StarterKit],
+        onUpdate: () => this.onEditorChange(this.editor.getHTML()),
     });
 
     value = '<p>What do you have in mind 💭</p>';
@@ -45,52 +42,61 @@ export class DotFormComponent implements OnDestroy, AfterViewInit {
     sliderTooltipOptions!: TooltipOptions;
     sliderAppendTo!: ElementRef;
 
-    constructor(private lifelineStateService: LifelineStateService, private renderer: Renderer2) {
+    dotForm$: Observable<DotForm>;
 
+    constructor(
+        private lifelineData: LifelineDataService,
+        private lifelineStateService: LifelineStateService,
+        private renderer: Renderer2) {
+
+        this.dotForm$ = this.lifelineData.dotForm$;
+    }
+
+    ngOnInit() {
     }
 
 
     onUpload(event: any) {
         for (const file of event.files) {
-            this.uploadedFiles.push(file);
+            const snapshot = this.lifelineData.snapshot.dotForm;
+            this.lifelineData.updateDotForm({ uploadedFiles: [...snapshot.uploadedFiles, file] });
         }
 
         // this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded' });
     }
 
-    onBasicUpload() {
-        // this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded with Basic Mode' });
-    }
+
 
     selectEmotion(event: Element) {
         const emotion: EmotionType = event.getAttribute('data-emotion') as EmotionType;
-        this.selectedEmotion = emotion;
+        this.lifelineData.updateDotForm({ selectedEmotion: emotion });
 
         console.log(emotion);
 
         this.lifelineStateService.setSelectedEmotion(emotion);
 
-        const tiptapElement = document.querySelector('.tiptap');
-        Object.values(EmotionType).forEach(emotionValue => {
-            this.renderer.removeClass(tiptapElement, emotionValue + '-editor');
-        });
-        // Add class for the selected emotion
-        this.renderer.addClass(tiptapElement, emotion + '-editor');
 
 
     }
 
-    async onIntensityChange() {
-        if (!this.selectedEmotion) return;
-        const previousIntensity = await this.lifelineStateService.selectedEmotionIntensity$
-            .pipe(
-                first()
-            )
-            .toPromise();
-        if (this.emotionIntensity !== previousIntensity) {
-            this.lifelineStateService.setSelectedEmotionIntensity(this.emotionIntensity);
-            console.log(this.emotionIntensity);
-        }
+    async onIntensityChange(event: any) {
+
+        this.lifelineData.updateDotForm({ emotionIntensity: event.value });
+
+        // const state = this.lifelineData.snapshot.dotForm;
+        // if (!state.selectedEmotion) return;
+        // const previousIntensity = state.emotionIntensity;
+        //
+        // console.log(event.value, "vs", previousIntensity);
+        // if (event.value !== previousIntensity) {
+        //     console.log(event.value, "vs", previousIntensity);
+        //     this.lifelineData.updateDotForm({ emotionIntensity: event.value });
+        // }
+    }
+
+    onEditorChange(event: any) {
+        console.log(event);
+        this.lifelineData.updateDotForm({ dotDescription: event });
     }
 
     public get EmotionType() {
@@ -102,7 +108,18 @@ export class DotFormComponent implements OnDestroy, AfterViewInit {
     }
 
     ngAfterViewInit(): void {
+        this.lifelineData.getState$().subscribe((state) => {
+            const emotion = state.dotForm.selectedEmotion;
 
-        console.log(this.slider.nativeElement);
+            const tiptapElement = document.querySelector('.tiptap');
+            Object.values(EmotionType).forEach(emotionValue => {
+                this.renderer.removeClass(tiptapElement, emotionValue + '-editor');
+            });
+            // Add class for the selected emotion
+            this.renderer.addClass(tiptapElement, emotion + '-editor');
+
+
+        });
+
     }
 }
