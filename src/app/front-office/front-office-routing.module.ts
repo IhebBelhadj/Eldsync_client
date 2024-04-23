@@ -1,10 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [];
+const routes: Routes = [
+    { path: 'lifeline', loadComponent: () => import('./lifeline/lifeline.component').then(m => m.LifelineComponent) },
+    // lazy load a standalone component (lifeline.component.ts)
+
+];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule]
 })
 export class FrontOfficeRoutingModule { }
