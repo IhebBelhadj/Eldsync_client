@@ -1,6 +1,41 @@
-<p-overlayPanel #op (onShow)="onPanelShow()" (onHide)="onPanelHide()" [style]="{minWidth: '350px', minHeight: '400px'}">
+<p-overlayPanel #op (onShow)="onPanelShow()" (onHide)="onPanelHide()"
+    [styleClass]="selectedDot?.emotionType + '-panelBg'"
+    [style]="{minWidth: '330px', minHeight: '400px', maxWidth: '350px'}">
     <ng-template pTemplate="content">
 
-        <p>working</p>
+        <div class="contentWrapper">
+
+            <div class="dotInspectHeader">
+                <div class="leftSection">
+                    <div class="dotDate">
+                        <i class="fa-regular fa-calendar-days"></i>
+                        <span>
+                            {{selectedDot?.eventDate | date: 'dd/MM/yyyy'}}
+                        </span>
+                    </div>
+                    <div class="dotTime">
+                        <i class="fa-regular fa-clock"></i>
+                        <span>
+                            {{selectedDot?.eventDate | date: 'HH:mm'}}
+                        </span>
+                    </div>
+
+
+                </div>
+
+                <div class="rightSection">
+                    <p-tag [ngClass]="getEmotionClass(selectedDot.emotionType)" *ngIf="emotionState?.text">
+                        <div class="flex align-items-center gap-2">
+                            <span class="font-medium text-base">{{emotionState.text}}</span>
+                        </div>
+                    </p-tag>
+                </div>
+
+            </div>
+
+            <div [innerHtml]="selectedDot?.dotMarkdown" class="dotContent">
+
+            </div>
+        </div>
     </ng-template>
 </p-overlayPanel>

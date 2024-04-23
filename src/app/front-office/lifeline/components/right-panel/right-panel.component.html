@@ -2,7 +2,7 @@
     [resizable]="true" [(visible)]="rightPanelOpen" position="right" [style]="{ width: '25vw', overflow: 'hidden' }"
     [contentStyle]="{overflow: 'hidden'}">
 
-    <ng-template pTemplate="header">
+    <ng-template *ngIf="rightPanelAction == 'add'" pTemplate="header">
         <div class="flex justify-content-between align-items-center w-full">
 
             <div class="inline-flex align-items-center justify-content-center gap-4">
@@ -18,7 +18,23 @@
         </div>
     </ng-template>
 
-    <lifeline-dot-form></lifeline-dot-form>
+    <ng-template *ngIf="rightPanelAction == 'show'" pTemplate="header">
+        <div class="flex justify-content-between align-items-center w-full">
+
+            <div class="inline-flex align-items-center justify-content-center gap-4">
+                <span class="font-bold white-space-nowrap"></span>
+                <p-tag [ngClass]="getEmotionClass(selectedEmotion)" *ngIf="emotionState?.text">
+                    <div class="flex align-items-center gap-2">
+                        <span class="font-medium text-base">{{emotionState.text}}</span>
+                    </div>
+                </p-tag>
+            </div>
+            <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded btnDocker"
+                pTooltip="Remove" tooltipPosition="top" (click)='removeDot()'></button>
+        </div>
+    </ng-template>
+
+    <lifeline-dot-form *ngIf="rightPanelAction == 'add'"></lifeline-dot-form>
 </p-dialog>
 
 <!-- <div *ngIf="(lifelineStateService.rightPanelOpen$ | async);" [@slideInOut] -->

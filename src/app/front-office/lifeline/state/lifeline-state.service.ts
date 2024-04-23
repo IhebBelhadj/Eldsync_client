@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable } from '@apollo/client/utilities';
-import { BehaviorSubject, map } from 'rxjs';
+import { BehaviorSubject, distinctUntilChanged, map, Observable } from 'rxjs';
 import { EmotionType } from '../models/emotionType';
 import { DotForm, LifelineDataService } from './lifeline-data.service';
+import { Dot } from '../models/dot';
 
 export interface LifelineState {
     rightPanelOpen: boolean;
@@ -18,6 +18,12 @@ export interface LifelineState {
 
     // calendar tracking
     calendarCurrentDate: Date;
+}
+
+export interface dotInspectData {
+    event: any;
+    selector: any;
+    dot: Dot;
 }
 
 
@@ -38,6 +44,8 @@ export class LifelineStateService {
         calendarCurrentDate: new Date(),
     });
 
+    private dotInspectData: dotInspectData;
+
     constructor(private lifelineData: LifelineDataService) {
 
         this.lifelineData.dotForm$.subscribe((dotForm: DotForm) => {
@@ -54,35 +62,41 @@ export class LifelineStateService {
         return this.stateSubject.asObservable();
     }
 
-    get rightPanelOpen$(): any {
-        return this.stateSubject.asObservable().pipe(
-            map(state => state.rightPanelOpen)
+    get rightPanelOpen$(): Observable<boolean> {
+        return this.stateSubject.pipe(
+            map(state => state.rightPanelOpen),
+            distinctUntilChanged((prev, curr) => prev === curr) // Compare references
         );
     }
 
-    get fastTravelOpen$(): any {
-        return this.stateSubject.asObservable().pipe(
-            map(state => state.fastTravelOpen)
+    get fastTravelOpen$(): Observable<boolean> {
+        return this.stateSubject.pipe(
+            map(state => state.fastTravelOpen),
+            distinctUntilChanged((prev, curr) => prev === curr)
         );
     }
 
-    get filtersPanelOpen$(): any {
-        return this.stateSubject.asObservable().pipe(
-            map(state => state.filtersPanelOpen)
+    get filtersPanelOpen$(): Observable<boolean> {
+        return this.stateSubject.pipe(
+            map(state => state.filtersPanelOpen),
+            distinctUntilChanged((prev, curr) => prev === curr)
         );
     }
 
-    get settingsPanelOpen$(): any {
-        return this.stateSubject.asObservable().pipe(
-            map(state => state.settingsPanelOpen)
+    get settingsPanelOpen$(): Observable<boolean> {
+        return this.stateSubject.pipe(
+            map(state => state.settingsPanelOpen),
+            distinctUntilChanged((prev, curr) => prev === curr)
         );
     }
 
-    get dotInspectOpen$(): any {
-        return this.stateSubject.asObservable().pipe(
-            map(state => state.dotInspectOpen)
+    get dotInspectOpen$(): Observable<boolean> {
+        return this.stateSubject.pipe(
+            map(state => state.dotInspectOpen),
+            distinctUntilChanged((prev, curr) => prev === curr)
         );
     }
+
 
     // Getter for rightPanelContent
     get rightPanelAction$(): any {
@@ -103,8 +117,9 @@ export class LifelineStateService {
         )
     }
 
-    get calendarCurrentDate$(): any {
-        return this.stateSubject.asObservable().pipe(
+    get calendarCurrentDate$() {
+        return this.stateSubject.pipe(
+            distinctUntilChanged((prev, curr) => prev.calendarCurrentDate === curr.calendarCurrentDate),
             map(state => state.calendarCurrentDate)
         );
     }
@@ -115,6 +130,10 @@ export class LifelineStateService {
 
     get snapshot(): LifelineState {
         return this.stateSubject.getValue();
+    }
+
+    get dotInspectDataSnapshot(): dotInspectData {
+        return this.dotInspectData;
     }
 
     // Method to update state
@@ -185,5 +204,11 @@ export class LifelineStateService {
 
     setSelectedEmotionIntensity(intensity: number) {
         this.updateState({ selectedEmotionIntensity: intensity })
+    }
+
+    setDotInspectData(event: any, selector: any, dot: Dot) {
+        this.dotInspectData = {
+            event, selector, dot
+        }
     }
 }

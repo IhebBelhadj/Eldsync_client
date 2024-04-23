@@ -60,6 +60,7 @@ export class CalendarComponent implements AfterViewInit, OnDestroy {
         this.stateSubscription = this.lifelineState.calendarCurrentDate$
             .subscribe((date: Date) => {
                 this.calendarApi.gotoDate(date);
+                console.log("updated calendar")
                 this.calendarUpdate();
             });
     }
@@ -129,19 +130,19 @@ export class CalendarComponent implements AfterViewInit, OnDestroy {
             });
     }
 
-    onEventHover(hoverState: boolean, selector: ElementRef, event: Event) {
-        console.log("hoverState", hoverState);
-        console.log("event", selector);
-        console.log(event);
-        this.dotSelector = selector;
-        this.dotEvent = event;
+    onEventHover(hoverState: boolean, selector: ElementRef, event: Event, dot: Dot) {
+
+        if (!hoverState) {
+            this.lifelineState.setDotInspect(false);
+            return;
+        }
 
         console.log("before", this.lifelineState.snapshot.dotInspectOpen);
-        if (this.lifelineState.snapshot.dotInspectOpen != hoverState) {
 
-            this.lifelineState.setDotInspect(hoverState);
-            console.log("after", this.lifelineState.snapshot.dotInspectOpen)
-        }
+        this.lifelineState.setDotInspectData(event, selector, dot);
+        this.lifelineState.setDotInspect(true);
+        console.log("after", this.lifelineState.snapshot.dotInspectOpen)
+
     }
 
 

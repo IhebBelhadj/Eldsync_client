@@ -15,7 +15,9 @@
         <full-calendar #calendar style="flex: 1;" [options]="calendarOptions" [events]="events">
             <ng-template #eventContent let-arg>
                 <!--content here for the event template-->
-                <div #selector class="eventContent" (mouseover)="onEventHover(true,selector,$event)">
+                <div [attr.data-id]="arg.event.extendedProps.idDot" class="eventContent" #selector
+                    (mouseover)="onEventHover(true,selector,$event, arg.event.extendedProps)"
+                    (mouseout)="onEventHover(false)">
                     <div class="dotDisplay" [ngClass]="arg.event.extendedProps.emotionType+ '_dot'"></div>
 
 
@@ -31,7 +33,7 @@
         </div>
     </div>
 
-    <lifeline-dot-inspect [appendToSelector]="dotSelector" [event]="dotEvent"></lifeline-dot-inspect>
+    <lifeline-dot-inspect></lifeline-dot-inspect>
 
 
 

@@ -43,6 +43,10 @@ export class RightPanelComponent implements OnInit, OnDestroy {
     selectedEmotion: EmotionType;
     selectedEmotionIntensity: number;
 
+    rightPanelAction: string;
+
+    rightPanelActionSubscription: Subscription;
+
 
     constructor(
         public lifelineService: LifelineStateService,
@@ -67,6 +71,11 @@ export class RightPanelComponent implements OnInit, OnDestroy {
                 s => s.intensity === this.selectedEmotionIntensity
             );
         });
+
+        this.rightPanelActionSubscription = this.lifelineService.rightPanelAction$.subscribe((action: string) => {
+            this.rightPanelAction = action;
+        });
+
     }
 
     ngOnDestroy() {
@@ -75,6 +84,9 @@ export class RightPanelComponent implements OnInit, OnDestroy {
         }
         if (this.stateSubscription) {
             this.stateSubscription.unsubscribe();
+        }
+        if (this.rightPanelActionSubscription) {
+            this.rightPanelActionSubscription.unsubscribe();
         }
     }
 
