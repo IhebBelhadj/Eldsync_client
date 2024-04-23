@@ -66,7 +66,6 @@ export class RightPanelComponent implements OnInit, OnDestroy {
             )?.states.find(
                 s => s.intensity === this.selectedEmotionIntensity
             );
-            console.log(this.emotionState);
         });
     }
 

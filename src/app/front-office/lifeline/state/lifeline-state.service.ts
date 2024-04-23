@@ -10,10 +10,14 @@ export interface LifelineState {
     filtersPanelOpen: boolean;
     settingsPanelOpen: boolean;
     rightPanelAction: string;
+    dotInspectOpen: boolean;
 
     // emotion tracking
     selectedEmotion: EmotionType;
     selectedEmotionIntensity: number;
+
+    // calendar tracking
+    calendarCurrentDate: Date;
 }
 
 
@@ -27,9 +31,11 @@ export class LifelineStateService {
         fastTravelOpen: false,
         filtersPanelOpen: false,
         settingsPanelOpen: false,
+        dotInspectOpen: false,
         rightPanelAction: "add",
         selectedEmotion: null,
         selectedEmotionIntensity: 1,
+        calendarCurrentDate: new Date(),
     });
 
     constructor(private lifelineData: LifelineDataService) {
@@ -72,6 +78,12 @@ export class LifelineStateService {
         );
     }
 
+    get dotInspectOpen$(): any {
+        return this.stateSubject.asObservable().pipe(
+            map(state => state.dotInspectOpen)
+        );
+    }
+
     // Getter for rightPanelContent
     get rightPanelAction$(): any {
         return this.stateSubject.asObservable().pipe(
@@ -89,6 +101,20 @@ export class LifelineStateService {
         return this.stateSubject.asObservable().pipe(
             map(state => state.selectedEmotionIntensity)
         )
+    }
+
+    get calendarCurrentDate$(): any {
+        return this.stateSubject.asObservable().pipe(
+            map(state => state.calendarCurrentDate)
+        );
+    }
+
+    get calendarCurrentDateSnapshot(): Date {
+        return this.stateSubject.getValue().calendarCurrentDate;
+    }
+
+    get snapshot(): LifelineState {
+        return this.stateSubject.getValue();
     }
 
     // Method to update state
@@ -109,6 +135,15 @@ export class LifelineStateService {
 
     setFiltersPanel(open: boolean) {
         this.updateState({ filtersPanelOpen: open });
+    }
+
+    setDotInspect(open: boolean) {
+        this.updateState({ dotInspectOpen: open });
+    }
+
+    setCalendarCurrentDate(date: Date) {
+        console.log("setting date to: ", date);
+        this.updateState({ calendarCurrentDate: date });
     }
 
     toggleFastTravel() {

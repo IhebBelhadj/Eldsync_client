@@ -58,6 +58,20 @@
             }
         }
     }
+
+    .fc-daygrid-event-harness {
+        display: inline-block;
+    }
+
+    .fc-daygrid-dot-event {
+        transition: transform 0.15s ease-in-out;
+    }
+
+    .fc-daygrid-dot-event.fc-event-mirror, .fc-daygrid-dot-event:hover {
+        background-color: transparent;
+        border: none;
+        transform: scale(1.4);
+    }
 }
 
 .navigationBtn {
@@ -74,4 +88,37 @@
 .calendarTitle {
     font-size: 6rem;
     margin-bottom: -1.2rem;
+}
+
+
+.eventContent {
+    .dotDisplay {
+        width: 1rem;
+        height: 1rem;
+        border-radius: 50%;
+        margin: 0.2rem;
+    }
+
+   .HAPPY_dot {
+        background-color: $color-happy;
+    }
+
+    .SAD_dot {
+        background-color: $color-sad;
+    }
+
+    .LOVING_dot {
+        background-color: $color-loving;
+    }
+
+    .ANGRY_dot {
+        background-color: $color-angry;
+    }
+
+    .GRATEFUL_dot {
+        background-color: $color-grateful;
+    }
+
+
+
 }

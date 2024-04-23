@@ -15,12 +15,12 @@
         <full-calendar #calendar style="flex: 1;" [options]="calendarOptions" [events]="events">
             <ng-template #eventContent let-arg>
                 <!--content here for the event template-->
-                <div class="eventContent">
-                    <div class="eventTitle">{{arg.event.emotionType}}</div>
-                    <div>
-                        some content
-                    </div>
+                <div #selector class="eventContent" (mouseover)="onEventHover(true,selector,$event)">
+                    <div class="dotDisplay" [ngClass]="arg.event.extendedProps.emotionType+ '_dot'"></div>
+
+
                 </div>
+
             </ng-template>
 
         </full-calendar>
@@ -30,6 +30,9 @@
                 class="p-button-rounded p-button-text navigationBtn" (click)="seekRight()"></button>
         </div>
     </div>
+
+    <lifeline-dot-inspect [appendToSelector]="dotSelector" [event]="dotEvent"></lifeline-dot-inspect>
+
 
 
 </div>

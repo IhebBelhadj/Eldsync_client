@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { FullCalendarComponent, FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { CalendarOptions } from '@fullcalendar/core';
@@ -6,19 +6,24 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { DotService } from '../../services/dot.service';
 import { Dot } from '../../models/dot';
-import { map } from 'rxjs';
+import { map, Subscription } from 'rxjs';
+import { LifelineStateService } from '../../state/lifeline-state.service';
+import moment from 'moment';
+import { DotInspectComponent } from '../dot-inspect/dot-inspect.component';
 
 @Component({
     selector: 'lifeline-calendar',
     standalone: true,
-    imports: [FullCalendarModule, CommonModule, ButtonModule],
+    imports: [FullCalendarModule, CommonModule, ButtonModule, DotInspectComponent],
     providers: [DatePipe],
     templateUrl: './calendar.component.html',
     styleUrl: './calendar.component.scss'
 })
-export class CalendarComponent {
+export class CalendarComponent implements AfterViewInit, OnDestroy {
 
     @ViewChild('calendar') calendar: FullCalendarComponent;
+
+
 
     calendarTitle = {
         year: '',
@@ -39,19 +44,40 @@ export class CalendarComponent {
 
     };
 
+    stateSubscription!: Subscription;
+
+    dotEvent: Event;
+    dotSelector: ElementRef;
+
     constructor(
         private crd: ChangeDetectorRef,
         private dotService: DotService,
         private datePipe: DatePipe,
+        private lifelineState: LifelineStateService,
     ) { };
 
+    ngAfterViewInit() {
+        this.stateSubscription = this.lifelineState.calendarCurrentDate$
+            .subscribe((date: Date) => {
+                this.calendarApi.gotoDate(date);
+                this.calendarUpdate();
+            });
+    }
+
+    ngOnDestroy(): void {
+        if (this.stateSubscription)
+            this.stateSubscription.unsubscribe();
+    }
+
     seekLeft() {
-        this.calendarApi.prev();
+        const prevDate = moment(this.lifelineState.calendarCurrentDateSnapshot).subtract(1, 'months').toDate();
+        this.lifelineState.setCalendarCurrentDate(prevDate);
         this.calendarUpdate();
     }
 
     seekRight() {
-        this.calendarApi.next();
+        const nextDate = moment(this.lifelineState.calendarCurrentDateSnapshot).add(1, 'months').toDate();
+        this.lifelineState.setCalendarCurrentDate(nextDate);
         this.calendarUpdate();
     }
 
@@ -78,12 +104,10 @@ export class CalendarComponent {
 
         const startDateString = this.datePipe.transform(startDate, 'yyyy-MM-ddTHH:mm:ss');
         const endDateString = this.datePipe.transform(endDate, 'yyyy-MM-ddTHH:mm:ss');
-        console.log('startDate:', startDate);
-        console.log('endDate:', endDate);
+
 
         this.dotService.searchDots({ elderId: 1, startDate: startDateString, endDate: endDateString }, `
             idDot
-            elderId
             eventDate
             dotMarkdown
             emotionType
@@ -94,7 +118,8 @@ export class CalendarComponent {
                 return data.map(dot => ({
                     ...dot,
                     eventDate: new Date(dot.eventDate),
-                    date: new Date(dot.eventDate)
+                    date: new Date(dot.eventDate),
+                    background: "#FF0"
                 }));
             })
         )
@@ -102,6 +127,21 @@ export class CalendarComponent {
                 this.events = data;
                 console.log('data:', data);
             });
+    }
+
+    onEventHover(hoverState: boolean, selector: ElementRef, event: Event) {
+        console.log("hoverState", hoverState);
+        console.log("event", selector);
+        console.log(event);
+        this.dotSelector = selector;
+        this.dotEvent = event;
+
+        console.log("before", this.lifelineState.snapshot.dotInspectOpen);
+        if (this.lifelineState.snapshot.dotInspectOpen != hoverState) {
+
+            this.lifelineState.setDotInspect(hoverState);
+            console.log("after", this.lifelineState.snapshot.dotInspectOpen)
+        }
     }
 
 

@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, throwError } from 'rxjs';
 import { EmotionType } from '../models/emotionType';
+import { DotService } from '../services/dot.service';
+import { DotInput } from '../models/dot-input';
+import { DatePipe } from '@angular/common';
 
 export interface DotForm {
     selectedEmotion: EmotionType,
@@ -29,7 +32,9 @@ export class LifelineDataService {
         }
     });
 
-    constructor() { }
+    constructor(
+        private dotService: DotService,
+    ) { }
 
 
     getState$() {
@@ -62,5 +67,35 @@ export class LifelineDataService {
             eventDate: new Date(),
             uploadedFiles: []
         });
+    }
+
+    saveDot(datePipe: DatePipe): Observable<any> {
+        const state = this.stateSubject.getValue();
+        console.log(state.dotForm.selectedEmotion);
+        const dotData: DotInput = {
+            emotionType: state.dotForm.selectedEmotion,
+            emotionIntensity: state.dotForm.emotionIntensity,
+            dotMarkdown: state.dotForm.dotDescription,
+            elderId: 1,
+            eventDate: datePipe.transform(state.dotForm.eventDate, 'yyyy-MM-ddTHH:mm:ss')
+        };
+
+        return this.dotService.createDot(dotData, `
+            idDot
+            eventDate
+            dotMarkdown
+            emotionType
+            emotionIntensity
+
+        `).pipe(
+            map((response: any) => {
+                this.resetDotForm();
+                return response;
+            }),
+            catchError((error) => {
+                console.error('Error saving dot:', error);
+                return throwError(error);
+            })
+        )
     }
 }

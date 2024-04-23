@@ -21,19 +21,8 @@ export class LifelineComponent implements OnInit {
     }
 
     ngOnInit() {
-        // this.getDotById('10', `
-        //     idDot
-        //     elderId
-        //     eventDate
-        //     dotMarkdown
-        //     emotionType
-        //     emotionIntensity
-        // `);
+
     }
 
-    getDotById(dotId: string, queryString: string) {
-        // this.dotService.getDotById(dotId, queryString).subscribe((dot) => {
-        //     console.log(dot);
-        // });
-    }
+
 }

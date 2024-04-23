@@ -46,7 +46,6 @@ export class DotService {
                 ${queryString}
             }}`;
 
-        console.log('SEARCH_DOTS_QUERY:', SEARCH_DOTS_QUERY);
         return this.apollo.query<{ searchDots: [Dot] }>({
             query: SEARCH_DOTS_QUERY,
             variables: { dotSearchInput }

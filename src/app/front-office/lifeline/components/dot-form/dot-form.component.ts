@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild, } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AccordionModule } from 'primeng/accordion';
@@ -22,7 +22,7 @@ import { Observable } from 'rxjs';
 @Component({
     selector: 'lifeline-dot-form',
     standalone: true,
-
+    providers: [DatePipe],
     imports: [FormsModule, ButtonModule, EditorModule, SliderModule, CalendarModule, AccordionModule, TooltipModule, FileUploadModule, CommonModule, NgxTiptapModule, ExtendedTooltipDirective],
     templateUrl: './dot-form.component.html',
     styleUrls: ['./dot-form.component.scss', "../../styles/lifeline.scss"]
@@ -47,6 +47,7 @@ export class DotFormComponent implements OnDestroy, AfterViewInit, OnInit {
     constructor(
         private lifelineData: LifelineDataService,
         private lifelineStateService: LifelineStateService,
+        private datePipe: DatePipe,
         private renderer: Renderer2) {
 
         this.dotForm$ = this.lifelineData.dotForm$;
@@ -121,5 +122,16 @@ export class DotFormComponent implements OnDestroy, AfterViewInit, OnInit {
 
         });
 
+    }
+
+    createDot() {
+
+        this.lifelineData.saveDot(this.datePipe).pipe(first()).subscribe((response) => {
+            console.log("create dot res: ", response);
+            const currentCalendarDate = this.lifelineStateService.calendarCurrentDateSnapshot;
+            this.lifelineStateService.setCalendarCurrentDate(currentCalendarDate);
+            this.lifelineStateService.setRightPanel(false);
+
+        });
     }
 }

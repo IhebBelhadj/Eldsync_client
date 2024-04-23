@@ -57,6 +57,8 @@ export class FastTravelComponent implements OnInit, OnDestroy {
 
     fastTravel() {
         console.log("Fast travel", this.pickedDate);
+        this.lifelineStateService.setCalendarCurrentDate(this.pickedDate);
         this.overlayPanel.hide();
+        this.pickedDate = null;
     }
 }
