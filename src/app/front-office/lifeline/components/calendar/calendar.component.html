@@ -17,7 +17,7 @@
                 <!--content here for the event template-->
                 <div [attr.data-id]="arg.event.extendedProps.idDot" class="eventContent" #selector
                     (mouseover)="onEventHover(true,selector,$event, arg.event.extendedProps)"
-                    (mouseout)="onEventHover(false)">
+                    (mouseout)="onEventHover(false)" (click)="showDotDetails(arg.event.extendedProps)">
                     <div class="dotDisplay" [ngClass]="arg.event.extendedProps.emotionType+ '_dot'"></div>
 
 

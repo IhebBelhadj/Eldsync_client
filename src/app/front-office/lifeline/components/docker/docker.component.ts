@@ -23,6 +23,11 @@ export class DockerComponent {
 
     toggleRightPanel() {
         console.log("Toggle right panel")
+        const snapshot = this.lifelineStateService.snapshot;
+        if (snapshot.rightPanelAction != 'add') {
+            this.lifelineStateService.setRightPanelAction('add');
+            this.lifelineStateService.setRightPanel(false);
+        }
         this.lifelineStateService.setRightPanel(true); // Toggle right panel on
     }
     toggleFastTravel($event: Event) {

@@ -14,7 +14,7 @@
                 </p-tag>
             </div>
             <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded btnDocker"
-                pTooltip="Remove" tooltipPosition="top" (click)='removeDot()'></button>
+                pTooltip="Remove" tooltipPosition="top" (click)='initRemoveDotRequest()'></button>
         </div>
     </ng-template>
 
@@ -35,6 +35,7 @@
     </ng-template>
 
     <lifeline-dot-form *ngIf="rightPanelAction == 'add'"></lifeline-dot-form>
+    <lifeline-dot-content *ngIf="rightPanelAction == 'show'"></lifeline-dot-content>
 </p-dialog>
 
 <!-- <div *ngIf="(lifelineStateService.rightPanelOpen$ | async);" [@slideInOut] -->

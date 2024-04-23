@@ -7,7 +7,7 @@ import { ButtonModule } from 'primeng/button';
 import { DotService } from '../../services/dot.service';
 import { Dot } from '../../models/dot';
 import { map, Subscription } from 'rxjs';
-import { LifelineStateService } from '../../state/lifeline-state.service';
+import { DotCreationCancelState, LifelineStateService } from '../../state/lifeline-state.service';
 import moment from 'moment';
 import { DotInspectComponent } from '../dot-inspect/dot-inspect.component';
 
@@ -143,6 +143,29 @@ export class CalendarComponent implements AfterViewInit, OnDestroy {
         this.lifelineState.setDotInspect(true);
         console.log("after", this.lifelineState.snapshot.dotInspectOpen)
 
+    }
+
+
+    showDotDetails(dot: Dot) {
+        console.log("show details");
+        this.lifelineState.setDotInspectData(null, null, dot);
+        const snapshot = this.lifelineState.snapshot;
+        const isCreatingDot = snapshot.rightPanelAction == "add" && snapshot.rightPanelOpen;
+        console.log("isCreatingDot", isCreatingDot);
+        if (isCreatingDot) {
+            this.lifelineState.initCancelDotCreationRequest$().subscribe(value => {
+                if (value != DotCreationCancelState.VALIDATED) return;
+                this.showRightPanelDotDetails();
+            });
+        } else {
+            this.showRightPanelDotDetails();
+        }
+
+    }
+
+    showRightPanelDotDetails() {
+        this.lifelineState.setRightPanelAction('show');
+        this.lifelineState.setRightPanel(true);
     }
 
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, distinctUntilChanged, map, Observable } from 'rxjs';
+import { BehaviorSubject, distinctUntilChanged, map, Observable, Subject } from 'rxjs';
 import { EmotionType } from '../models/emotionType';
 import { DotForm, LifelineDataService } from './lifeline-data.service';
 import { Dot } from '../models/dot';
@@ -10,6 +10,7 @@ export interface LifelineState {
     filtersPanelOpen: boolean;
     settingsPanelOpen: boolean;
     rightPanelAction: string;
+    rightPanelPosition: string;
     dotInspectOpen: boolean;
 
     // emotion tracking
@@ -21,9 +22,13 @@ export interface LifelineState {
 }
 
 export interface dotInspectData {
-    event: any;
-    selector: any;
-    dot: Dot;
+    event?: any;
+    selector?: any;
+    dot?: Dot;
+}
+
+export enum DotCreationCancelState {
+    CLEARED, PENDING, VALIDATED
 }
 
 
@@ -39,12 +44,16 @@ export class LifelineStateService {
         settingsPanelOpen: false,
         dotInspectOpen: false,
         rightPanelAction: "add",
+        rightPanelPosition: 'right',
         selectedEmotion: null,
         selectedEmotionIntensity: 1,
         calendarCurrentDate: new Date(),
     });
 
     private dotInspectData: dotInspectData;
+    private cancelDotCreation: BehaviorSubject<DotCreationCancelState> =
+        new BehaviorSubject<DotCreationCancelState>(DotCreationCancelState.CLEARED);
+
 
     constructor(private lifelineData: LifelineDataService) {
 
@@ -210,5 +219,26 @@ export class LifelineStateService {
         this.dotInspectData = {
             event, selector, dot
         }
+    }
+
+    cancelDotCreationObservable$(): Observable<DotCreationCancelState> {
+        return this.cancelDotCreation.asObservable();
+    }
+
+    initCancelDotCreationRequest$(): Observable<DotCreationCancelState> {
+
+        this.cancelDotCreation.next(DotCreationCancelState.PENDING);
+        // listens to the cancel creation observable
+        return this.cancelDotCreationObservable$();
+    }
+
+    clearCancelDotCreationRequest$(): Observable<DotCreationCancelState> {
+        this.cancelDotCreation.next(DotCreationCancelState.CLEARED);
+        return this.cancelDotCreationObservable$();
+    }
+
+    validateCancelDotCreationRequest$(): Observable<DotCreationCancelState> {
+        this.cancelDotCreation.next(DotCreationCancelState.VALIDATED);
+        return this.cancelDotCreationObservable$();
     }
 }

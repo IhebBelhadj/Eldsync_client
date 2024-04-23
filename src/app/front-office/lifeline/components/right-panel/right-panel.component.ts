@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { DotFormComponent } from '../dot-form/dot-form.component';
-import { LifelineState, LifelineStateService } from '../../state/lifeline-state.service';
+import { DotCreationCancelState, LifelineState, LifelineStateService } from '../../state/lifeline-state.service';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { DialogModule } from 'primeng/dialog';
@@ -12,11 +12,12 @@ import { EmotionState, emotionStates } from '../../state/emotion.states';
 import { EmotionType } from '../../models/emotionType';
 import { ConfirmationStateService } from '../../state/confirmation-state.service';
 import { LifelineDataService } from '../../state/lifeline-data.service';
+import { DotContentComponent } from '../dot-content/dot-content.component';
 
 @Component({
     selector: 'lifeline-right-panel',
     standalone: true,
-    imports: [ButtonModule, DotFormComponent, CommonModule, DialogModule, TagModule, TooltipModule],
+    imports: [ButtonModule, DotFormComponent, DotContentComponent, CommonModule, DialogModule, TagModule, TooltipModule],
     templateUrl: './right-panel.component.html',
     styleUrls: ['./right-panel.component.scss', '../../styles/lifeline.scss'],
     animations: [
@@ -46,6 +47,7 @@ export class RightPanelComponent implements OnInit, OnDestroy {
     rightPanelAction: string;
 
     rightPanelActionSubscription: Subscription;
+    cancelDotCreationSubscription: Subscription;
 
 
     constructor(
@@ -56,6 +58,9 @@ export class RightPanelComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.rightPanelSubscription = this.lifelineService.rightPanelOpen$.subscribe((isOpen: boolean) => {
+            if (this.rightPanelOpen && isOpen && this.lifelineService.snapshot.rightPanelAction == 'add') {
+                this.removeDot();
+            }
             this.rightPanelOpen = isOpen;
         });
 
@@ -76,6 +81,14 @@ export class RightPanelComponent implements OnInit, OnDestroy {
             this.rightPanelAction = action;
         });
 
+        this.cancelDotCreationSubscription = this.lifelineService.cancelDotCreationObservable$().subscribe(request => {
+            if (request == DotCreationCancelState.PENDING) {
+                this.removeDot();
+            }
+        })
+
+
+
     }
 
     ngOnDestroy() {
@@ -87,6 +100,9 @@ export class RightPanelComponent implements OnInit, OnDestroy {
         }
         if (this.rightPanelActionSubscription) {
             this.rightPanelActionSubscription.unsubscribe();
+        }
+        if (this.cancelDotCreationSubscription) {
+            this.cancelDotCreationSubscription.unsubscribe();
         }
     }
 
@@ -104,10 +120,13 @@ export class RightPanelComponent implements OnInit, OnDestroy {
 
     }
 
+    initRemoveDotRequest() {
+        this.lifelineService.initCancelDotCreationRequest$();
+    }
     removeDot() {
 
         this.confirmationService.addToQueue('deleteDot', {
-            message: 'Are you sure you want to delete this dot?',
+            message: 'Are you sure you want to cancel dot creation?',
         });
 
         const resultSub = this.confirmationService.confirmationResult$
@@ -116,8 +135,10 @@ export class RightPanelComponent implements OnInit, OnDestroy {
                     if (result.result === 'success') {
                         // Logic to delete the dot
                         this.cancelDotCreation();
+                        this.lifelineService.validateCancelDotCreationRequest$();
                     } else {
                         console.log('Dot deletion canceled');
+                        this.lifelineService.clearCancelDotCreationRequest$();
                     }
                     resultSub.unsubscribe();
                 }
