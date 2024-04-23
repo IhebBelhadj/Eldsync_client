@@ -1,0 +1,61 @@
+<div class="container justify-content-center align-items-center">
+    <!-- Search input -->
+    <input type="text" [(ngModel)]="searchTerm" placeholder="Rechercher par nom">
+
+    <button type="button" class="p-button p-button-primary" (click)="goToAddTaskForm()">Ajouter une tâche</button>
+
+    <!-- Table -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Description</th>
+                <th scope="col">Date</th>
+                <th scope="col">Heure</th>
+                <th scope="col">Priorité</th>
+                <th scope="col">Répétition</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let task of taskList">
+                <td>{{ task.id }}</td>
+                <td>{{ task.name }}</td>
+                <td>{{ task.description }}</td>
+                <td>{{ task.date }}</td>
+                <td>{{ task.time }}</td>
+                <td>{{ task.priority }}</td>
+                <td>{{ task.recurrence }}</td>
+                <td>
+                    <!-- Detail button -->
+                    <button type="button" class="p-button p-button-success" (click)="showDialog(task)">Détails</button>
+
+                    <button type="button" class="p-button p-button-danger" (click)="deleteTask(task.id)">Supprimer</button>
+                    <button type="button" class="p-button p-button-info" (click)="goToUpdateTaskForm(task.id)">Modifier</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p-dialog header="Détails de la tâche" [(visible)]="displayDialog" [modal]="true" [closable]="true" [responsive]="true">
+        <ng-template pTemplate="header">
+            <h2>Détails de la tâche</h2>
+        </ng-template>
+        <ng-template pTemplate="content">
+            <div class="p-grid p-fluid">
+                <div class="p-col-4"><strong>Nom:</strong></div>
+                <div class="p-col-4">{{selectedTask?.name}}</div>
+                <div class="p-col-4"><strong>Description:</strong></div>
+                <div class="p-col-8">{{selectedTask?.description}}</div>
+                <div class="p-col-4"><strong>Date:</strong></div>
+                <div class="p-col-8">{{selectedTask?.date}}</div>
+                <div class="p-col-4"><strong>Heure:</strong></div>
+                <div class="p-col-8">{{selectedTask?.time}}</div>
+                <div class="p-col-4"><strong>Priorité:</strong></div>
+                <div class="p-col-8">{{selectedTask?.priority}}</div>
+                <div class="p-col-4"><strong>Répétition:</strong></div>
+                <div class="p-col-8">{{selectedTask?.recurrence}}</div>
+            </div>
+        </ng-template>
+    </p-dialog>
+</div>

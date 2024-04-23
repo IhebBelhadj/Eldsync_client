@@ -11,10 +11,13 @@ import { EventService } from './demo/service/event.service';
 import { IconService } from './demo/service/icon.service';
 import { NodeService } from './demo/service/node.service';
 import { PhotoService } from './demo/service/photo.service';
+import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
     declarations: [AppComponent, NotfoundComponent],
-    imports: [AppRoutingModule, AppLayoutModule],
+    imports: [AppRoutingModule, AppLayoutModule,BrowserModule,ReactiveFormsModule,HttpClientModule],
     providers: [
         { provide: LocationStrategy, useClass: PathLocationStrategy },
         CountryService,
@@ -24,6 +27,9 @@ import { PhotoService } from './demo/service/photo.service';
         NodeService,
         PhotoService,
         ProductService,
+        HttpClientModule,
+        ReactiveFormsModule
+
     ],
     bootstrap: [AppComponent],
 })
