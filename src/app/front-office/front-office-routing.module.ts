@@ -3,7 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
     { path: 'lifeline', loadComponent: () => import('./lifeline/lifeline.component').then(m => m.LifelineComponent) },
-    // lazy load a standalone component (lifeline.component.ts)
+    { path: 'event', loadComponent: () => import('./event/event.module').then(m => m.EventModule) },
+    { path: 'eventUser', loadComponent: () => import('./event-user/event-user.module').then(m => m.EventUserModule) },
+
+
+    // lazy load a standalone component (lifeline.component.ts)b 
 
 ];
 
