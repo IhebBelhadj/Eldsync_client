@@ -1,0 +1,257 @@
+<p>event-user-calender works!</p>
+<img *ngIf="eventBannerUrl | async as bannerUrl" class="event-banner" [src]="bannerUrl" alt="Event Banner">
+
+<div class="calendar-container">
+  <ng-container *ngIf="calendarOptions">
+    <full-calendar #calendar [options]="calendarOptions">
+      
+    </full-calendar>
+    <button pButton pRipple icon="pi pi-chevron-left" iconPos="left" (click)="GoBack()" class="p-button-secondary custom-button"></button>
+  </ng-container>
+</div>
+
+
+
+
+<div class="grid p-fluid">
+  <div class="col-12 md:col-6">
+<p-dialog header="Event Details" [(visible)]="displayDetailsDialog"  [style]="{width: '40vw'}" [contentStyle]="{'padding': '24px'}" [baseZIndex]="1000">
+  <div style="font-family: 'Arial', sans-serif; color: #333;">
+    <div style="text-align: center; margin-bottom: 20px;">
+      <img *ngIf="selectedEvent?.bannerUrl" [src]="selectedEvent?.bannerUrl" alt="Event Banner" style="width: 100%; height: auto;" >
+
+    </div>
+    <h2 style="color: #0056b3; margin-bottom: 12px;">{{ selectedEvent?.name }}</h2>
+    <p><strong>Date:</strong> {{ selectedEvent?.date | date:'fullDate' }}</p>
+    <p><strong>Start Time:</strong> {{ selectedEvent?.startTime | date:'shortTime' }}</p>
+    <p><strong>Category:</strong> {{ selectedEvent?.category | titlecase }}</p>
+    <p><strong>Location:</strong> {{ selectedEvent?.location }}</p>
+    <p><strong>Price:</strong> ${{ selectedEvent?.price | number:'1.2-2' }}</p>
+    <div style="border-top: 1px solid #ccc; padding-top: 10px;">
+      <h4 style="color: #0056b3;">Description</h4>
+      <p>{{ selectedEvent?.description }}</p>
+    </div>
+    <div style="text-align: right; margin-top: 20px;">
+      <button pButton type="button" label="Update" icon="pi pi-check" class="p-button-secondary" (click)="openEditDialog(selectedEvent)"></button>
+    </div>
+  </div>
+</p-dialog>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="grid p-fluid">
+  <div class="col-12 md:col-6">
+<p-dialog header="Add Event" [(visible)]="displayAddDialog" [style]="{width: '40vw'}">
+  <form [formGroup]="eventForm">
+    
+    <div class="form-group">
+      <div class="field">
+        <label for="name">Name:</label>
+        <input formControlName="name" type="text" pInputText placeholder="Event Name">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="field">
+        <label for="description">Description:</label>
+        <textarea formControlName="description" rows="5" cols="30" pInputTextarea placeholder="Event Description"></textarea>
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <div class="field">
+        <label for="date">Date:</label>
+        <span>{{ eventForm.get('date').value | date: 'longDate' }}</span>
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <div class="field">
+        <label for="location">Location:</label>
+        <p-autoComplete formControlName="location" 
+        [suggestions]="filteredLocations" 
+        (completeMethod)="searchLocations($event)" 
+        [dropdown]="true"></p-autoComplete>
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <div class="field">
+        <label for="price">Price:</label>
+        <input formControlName="price" type="number" pInputText placeholder="Price" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="field">
+        <label for="category">Category:</label>
+        <p-dropdown [options]="categories" formControlName="category" placeholder="Select a Category" [showClear]="true"></p-dropdown>
+      </div>
+    </div>
+
+  <!--
+    <div class="form-group">
+      <div class="field">
+        <label for="status">Status:</label>
+        <p-dropdown [options]="statues" formControlName="status" placeholder="Select a Status" [showClear]="true"></p-dropdown>
+
+      </div>
+    </div>
+  -->
+    <div class="form-group">
+      <div class="field">
+          <label for="banner">Banner:</label>
+          <div class="file-input-container">
+              <span class="file-input-trigger">Choose File</span>
+              <input type="file" id="banner" #fileInput (change)="onFileSelection($event)">
+              <div class="file-input-name" id="file-name">No file chosen</div>
+          </div>
+      </div>
+  </div>
+
+    <div class="form-actions" > 
+      <div class="flex flex-wrap gap-2">
+      <button pButton type="button" label="Save" icon="pi pi-check" (click)="onAddEvent(eventForm.value)"></button>
+      <button pButton type="button" label="Cancel" icon="pi pi-times" (click)="onCancel()"></button>
+    </div>
+  </div>
+
+  </form>
+</p-dialog>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="grid p-fluid">
+  <div class="col-12 md:col-6">
+
+<p-dialog header="Edit Event" [(visible)]="displayEditDialog" [style]="{width: '40vw'}">
+  <form [formGroup]="eventForm">
+
+    <div class="form-group">
+      <div class="field">
+        <label for="name">Name:</label>
+        <input formControlName="name" type="text" pInputText placeholder="Event Name">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="field">
+        <label for="description">Description:</label>
+        <textarea formControlName="description" rows="5" cols="30" pInputTextarea placeholder="Event Description"></textarea>
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <div class="field">
+        <label for="date">Date:</label>
+        <p-calendar formControlName="date" [showIcon]="true" inputId="icon"></p-calendar>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="field">
+        <label for="location">Location:</label>
+        <input formControlName="location" pInputText id="location" type="text" />
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <div class="field">
+        <label for="price">Price:</label>
+        <input formControlName="price" type="number" pInputText placeholder="Price" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="field">
+        <label for="category">Category:</label>
+        <p-dropdown [options]="categories" formControlName="category" placeholder="Select a Category" [showClear]="true"></p-dropdown>
+      </div>
+    </div>
+
+  <!--
+<div class="form-group">
+      <div class="field">
+        <label for="status">Status:</label>
+        <p-dropdown [options]="statues" formControlName="status" placeholder="Select a Status" [showClear]="true"></p-dropdown>
+
+      </div>
+    </div>
+
+  -->
+    
+
+    <div class="p-field">
+      <label for="bannerData">Event Banner</label>
+      <input type="file" (change)="onFileSelected($event)" pInputText>
+      <img *ngIf="selectedEvent?.bannerUrl" [src]="selectedEvent?.bannerUrl" alt="Event Banner" style="width:100%; margin-top:10px;">
+    </div>
+
+    <div class="form-actions">
+      <div class="flex flex-wrap gap-2">
+
+      <button pButton type="button" label="Save" icon="pi pi-check" (click)="onSave()"></button>
+      <button pButton type="button" label="Cancel" icon="pi pi-times" (click)="onCancel()"></button>
+    </div>
+  </div>
+
+  </form>
+</p-dialog>
+</div>
+</div>
+
+
+
+
+
+
+
