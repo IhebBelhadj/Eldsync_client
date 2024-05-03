@@ -2,8 +2,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-    { path: '', loadComponent: () => import('./lifeline/lifeline.component').then(m => m.LifelineComponent) },
-    // lazy load a standalone component (lifeline.component.ts)
+    { path: 'lifeline', loadComponent: () => import('./lifeline/lifeline.component').then(m => m.LifelineComponent) },
+    { path: 'event', loadChildren: () => import('./event/event.module').then(m => m.EventModule) },
+    { path: 'eventUser', loadChildren: () => import('./event-user/event-user.module').then(m => m.EventUserModule) },
+
 
 ];
 
