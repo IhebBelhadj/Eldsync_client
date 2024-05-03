@@ -67,7 +67,7 @@ export class DisplayCardEventComponent implements OnInit {
   }
 
   GoBack(): void {
-    this.router.navigate(['/uikit/event']);
+    this.router.navigate(['/frontOffice/event']);
   }
 
   showDialog(event: any): void {
@@ -76,7 +76,7 @@ export class DisplayCardEventComponent implements OnInit {
   }
 
   GoToEventSchedular(): void {
-    this.router.navigate(['/uikit/event/EventSchedular']);
+    this.router.navigate(['/frontOffice/event/EventSchedular']);
   }
 
 

@@ -3,7 +3,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FullCalendarModule } from '@fullcalendar/angular'; // import the FullCalendar module
-import { ScheduleModule } from '@syncfusion/ej2-angular-schedule';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { CardModule } from 'primeng/card';
@@ -46,7 +45,6 @@ import { UpdateEventComponent } from './update-event/update-event.component';
     DialogModule,
     FullCalendarModule, // add the FullCalendarModule to your imports
     CalendarModule,
-    ScheduleModule,  // Add ScheduleModule here
     CommonModule,
     FormsModule,
     ReactiveFormsModule,

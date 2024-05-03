@@ -119,7 +119,7 @@ export class AddUpdateEventComponent implements OnInit {
     this.eventService.addEvent(formData).subscribe({
       next: (response) => {
         console.log('Event created successfully!', response);
-        this.router.navigate(['/uikit/eventUser']); // Redirect after successful event creation
+        this.router.navigate(['/frontOffice/event']); // Redirect after successful event creation
       },
             error: (error) => console.error('Error creating event:', error)
     });
@@ -127,7 +127,7 @@ export class AddUpdateEventComponent implements OnInit {
 
 
   goBack(): void {
-    this.router.navigate(['/uikit/event']);
+    this.router.navigate(['/frontOffice/event']);
   }
 }
 

@@ -92,25 +92,25 @@ export class EventComponent {
 
 
   GoEvent(): void {
-    this.router.navigate(['/uikit/event/eventAddUpdate']);
+    this.router.navigate(['/frontOffice/event/eventAddUpdate']);
   }
 
   
   GoToEventSchedular(): void {
-    this.router.navigate(['/uikit/event/EventSchedular']);
+    this.router.navigate(['/frontOffice/event/EventSchedular']);
   }
 
   
 
   GoToCard(): void {
-    this.router.navigate(['/uikit/event/DisplayCardEvent']);
+    this.router.navigate(['/frontOffice/event/DisplayCardEvent']);
   }
   updateEvent(idEvent: number) {
-    this.router.navigate(['/uikit/event/UpdateEvent', idEvent]);
+    this.router.navigate(['/frontOffice/event/UpdateEvent', idEvent]);
   }
 
   GoToPastEvent(): void {
-    this.router.navigate(['/uikit/event/PastEvent']);
+    this.router.navigate(['/frontOffice/event/PastEvent']);
   }
 }
 

@@ -105,7 +105,7 @@ private loadStatus(): void
           this.events = events.map(event => ({
             idEvent: event.idEvent, 
             title: event.name,
-            start: event.date,
+            start: new Date(event.date),
             description: event.description,
             category: event.category,
             location: event.location,
@@ -295,7 +295,7 @@ onFileSelected(event: any)
 
   GoBack(): void 
     {
-      this.router.navigate(['/uikit/event']);
+      this.router.navigate(['/frontOffice/event']);
     }
 
 

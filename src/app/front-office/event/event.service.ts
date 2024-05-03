@@ -41,6 +41,11 @@ export class EventService {
     });
   }
 
+  rescheduleEvent(eventId: number, newDate: string): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${eventId}/reschedule`, {date: newDate});
+  }
+  
+
 
   /*public addEvent(event: Event): Observable<Event> {
     return this.http.post<Event>(`${this.apiUrl}/addEvent`, event);
@@ -101,9 +106,28 @@ public getEventDetails(idEvent: number): Observable<any> {
     return this.http.get<Event[]>(`${this.apiUrl}/category/${category}`);
   }
 
-  public registerUserForEvent(idUser: number, eventId: number): Observable<void> {
-    return this.http.post<void>(`${this.userApiUrl}/events/${idUser}/${eventId}`, {});
+  registerUserForEvent(userId: number, eventId: number): Observable<string> {
+    return this.http.post<string>(`${this.apiUrl}/${eventId}/register/${userId}`, {}, { responseType: 'text' as 'json' });
+}
+
+
+  public getEventsForUser(userId: number): Observable<Event[]> {
+    return this.http.get<Event[]>(`${this.apiUrl}/users/${userId}/events`);
   }
+
+  /*
+  public registerUserForEvent(idUser: number, eventId: number): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/register/${idUser}/${eventId}`, {});
+  }
+
+  public getEventsAttendedByUser(userId: number): Observable<Event[]> {
+  return this.http.get<Event[]>(`${this.apiUrl}/${userId}/events-attended`);
+}
+*/
+public getRegisteredEventsForUser(id: number): Observable<Event[]> {
+  return this.http.get<Event[]>(`${this.apiUrl}/${id}/events`);
+}
+ 
 /*
   public getUserWithMostEventsAttended(): Observable<User> {
     return this.http.get<User>(`${this.userApiUrl}/most-events`);

@@ -13,6 +13,7 @@ export class EventUserComponent implements OnInit {
 
   events: any[] = [];
   selectedEvent: any = null;
+
   totalRecords: number = 0;
   rows: number = 6;  // Default number of rows per page
   page: number = 0;  // Default initial page
@@ -85,7 +86,7 @@ export class EventUserComponent implements OnInit {
   }
 
   GoAdd(): void {
-    this.router.navigate(['/uikit/eventUser/eventUserAdd']);
+    this.router.navigate(['/frontOffice/eventUser/eventUserAdd']);
   }
 
   showDialog(event: any): void {
@@ -93,8 +94,47 @@ export class EventUserComponent implements OnInit {
     this.displayDialog = true;
   }
 
+
+
+
+  registerToEvent(eventId: number): void {
+    const userId = 2; 
+  
+    this.eventService.registerUserForEvent(userId, eventId).subscribe({
+      next: () => { 
+        console.log('Registered successfully');
+        alert('You have successfully registered for the event!');
+      },
+      error: err => {
+        console.error('Registration failed:', err);
+        alert('Failed to register for the event.');
+      }
+    });
+  }
+  
+
+navigateToAttendedEvents(): void {
+  this.router.navigate(['/frontOffice/eventUser/eventAttended']); // Adjust the path as needed
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   GoCalender(): void {
-    this.router.navigate(['/uikit/eventUser/eventUserCalender']);
+    this.router.navigate(['/frontOffice/eventUser/eventUserCalender']);
   }
 
 

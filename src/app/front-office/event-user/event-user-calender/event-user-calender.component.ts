@@ -108,13 +108,15 @@ private loadStatus(): void
           .map(event => ({
             idEvent: event.idEvent, 
             title: event.name,
-            start: event.date,
+            start: new Date(event.date),
             description: event.description,
             category: event.category,
             location: event.location,
             price: event.price,
             bannerUrl: event.bannerData,
           }));
+          console.log('Events for FullCalendar:', this.events); // Check the date here
+
 
           this.calendarOptions = {
             plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
@@ -276,7 +278,7 @@ onFileSelected(event: any)
 
   GoBack(): void 
     {
-      this.router.navigate(['/uikit/eventUser']);
+      this.router.navigate(['/frontOffice/eventUser']);
     }
 
 

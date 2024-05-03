@@ -123,7 +123,7 @@ import { EventService } from '../event.service';
         this.eventService.updateEvent(idEvent, this.eventForm.value, this.selectedFile).subscribe({
           next: () => {
             console.log('Event updated successfully');
-            this.router.navigate(['/uikit/event']);
+            this.router.navigate(['/frontOffice/event']);
             console.log(this.imageUrl);
             
           },
@@ -190,7 +190,7 @@ searchLocations(event): void {
  
 
     goBack(): void {
-      this.router.navigate(['/uikit/event']);
+      this.router.navigate(['/frontOffice/event']);
     }
 
 

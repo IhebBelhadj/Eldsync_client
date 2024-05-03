@@ -14,15 +14,15 @@
 
           <span class="p-input-icon-left p-input-icon-right">
             <label for="toDate" class="mr-3">To Day</label>
-            <p-calendar [(ngModel)]="toDate" inputId="toDate"></p-calendar>
+            <p-calendar [(ngModel)]="toDate" inputId="toDate" class="mr-3"></p-calendar>
           </span>
   
 
-    <div class="col-12 mb-2 lg:col-4 lg:mb-0">
+          <div class="inline-flex">
           <button pButton type="button" label="" (click)="getEventsByDateRange()" icon="pi pi-search" class="p-button-primary mr-3" ></button>
-          <button pButton type="button" label="Suggest Event" class="p-button-success mr-3" icon="pi pi-plus" (click)="GoAdd()"></button>
-          <button pButton type="button" label="View Calnder" class="p-button-secondary mr-3" icon="pi pi-calendar" (click)="GoCalender()"></button>
-
+          <button pButton type="button" label="Suggest" class="p-button-success mr-3" icon="pi pi-plus" (click)="GoAdd()"></button>
+          <button pButton type="button" label="Calnder" class="p-button-secondary mr-3" icon="pi pi-calendar" (click)="GoCalender()"></button>
+          <button pButton type="button" label="Attended Events" class="p-button-info" (click)="navigateToAttendedEvents()"></button>
     </div>
   </div>
 </div>
@@ -37,6 +37,8 @@
           <p class="card-text">{{ event.location }}</p>
           <p class="card-text"><small class="text-muted">{{ event.date | date }}</small></p>
           <button pButton type="button" label="View Details" class="p-button-secondary mr-3" icon="pi pi-eye" (click)="showDialog(event)"></button>
+          <button pButton type="button" label="Register" class="p-button-success" (click)="registerToEvent(event.idEvent)"></button>
+
 
         </div>
       </div>

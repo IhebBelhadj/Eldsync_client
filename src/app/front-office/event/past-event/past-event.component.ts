@@ -12,8 +12,13 @@ import { EventService } from '../event.service';
 })
 export class PastEventComponent implements OnInit {
   pastEvents: Event[] = [];
+  selectedDate: Date | null = null;
+  editingEventId: number | null = null;
+  showDialog = false;
 
-  constructor(private eventService: EventService, private router: Router,) {}
+
+
+  constructor(private eventService: EventService, private router: Router) {}
 
   ngOnInit(): void {
     this.getEvents();
@@ -43,7 +48,60 @@ export class PastEventComponent implements OnInit {
     });
   }
 
+
+  openReschedule(event: Event): void {
+    this.editingEventId = event.idEvent;
+    this.selectedDate = new Date(event.date); // assuming `date` is in a compatible format
+    this.showDialog = true;
+  }
+
+  
+  rescheduleEvent(): void {
+    if (this.editingEventId && this.selectedDate) {
+      // Convert the selected date to UTC
+      const formattedDate = new Date(Date.UTC(
+        this.selectedDate.getFullYear(),
+        this.selectedDate.getMonth(),
+        this.selectedDate.getDate()
+      )).toISOString().split('T')[0];  // Ensure the date is in 'yyyy-MM-dd' format
+      
+      this.eventService.rescheduleEvent(this.editingEventId, formattedDate).subscribe({
+        next: (updatedEvent) => {
+          this.getEvents(); // Refresh the events list or update locally
+          this.editingEventId = null; // Reset editing
+          this.selectedDate = null; // Reset the selected date
+          this.showDialog = false; // Hide the dialog on completion
+        },
+        error: (error) => {
+          console.error('Failed to reschedule event', error);
+        }
+      });
+    }
+  }
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   GoHome(): void {
-    this.router.navigate(['/uikit/event']);
+    this.router.navigate(['/frontOffice/event']);
   }
 }

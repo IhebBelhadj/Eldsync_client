@@ -128,11 +128,11 @@ export class EventUserAddComponent  implements OnInit {
 
   onDialogHide(): void {
     this.displayDialog = false;
-    this.router.navigate(['/uikit/eventUser']);
+    this.router.navigate(['/frontOffice/eventUser']);
   }
 
   goBack(): void {
-    this.router.navigate(['/uikit/eventUser']);
+    this.router.navigate(['/frontOffice/eventUser']);
   }
 }
 
