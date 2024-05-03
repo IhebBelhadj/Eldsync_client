@@ -60,3 +60,11 @@ export const emotionStates: EmotionStates[] = [
         ]
     }
 ];
+
+export function getEmotionState(emotion: string, intensity: number): EmotionState {
+    return emotionStates.find(
+        emotionState => emotionState.emotion === emotion
+    )?.states.find(
+        s => s.intensity === intensity
+    );
+}

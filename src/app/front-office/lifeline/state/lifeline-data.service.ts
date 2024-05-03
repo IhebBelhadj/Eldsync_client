@@ -4,6 +4,7 @@ import { EmotionType } from '../models/emotionType';
 import { DotService } from '../services/dot.service';
 import { DotInput } from '../models/dot-input';
 import { DatePipe } from '@angular/common';
+import { Dot } from '../models/dot';
 
 export interface DotForm {
     selectedEmotion: EmotionType,
@@ -14,7 +15,9 @@ export interface DotForm {
 }
 
 export interface LifelineData {
-    dotForm: DotForm
+    dotForm: DotForm,
+    selectedDot: Dot | null,
+    selectedDotId: string | null,
 }
 
 @Injectable({
@@ -29,7 +32,9 @@ export class LifelineDataService {
             emotionIntensity: 1,
             eventDate: new Date(),
             uploadedFiles: []
-        }
+        },
+        selectedDot: null,
+        selectedDotId: null,
     });
 
     constructor(
@@ -51,6 +56,18 @@ export class LifelineDataService {
         );
     }
 
+    get selectedDot$(): any {
+        return this.stateSubject.asObservable().pipe(
+            map(state => state.selectedDot)
+        );
+    }
+
+    get selectedDotId$(): any {
+        return this.stateSubject.asObservable().pipe(
+            map(state => state.selectedDotId)
+        );
+    }
+
     updateDotForm(dotForm: Partial<DotForm>) {
 
         const currentState = this.stateSubject.getValue();
@@ -67,6 +84,11 @@ export class LifelineDataService {
             eventDate: new Date(),
             uploadedFiles: []
         });
+    }
+
+    setSelectedDotId(dotId: string) {
+        const currentState = this.stateSubject.getValue();
+        this.stateSubject.next({ ...currentState, selectedDotId: dotId });
     }
 
     saveDot(datePipe: DatePipe): Observable<any> {
