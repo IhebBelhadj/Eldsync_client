@@ -7,8 +7,6 @@ const routes: Routes = [
     { path: 'eventUser', loadChildren: () => import('./event-user/event-user.module').then(m => m.EventUserModule) },
 
 
-    // lazy load a standalone component (lifeline.component.ts)b 
-
 ];
 
 @NgModule({

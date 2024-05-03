@@ -10,6 +10,7 @@ import { map, Subscription } from 'rxjs';
 import { DotCreationCancelState, LifelineStateService } from '../../state/lifeline-state.service';
 import moment from 'moment';
 import { DotInspectComponent } from '../dot-inspect/dot-inspect.component';
+import { LifelineDataService } from '../../state/lifeline-data.service';
 
 @Component({
     selector: 'lifeline-calendar',
@@ -54,6 +55,7 @@ export class CalendarComponent implements AfterViewInit, OnDestroy {
         private dotService: DotService,
         private datePipe: DatePipe,
         private lifelineState: LifelineStateService,
+        private lifelineData: LifelineDataService,
     ) { };
 
     ngAfterViewInit() {
@@ -155,17 +157,18 @@ export class CalendarComponent implements AfterViewInit, OnDestroy {
         if (isCreatingDot) {
             this.lifelineState.initCancelDotCreationRequest$().subscribe(value => {
                 if (value != DotCreationCancelState.VALIDATED) return;
-                this.showRightPanelDotDetails();
+                this.showRightPanelDotDetails(dot);
             });
         } else {
-            this.showRightPanelDotDetails();
+            this.showRightPanelDotDetails(dot);
         }
 
     }
 
-    showRightPanelDotDetails() {
+    showRightPanelDotDetails(dot: Dot) {
         this.lifelineState.setRightPanelAction('show');
         this.lifelineState.setRightPanel(true);
+        this.lifelineData.setSelectedDotId(dot.idDot);
     }
 
 

@@ -1,0 +1,59 @@
+/* Update Event Component Styles */
+
+/* Style for the file input */
+input[type="file"] {
+      padding: 10px;
+      background-color: none;
+      border: 2px dashed #d3d3d3;
+      border-radius: 5px;
+      color: #333;
+      transition: background-color 0.3s ease-in-out;
+    
+      &:hover {
+        background-color: #e9e9e9;
+        cursor: pointer;
+      }
+    }
+    
+    /* Style for the display image */
+    img.event-banner {
+      display: block;
+      max-width: 100%;
+      height: auto;  // Maintain aspect ratio
+      margin-top: 10px;
+      border-radius: 5px; // Optional: for rounded corners
+    }
+    
+    /* Responsive design */
+    @media (max-width: 500px) {
+      img.event-banner {
+        max-width: 100%;
+        height: auto;
+      }
+    }
+
+    /* Update Event Component Styles */
+
+/* Custom button styling */
+.custom-file-upload .ui-button {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      margin-top: 5px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
+    .pi-upload {
+      margin-right: 8px; /* Adds 8 pixels of space between the icon and the text */
+      color: white; /* Example color, adjust as needed */
+  }
+  
+    /* Styles for the file input and image are the same as previously defined */
+    
+    

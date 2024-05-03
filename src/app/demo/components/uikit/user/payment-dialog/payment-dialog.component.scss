@@ -1,0 +1,44 @@
+@import url("@angular/material/prebuilt-themes/deeppurple-amber.css");
+
+@import url("node_modules/bootstrap/dist/css/bootstrap.min.css");
+
+/* styles.css */
+
+.popup-container {
+  max-width: 400px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+}
+
+.popup-container > .services-list {
+  margin-top: 20px;
+}
+
+.service-item {
+  margin-bottom: 10px;
+}
+
+.service-label {
+  display: flex;
+  align-items: center;
+}
+
+.service-label > .checkbox-input {
+  margin-right: 10px;
+}
+
+.service-name {
+  font-size: 16px;
+}
+
+.confirm-button {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.confirm-button + .other-element {
+  /* This will only apply to .other-element if it's placed immediately after .confirm-button */
+  background-color: #f0f0f0;
+}

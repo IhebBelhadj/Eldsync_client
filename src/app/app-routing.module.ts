@@ -9,7 +9,10 @@ import { AppLayoutComponent } from "./layout/app.layout.component";
             {
                 path: '', component: AppLayoutComponent,
                 children: [
-                    // { path: '', loadChildren: () => import('./front-office/front-office.module').then(m => m.FrontOfficeModule) },
+                    { path: '', redirectTo: '/front', pathMatch: 'full' },
+                    { path: 'd', loadChildren: () => import('./demo/components/dashboard/dashboard.module').then(m => m.DashboardModule) },
+
+                    { path: 'lifeline', loadChildren: () => import('./front-office/front-office.module').then(m => m.FrontOfficeModule) },
                     { path: 'uikit', loadChildren: () => import('./demo/components/uikit/uikit.module').then(m => m.UIkitModule) },
                     { path: 'utilities', loadChildren: () => import('./demo/components/utilities/utilities.module').then(m => m.UtilitiesModule) },
                     { path: 'documentation', loadChildren: () => import('./demo/components/documentation/documentation.module').then(m => m.DocumentationModule) },
@@ -21,10 +24,10 @@ import { AppLayoutComponent } from "./layout/app.layout.component";
                 ]
             },
 
-            { path: "lifeline", loadComponent: () => import('./front-office/lifeline/lifeline.component').then(m => m.LifelineComponent) },
           //  { path: 'event', loadComponent: () => import('./front-office/event/event.module').then(m => m.EventModule) },
             // { path: 'eventUser', loadComponent: () => import('./front-office/event-user/event-user.module').then(m => m.EventUserModule) },
             { path: 'auth', loadChildren: () => import('./demo/components/auth/auth.module').then(m => m.AuthModule) },
+            { path: 'front', loadChildren: () => import('./demo/components/front/front.module').then(m => m.FrontModule) },
             { path: 'landing', loadChildren: () => import('./demo/components/landing/landing.module').then(m => m.LandingModule) },
             { path: 'notfound', component: NotfoundComponent },
             { path: '**', redirectTo: '/notfound' },

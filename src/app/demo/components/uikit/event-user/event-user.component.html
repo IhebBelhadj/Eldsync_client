@@ -1,0 +1,62 @@
+<h1> Card View
+</h1>
+
+<div class="form-group">
+  <div class="card">
+    
+    <div class="grid formgrid">
+      
+
+          <span class="p-input-icon-left p-input-icon-right mr-3">
+            <label for="fromDate" class="mr-3">From Day</label>
+            <p-calendar [(ngModel)]="fromDate" inputId="fromDate"></p-calendar>
+          </span>
+
+          <span class="p-input-icon-left p-input-icon-right">
+            <label for="toDate" class="mr-3">To Day</label>
+            <p-calendar [(ngModel)]="toDate" inputId="toDate"></p-calendar>
+          </span>
+  
+
+    <div class="col-12 mb-2 lg:col-4 lg:mb-0">
+          <button pButton type="button" label="" (click)="getEventsByDateRange()" icon="pi pi-search" class="p-button-primary mr-3" ></button>
+          <button pButton type="button" label="Suggest Event" class="p-button-success mr-3" icon="pi pi-plus" (click)="GoAdd()"></button>
+          <button pButton type="button" label="View Calnder" class="p-button-secondary mr-3" icon="pi pi-calendar" (click)="GoCalender()"></button>
+
+    </div>
+  </div>
+</div>
+<p-paginator [rows]="rows" [totalRecords]="totalRecords" (onPageChange)="paginate($event)" styleClass="paginator-custom" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[5, 10, 20]"></p-paginator>
+
+
+<div class="container">
+      <div *ngFor="let event of events" class="card">
+        <img class="card-img-top" [src]="event.bannerUrl || 'assets/default-image.jpg'" alt="Banner">
+        <div class="card-body">
+          <h5 class="card-title">{{ event.name }}</h5>
+          <p class="card-text">{{ event.location }}</p>
+          <p class="card-text"><small class="text-muted">{{ event.date | date }}</small></p>
+          <button pButton type="button" label="View Details" class="p-button-secondary mr-3" icon="pi pi-eye" (click)="showDialog(event)"></button>
+
+        </div>
+      </div>
+    </div>
+
+    
+    
+    <p-dialog [(visible)]="displayDialog" [style]="{'width': '30vw'}" [header]="selectedEvent?.name" [modal]="true" [closable]="true" [contentStyle]="{'overflow':'hidden'}" class="event-dialog">
+      <div *ngIf="selectedEvent" class="event-content" style="margin-right: 10px;">
+          <img [src]="selectedEvent.bannerUrl || 'assets/default-image.jpg'" alt="Banner" class="event-image" style="width:100%">
+          <h3  style="color:Red;font-weight:bold">{{ selectedEvent.location }}</h3>
+          <h4>{{ selectedEvent.price | currency }}</h4>
+          <h4><small>{{ selectedEvent.date | date:'fullDate' }}</small></h4>
+
+          <h5>{{ selectedEvent.description }}</h5>
+          <p>{{ selectedEvent.category }}</p>
+
+      </div>
+  </p-dialog>
+  
+  
+    
+    
