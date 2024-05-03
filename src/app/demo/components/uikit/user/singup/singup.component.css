@@ -1,0 +1,56 @@
+.form-head {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .title {
+    text-align: center;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    display: block;
+    font-weight: bold;
+  }
+  
+  input,
+  select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .outer-link {
+    text-align: center;
+  }
+  
+  .outer-link a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .outer-link a:hover {
+    text-decoration: underline;
+  }
+  

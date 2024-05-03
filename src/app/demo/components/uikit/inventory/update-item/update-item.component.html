@@ -1,0 +1,72 @@
+<h1>Update Item</h1>
+<div class="grid p-fluid">
+  <div class="col-12 md:col-6">
+    <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+
+      <div class="form-group">
+        <div class="field">
+          <label for="name">ID:</label>
+          <input type="text" pInputText placeholder="Item Id" formControlName="id">
+        </div>
+      </div>
+
+
+      <!-- Name Field -->
+      <div class="form-group">
+        <div class="field">
+          <label for="name">Name:</label>
+          <input type="text" pInputText placeholder="Item Name" formControlName="name">
+        </div>
+      </div>
+
+      <!-- Description Field -->
+      <div class="form-group">
+        <div class="field">
+          <label for="description">Description:</label>
+          <textarea rows="5" pInputTextarea placeholder="Item Description" formControlName="description"></textarea>
+        </div>
+      </div>
+
+      <!-- Quantity Field -->
+      <div class="form-group">
+        <div class="field">
+          <label for="quantity">Quantity:</label>
+          <input pInputText type="number" placeholder="Quantity" formControlName="quantity">
+        </div>
+      </div>
+
+      <!-- Unit Price Field -->
+      <div class="form-group">
+        <div class="field">
+          <label for="unitPrice">Unit Price:</label>
+          <input pInputText type="text" placeholder="Unit Price" formControlName="unitPrice">
+        </div>
+      </div>
+
+      <!-- Expiry Date Field -->
+      <div class="form-group">
+        <div class="field">
+          <label for="expiryDate">Expiry Date:</label>
+          <p-calendar [showIcon]="true" inputId="expiryDate" formControlName="expiryDate"></p-calendar>
+        </div>
+      </div>
+
+      <!-- Category Field -->
+      <div class="form-group">
+        <div class="field">
+          <label for="category">Category:</label>
+          <p-dropdown [options]="categories" placeholder="Select a Category" formControlName="category" [showClear]="true"></p-dropdown>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div style="margin-top: 10px;">
+        <div class="flex flex-wrap gap-2">
+          <button pButton pRipple type="submit" label="Update Item" icon="pi pi-check" style="background-color: var(--green-500);" (click)="onSubmit()"></button>
+          <button pButton pRipple label="Go Back" icon="pi pi-chevron-left" (click)="goBack()" class="p-button-secondary"></button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>

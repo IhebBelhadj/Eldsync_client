@@ -1,0 +1,14 @@
+@import url("@angular/material/prebuilt-themes/deeppurple-amber.css");
+
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+
+.card-registration .select-input.form-control[readonly]:not([disabled]) {
+    font-size: 1rem;
+    line-height: 2.15;
+    padding-left: .75em;
+    padding-right: .75em;
+    }
+    .card-registration .select-arrow {
+    top: 13px;
+    }

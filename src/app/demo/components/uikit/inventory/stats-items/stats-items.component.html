@@ -1,0 +1,34 @@
+
+<h1> Item Stats</h1>
+
+<div class="grid p-fluid">
+      <div class="col-12 lg:col-6">
+          <div class="card flex flex-column align-items-center">
+              <h5 class="text-left w-full" style="  font-weight: bold;">Doughnut Chart</h5>
+              <div style="width: 600px; height: 600px; display: flex; justify-content: center; align-items: center;">
+                  <p-chart type="doughnut" [data]="chartData" [options]="chartOptions" [style]="{'width': '600px', 'height': '600px'}"></p-chart>
+              </div>
+          </div>
+      </div>
+      <div class="col-12 lg:col-6">
+          <div class="card">
+              <div class="info-container">
+                  <h3 class="info-item total-budget">Total Budget:</h3>
+                  <h4 class="info-item total-budget">{{ totalBudget | currency }}</h4>
+
+              </div>
+              <div class="info-container">
+                  <h3 class="info-item total-items">Total Items</h3>
+                  <h4 class="info-item total-items">{{ totalItems }}</h4>
+
+              </div>
+              <div class="info-container">
+                  <h3 class="info-item expiring-item">First Expiring Item:</h3>
+                  <h4 class="info-item expiring-item">{{ nextExpiryItem.name }} : {{ nextExpiryItem.expiryDate | date:'mediumDate' }}</h4>
+
+              </div>
+          </div>
+      </div>
+  </div>
+  <button pButton pRipple label="Go Back" icon="pi pi-chevron-left" (click)="goBack()" class="p-button-info"></button>
+  

@@ -9,6 +9,9 @@ import { AppLayoutComponent } from "./layout/app.layout.component";
             {
                 path: '', component: AppLayoutComponent,
                 children: [
+                    { path: '', redirectTo: '/front', pathMatch: 'full' },
+                    { path: 'd', loadChildren: () => import('./demo/components/dashboard/dashboard.module').then(m => m.DashboardModule) },
+
                     { path: 'lifeline', loadChildren: () => import('./front-office/front-office.module').then(m => m.FrontOfficeModule) },
                     { path: 'uikit', loadChildren: () => import('./demo/components/uikit/uikit.module').then(m => m.UIkitModule) },
                     { path: 'utilities', loadChildren: () => import('./demo/components/utilities/utilities.module').then(m => m.UtilitiesModule) },
@@ -18,6 +21,7 @@ import { AppLayoutComponent } from "./layout/app.layout.component";
                 ]
             },
             { path: 'auth', loadChildren: () => import('./demo/components/auth/auth.module').then(m => m.AuthModule) },
+            { path: 'front', loadChildren: () => import('./demo/components/front/front.module').then(m => m.FrontModule) },
             { path: 'landing', loadChildren: () => import('./demo/components/landing/landing.module').then(m => m.LandingModule) },
             { path: 'notfound', component: NotfoundComponent },
             { path: '**', redirectTo: '/notfound' },
