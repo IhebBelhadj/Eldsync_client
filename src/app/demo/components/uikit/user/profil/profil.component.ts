@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { AuthService } from '../service/auth.service';
 import { MatDialog } from '@angular/material/dialog'; // Import MatDialog
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserService } from '../service/user.service';
-import { User } from '../model/user';
 import { ChangePasswordRequest } from '../model/ChangePasswordRequest';
+import { User } from '../model/user';
 import { PaymentDialogComponent } from '../payment-dialog/payment-dialog.component';
+import { AuthService } from '../service/auth.service';
+import { UserService } from '../service/user.service';
 
 
 

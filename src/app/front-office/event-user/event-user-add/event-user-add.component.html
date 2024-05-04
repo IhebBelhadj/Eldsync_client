@@ -1,0 +1,115 @@
+<p>event-user-add works!</p>
+<!-- add-update-event.component.html -->
+<h1>Add Event</h1>
+<div class="grid p-fluid">
+<div class="col-12 md:col-6">
+    <form [formGroup]="eventForm">
+
+      <div class="form-group">
+            <div class="field">
+        <label for="name">Name:</label>
+        <input formControlName="name" type="text" pInputText placeholder="Event Name">
+            </div>
+      </div>
+
+      <div class="form-group">
+            <div class="field">
+        <label for="description">Description:</label>
+        <textarea formControlName="description" rows="5" cols="30" pInputTextarea placeholder="Event Description"></textarea>
+      </div>
+      </div>
+
+
+      <div class="form-group">
+      <div class="field">
+          <label for="banner">Banner:</label>
+          <div class="file-input-container">
+              <span class="file-input-trigger">Choose File</span>
+              <input type="file" id="banner" #fileInput (change)="onFileSelected($event)">
+              <div class="file-input-name" id="file-name">No file chosen</div>
+          </div>
+      </div>
+  </div>
+  
+        
+
+      <div class="form-group">
+             <div class="field">
+                  <label for="date">Date:</label>
+                  <p-calendar formControlName="date" [showIcon]="true" inputId="icon"></p-calendar>
+            </div>
+      </div>
+
+      <div class="form-group">
+            <div class="field">
+        <label for="category">Category:</label>
+        <p-dropdown [options]="categories" (onChange)="onCategoryChange($event.value)" placeholder="Select a Category" [showClear]="true"></p-dropdown>
+        
+
+      </div>
+      </div>
+
+      <div class="card">
+        <h5>Search By Location</h5>
+        <div class="grid formgrid">
+          <span class="p-input-icon-left p-input-icon-right">
+            <i class="pi pi-map"></i>
+  <!-- location-autocomplete.component.html -->
+<p-autoComplete (completeMethod)="search($event)"
+[suggestions]="suggestions"
+placeholder="Enter location"
+(onSelect)="onLocationSelect($event)"
+[dropdown]="true">
+</p-autoComplete>
+
+
+
+
+
+
+
+
+            <i class="pi pi-search"></i>
+          </span>
+          <div class="col-12 mb-2 lg:col-4 lg:mb-0">
+            <!-- Action buttons here -->
+          </div>
+        </div>
+      </div>
+      
+
+      <div class="form-group">
+            <div class="field">
+        <label for="price">Price:</label>
+        <input formControlName="price" type="text" pInputText placeholder="Price" />
+      </div>
+      </div>
+
+      <!-- 
+      <div class="form-group">
+            <div class="field">
+        <label for="status">Status:</label>
+        <p-dropdown [options]="status" formControlName="status" placeholder="Select a Status" [showClear]="true"></p-dropdown>
+
+      </div>
+      </div>
+    -->
+
+      <div style="margin-top: 10px;">
+            <div class="flex flex-wrap gap-2">
+        <button pButton pRipple label="Add Event" icon="pi pi-plus" iconPos="left" (click)="onSubmit(eventForm.value)" class="p-button-success"></button>
+        <button pButton pRipple label="Go Back" icon="pi pi-chevron-left" iconPos="left" (click)="goBack()" class="p-button-danger" ></button>
+        
+      </div>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<p-dialog header="Event Created" [(visible)]="displayDialog" (onHide)="onDialogHide()" class="green-dialog">
+  <p>Event created successfully! Please wait until the admin checks your demand.</p>
+  <p-footer>
+    <button type="button" pButton label="OK" (click)="onDialogHide()" class="green-button"></button>
+  </p-footer>
+</p-dialog>
