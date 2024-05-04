@@ -12,7 +12,7 @@ import { PaymentDialogComponent } from '../payment-dialog/payment-dialog.compone
 @Component({
     selector: 'app-profil',
     templateUrl: './profil.component.html',
-    styleUrls: ['./profil.component.css'],
+    styleUrls: ['./profil.component.scss'],
     encapsulation: ViewEncapsulation.None,
 })
 
