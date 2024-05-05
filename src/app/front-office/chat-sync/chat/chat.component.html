@@ -1,0 +1,191 @@
+<!-- draft
+
+
+<div class="chat-container " id="chat-page">
+    <div class="users-list">
+        <div class="users-list-container">
+            <h2>Online Users</h2>
+            <div *ngIf="connectedUsers.length > 0">
+                <ul id="connectedUsers">
+                    <ng-container>
+                        <li *ngFor="let user of connectedUsers " [attr.id]="user.nickName" (click)="onUserFriendClick(user.nickName)">
+                            <span class="friendName">{{ user.fullName }}</span>
+                            <span class="nbr-msg hidden">0</span>
+                          &lt;!&ndash;  <span>{{}}</span>&ndash;&gt;
+                        </li>
+                    </ng-container>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <p id="connected-user-fullname">{{ userFullname }}</p>
+
+            <a class="logout" href="javascript:void(0)" id="logout" (click)="onLogout()" [routerLink]="['/uikit/login'] ">Logout</a>
+        </div>
+    </div>
+
+    <div class="chat-area" id="chat-area">
+        <div class="chat-area" id="chat-messages">
+            <div *ngFor="let message of chatMessages" [ngClass]="{'message': true, 'sender': message.senderId === nickname, 'receiver': message.senderId !== nickname}">
+                <p>{{ message.content }}</p>
+            </div>
+        </div>
+
+        <form id="messageForm" name="messageForm" [ngClass]="{'hidden': !selectedUserId}" (ngSubmit)="sendMessage($event)">
+            <div class="message-input">
+                <input autocomplete="off" type="text" id="message" placeholder="Type your message..."  [ngModelOptions]="{ standalone: true }"  [(ngModel)]="messageInput" pInputText>
+                <button pButton type="submit">Send</button>
+            </div>
+        </form>
+    </div>
+</div>-->
+
+
+<!-- the new  front end -->
+<!--<div class="grid" style="align-items: center;">
+    <div class="col-3 ">
+
+            <div class="users-list">
+                <div class="users-list-container">
+
+                    <p-orderList [value]="connectedUsers" [listStyle]="{ 'max-height': '30rem' }" header="Connected Users">
+                        <ng-template let-user pTemplate="item">
+                            <div class="flex flex-wrap p-2 align-items-center gap-3" (click)="onUserFriendClick(user.nickName)">
+                                &lt;!&ndash; Assuming user has fullName, you can customize it as needed &ndash;&gt;
+                                <span class="font-bold">{{ user.fullName }}</span>
+
+                                &lt;!&ndash; <span>{{ user.additionalInfo }}</span> &ndash;&gt;
+                            </div>
+                        </ng-template>
+                    </p-orderList>
+                </div>
+                <div>
+                    &lt;!&ndash;<span class="font-bold" id="connected-user-fullname">{{ userFullname }}</span>&ndash;&gt;
+
+                    &lt;!&ndash; Assuming userFullname is a property in your component &ndash;&gt;
+                    <a class="logout" href="javascript:void(0)" id="logout" (click)="onLogout()" [routerLink]="['/uikit/login']">Logout</a>
+                </div>
+            </div>
+
+    </div>
+    <div class="col-8">
+        <div class="card " style="min-height: 480px" >
+            <div class="chat-area chat-card" id="chat-area">
+                <div class="chat-header">
+                    <div class="chat-header" *ngIf="selectedUser">
+                        <div class="user-image">
+                            <img src="https://i.pinimg.com/originals/17/27/77/1727776b72d248a4cb505fdb8b0a90f5.png" alt="User Image"/>
+                        </div>
+                        <span>{{ selectedUser}}</span>
+                    </div>
+                    <span class="chat-icons">
+                    <i class="pi pi-video" (click)="startVideoCall()"></i>
+                    <i class="pi pi-phone" (click)="startVoiceCall()"></i>
+                    <i class="pi pi-info-circle" (click)="toggleAbout()"></i>
+                 </span>
+                </div>
+                <div class="chat-window" id="chat-messages" #chatArea>
+                    <ul class="chat-messages" style="list-style-type:none;">
+                        <li *ngFor="let message of chatMessages" [ngClass]="{'sender': message.senderId === getUsername(), 'receiver': message.senderId !== getUsername()}">
+                            <div class="message">
+                                {{ message.content }}
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+&lt;!&ndash;                <form id="chat-input" name="messageForm" [ngClass]="{'hidden': !selectedUserId}" (ngSubmit)="sendMessage($event)">
+                    <div class="message-input">
+                        <input autocomplete="off" type="text" id="message" placeholder="Type your message..."  [ngModelOptions]="{ standalone: true }"  [(ngModel)]="messageInput" pInputText>
+                        <button pButton type="submit"><i class="pi pi-send"></i></button>
+                    </div>
+                </form>&ndash;&gt;
+                <div class="formgroup-inline">
+                    <div class="field">
+                        <label for="message" class="p-sr-only">Message</label>
+                        <div class="input-with-button">
+                            <input class="message-input" type="text" pInputText id="message" placeholder="Type your message..." [(ngModel)]="messageInput" />
+                            <button pButton type="button"  (click)="sendMessage($event)"> <i class="pi pi-send text-blue-500"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+</div>-->
+
+
+<!-- the real thing -->
+<div class="grid">
+    <div class="col-3">
+        <p-orderList [value]="connectedUsers" [listStyle]="{ 'max-height': '30rem' }" filterBy="name" filterPlaceholder="Filter by name">
+            <ng-template let-user pTemplate="item">
+                <div class="flex flex-wrap p-2 align-items-center gap-3" (click)="onUserFriendClick(user.nickName)">
+                    <div class="user-image">
+                        <img src="https://i.pinimg.com/originals/17/27/77/1727776b72d248a4cb505fdb8b0a90f5.png" [alt]="user.fullName" class="w-4rem shadow-2 flex-shrink-0 border-round" />
+                    </div>
+                    <div class="flex-1 flex flex-column gap-2">
+                        <span class="font-bold">{{ user.fullName }}</span>
+                        <div class="flex align-items-center gap-2">
+                        <span *ngIf="user.lastMessage">
+                            {{ user.lastMessage?.content }}
+                            <br>
+                            {{ user.lastMessage?.timestamp | date: 'medium' }}
+                        </span>
+                            <span *ngIf="!user.lastMessage">
+                            <span>No messages yet</span>
+                        </span>
+                        </div>
+                        <span class="font-bold text-900"></span>
+                    </div>
+                </div>
+            </ng-template>
+        </p-orderList>
+    </div>
+
+
+    <div class="col-9">
+    <div class="card">
+        <div class="chat-area chat-card" id="chat-area">
+            <div class="chat-header">
+                <div class="chat-header" *ngIf="selectedUser">
+                    <div class="user-image">
+                        <img src="https://i.pinimg.com/originals/17/27/77/1727776b72d248a4cb505fdb8b0a90f5.png" alt="User Image"/>
+                    </div>
+                    <span>{{ selectedUser}}</span>
+                </div>
+                <span class="chat-icons">
+                    <i class="pi pi-video" (click)="startVideoCall()"></i>
+                    <i class="pi pi-phone" (click)="startVoiceCall()"></i>
+                    <i class="pi pi-info-circle" (click)="toggleAbout()"></i>
+                 </span>
+            </div>
+            <div class="chat-window" id="chat-messages" #chatArea>
+                <ul class="chat-messages" style="list-style-type:none;">
+                    <li *ngFor="let message of chatMessages" [ngClass]="{'sender': message.senderId === getUsername(), 'receiver': message.senderId !== getUsername()}">
+                        <div class="message">
+                            {{ message.content }}
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+
+            <div class="formgroup-inline">
+                <div class="field">
+                    <label for="message" class="p-sr-only">Message</label>
+                    <div class="input-with-button">
+                        <input class="message-input" type="text" pInputText id="message" placeholder="Type your message..." [(ngModel)]="messageInput" />
+                        <button pButton type="button"  (click)="sendMessage($event)"> <i class="pi pi-send text-blue-500"></i></button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    </div>
+</div>
+

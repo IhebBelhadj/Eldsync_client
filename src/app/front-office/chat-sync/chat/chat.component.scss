@@ -1,0 +1,613 @@
+/*
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  flex-direction: column;
+}
+
+.chat-container {
+  display: flex;
+  max-width: 800px;
+  min-width: 800px;
+  min-height: 600px;
+  max-height: 600px;
+  margin: 20px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.users-list {
+  flex: 1;
+  border-right: 1px solid #ccc;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #3498db;
+  color: #fff;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.users-list-container {
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.users-list h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.users-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.user-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+.user-item.active {
+  background-color: #cdebff;
+  color: #4f4f4f;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.user-item img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.user-item span {
+  font-weight: bold;
+}
+
+.separator {
+  height: 1px;
+  background-color: #ccc;
+  margin: 10px 0;
+}
+
+.chat-area {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  box-sizing: border-box;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.message {
+  margin-bottom: 5px;
+  border-radius: 5px;
+}
+
+#chat-messages {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+}
+
+.message p {
+  padding: 0 12px;
+  border-radius: 15px;
+  word-wrap: break-word;
+}
+
+.user-item span.nbr-msg {
+  margin-left: 10px;
+  background-color: #f8fa6f;
+  color: white;
+  padding: 5px;
+  width: 10px;
+  border-radius: 50%;
+  height: 10px;
+}
+
+.sender {
+  background-color: #3498db;
+  color: #fff;
+  align-self: flex-end;
+}
+
+.receiver {
+  background-color: #ecf0f1;
+  color: #333;
+  align-self: flex-start;
+}
+
+.message-input {
+  margin-top: auto;
+  display: flex;
+}
+
+.message-input input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.message-input button {
+  padding: 10px;
+  border: none;
+  background-color: #3498db;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.user-form {
+  max-width: 400px;
+  padding: 40px;
+  box-sizing: border-box;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.user-form h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.user-form label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.user-form input {
+  width: 100%;
+  padding: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.user-form button {
+  padding: 12px;
+  border: none;
+  background-color: #3498db;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.hidden {
+  display: none;
+}
+
+a.logout {
+  color: #fff;
+  text-decoration: none;
+}
+!* CSS styles *!
+.users-list-container {
+  background-color: #3498db;
+  padding: 20px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.user-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.user-item {
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.nbr-msg {
+  background-color: #ffcc00;
+  color: #ffffff;
+  padding: 5px 10px;
+  border-radius: 50%;
+}
+
+
+!* CSS styles *!
+.user-item {
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.user-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.username {
+  font-weight: bold;
+}
+
+.nbr-msg {
+  background-color: #ffcc00;
+  color: #ffffff;
+  padding: 5px 10px;
+  border-radius: 50%;
+}
+
+
+.message {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.sender {
+  background-color: #cce6ff;
+  align-self: flex-end;
+}
+
+.receiver {
+  background-color: #f0f0f0;
+}
+
+.message-text {
+  margin: 0;
+}
+!* The modification in the side nave for the connected users *!
+.friendName{
+  margin-top: 5px;
+  margin-bottom: 10px;
+  color : #ffffff;
+
+
+  font-weight: bold;
+}
+*/
+:host ::ng-deep .p-orderlist-controls {
+  display: none !important;
+
+}
+
+/* Add this CSS to your global styles or component styles */
+:host ::ng-deep .p-orderlist-list {
+min-height: 400px;
+
+}
+/* Adjust the margin between cards */
+:host ::ng-deep .card {
+  margin-bottom: -20px !important;
+}
+
+.card-content {
+  flex: 1; /* Takes up remaining space */
+}
+
+.button-container {
+  margin-left: auto; /* Pushes buttons to the right */
+
+}
+
+.header {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+
+.grid {
+  display: flex;
+}
+
+.col-4, .col-8 {
+  padding: 10px;
+}
+
+.card {
+
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.search-container {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.search-container .pi-search {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.search-container .pi-search:hover {
+  color: #007bff; /* Change color on hover */
+  transition: color 0.3s ease; /* Smooth transition for color change */
+}
+
+.search-container input[type="text"] {
+  padding-left: 30px;
+  width: 100%;
+  max-width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.message-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 200px;
+  overflow-x: auto;
+}
+
+.friends-list {
+
+  display: flex; /* Aligns children (avatars) in a row */
+  overflow-x: auto; /* Allows horizontal scrolling if there are many avatars */
+}
+.friends-list ::-webkit-scrollbar {
+  width: 0;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.name {
+  font-weight: bold;
+}
+.message{
+
+  margin-bottom: 10px;
+  padding: 1rem;
+  max-width: 40%; /* Adjust this value as needed */
+
+}
+
+.message .content {
+  flex-grow: 1;
+  /* Add padding inside the message bubble */
+  padding: 8px;
+  word-break: break-word; /* Ensures the text breaks to prevent overflow */
+  max-width: 50px; /* Set a maximum width for the message content */
+  min-width: 0; /* Add this line to fix the overflow issue */
+}
+
+.message .timestamp {
+  font-size: 0.8em;
+  color: #888;
+}
+.contact-card{
+  display: flex;
+  flex-direction: column;
+  height: calc(80vh - 40px); /* Adjust based on header/footer height */
+}
+.chat-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: calc(71.5vh - 40px); /* Adjust based on header/footer height */
+}
+
+.chat-window {
+  flex-grow: 1;
+  overflow-y: auto;
+
+}
+
+.chat-window::-webkit-scrollbar {
+  width: 0;
+}
+
+.chat-window::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 10px;
+}
+/**/
+.chat-messages li {
+  margin-bottom: 10px;
+  padding: 5px;
+  border-radius: 4px;
+}
+
+.chat-messages .receiver {
+  text-align: left;
+  display: flex;
+}
+
+.chat-messages .sender {
+  justify-content: flex-end;
+  display: flex;
+}
+
+.chat-messages .sender .message {
+  align-self: flex-end;
+  display: flex;
+  margin-bottom: 10px;
+  padding: 1rem;
+  max-width: 70%; /* Adjust this value as needed */
+  background-color: #007bff;
+  border: 2px solid #fff;
+  border-radius: 10px 10px 0 10px;
+  color: #fff;
+}
+
+.chat-messages .receiver .message {
+  align-self: flex-start;
+  display: flex;
+  margin-bottom: 10px;
+  padding: 1rem;
+  max-width: 70%; /* Adjust this value as needed */
+  border: 2px solid #fff;
+  background-color: #afaeae; /* Light grey background for 'other' messages */
+  color: #fff; /* Dark grey text color for 'other' messages */
+  border-radius: 10px 10px 10px 0;
+}
+/* */
+
+.chat-messages .author {
+  color: rgba(105, 104, 104, 0.91);
+}
+
+.chat-input {
+  display: flex;
+  margin-top: 10px;
+}
+
+.chat-input input {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+.chat-input button {
+  background-color:#007bff;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.chat-input button:hover {
+  background-color: #003cff;
+}
+
+
+/* Chat header styling */
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px  ;
+
+}
+
+.friend-name {
+  font-weight: bold;
+  margin: 0 10px;
+}
+
+.chat-icons i {
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+/* About card styling */
+.about-card {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: calc(100% - 20px);
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  z-index: 10;
+}
+/** image**/
+.user-image {
+  width: 40px; /* Adjust size as needed */
+  height: 40px;
+  border-radius: 50%; /* Creates the circle shape */
+  overflow: hidden;
+  margin-right: 10px; /* Space between image and name */
+}
+
+.user-image img {
+  width: 100%;
+  height: auto;
+}
+
+/*icons*/
+/* Icon base styles */
+.chat-icons i {
+  font-size: 1.2em; /* Adjust size as needed */
+  margin: 0 8px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+/* Specific icon color styles */
+.chat-icons .pi-video {
+  color: #007bff; /* Red for video call icon */
+}
+
+.chat-icons .pi-phone {
+  color: #007bff; /* Green for phone call icon */
+}
+
+.chat-icons .pi-info-circle {
+  color: #007bff; /* Blue for info icon */
+}
+
+/* Hover effect for icons */
+.chat-icons i:hover {
+  color: #555; /* Darker shade on hover */
+}
+
+
+/*new*/
+.formgroup-inline {
+  display: flex;
+  align-items: center;
+}
+
+.field {
+  flex: 1;
+}
+
+.input-with-button {
+  display: flex;
+  align-items: center;
+
+}
+
+.message-input {
+  flex: 1;
+  height:30px;
+  margin-right:10px;
+
+}
+
+button[pButton] {
+  min-width: 40px; /* Adjust button width as needed */
+  height: 100%; /* Match button height with input field */
+  background-color:transparent;
+  border : none;
+}
+
+
+/*new*/
