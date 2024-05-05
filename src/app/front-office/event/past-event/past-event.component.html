@@ -1,35 +1,52 @@
-<div class="container mt-2">
-  <div class="form-group">
-    <button type="button" pButton label="Exit" icon="pi pi-arrow-left" class="p-button-warning mr-2" (click)="GoHome()"></button>
+
+  <div class="container mt-2">
+    <h1>Event List</h1>
+      <div class="form-group">
+      <div class="card">
+      
+      <div class="col-12 mb-2 lg:col-4 lg:mb-0">
+        <button type="button" pButton label="Exit" icon="pi pi-arrow-left" class="p-button-warning mr-2" (click)="GoHome()"></button>
+        <p-dropdown [options]="categories" [(ngModel)]="selectedCategory" placeholder="Select a category" (onChange)="onCategoryChange()"></p-dropdown>
+        <button type="button" pButton label="Reset" icon="pi pi-refresh" (click)="resetFilter()" class="p-button-text"></button>
+
+  
+      </div>
+    </div>
   </div>
+
+
+
+
+
   <div class="form-group">
-    <table>
-      <thead>
+    <p-table [value]="filteredEvents" [paginator]="true" [rows]="10" responsiveLayout="scroll">
+      <ng-template pTemplate="header">
         <tr>
-          <th>Event Name</th>
-          <th>Date</th>
-          <th>Location</th>
-          <th>Status</th>
-          <th style="width: 200px;">Banner</th>
-          <th>Description</th>
+          <th pSortableColumn="name">Name<p-sortIcon field="name"></p-sortIcon></th>
+          <th pSortableColumn="description">Description<p-sortIcon field="description"></p-sortIcon></th>        
+          <th pSortableColumn="location" style="width: 120px;">Location<p-sortIcon field="location"></p-sortIcon></th>
+          <th pSortableColumn="status">Status<p-sortIcon field="status"></p-sortIcon></th>
+          <th pSortableColumn="banner" style="width: 200px;">Banner<p-sortIcon field="banner"></p-sortIcon></th> <!-- Corrected closing tag -->
+          <th pSortableColumn="date" style="width: 150px;">Date<p-sortIcon field="date"></p-sortIcon></th>
           <th>Action</th>
         </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let event of pastEvents">
+      </ng-template>
+      <ng-template pTemplate="body" let-event>
+        <tr>
           <td>{{ event.name }}</td>
-          <td>{{ event.date | date:'mediumDate' }}</td>
+          <td>{{ event.description }}</td>
           <td>{{ event.location }}</td>
           <td>{{ event.status }}</td>
-          <td><img [src]="event.bannerUrl" alt="Event Banner" class="event-banner"></td>
-          <td>{{ event.description }}</td>
-          <td class="action-cell" style="width: 200px;">
+          <td style="width: 200px;"><img [src]="event.bannerUrl || 'assets/default-image.jpg'" style="width: 100%; height: auto;" alt="Banner for {{ event.name }} " ></td>
+          <td>{{ event.date | date:'mediumDate' }}</td>
+          <td>
             <button type="button" pButton label="Reschedule" icon="pi pi-calendar-plus" (click)="openReschedule(event)"></button>
           </td>
         </tr>
-      </tbody>
-    </table>
-    <p-dialog header="Reschedule Event" [(visible)]="showDialog" [responsive]="true" [style]="{width: '400px'}">
+      </ng-template>
+    </p-table>
+
+    <p-dialog header="Reschedule Event" [(visible)]="showDialog" [style]="{width: '400px'}">
       <p-calendar [(ngModel)]="selectedDate" [showIcon]="true"></p-calendar>
       <button type="button" pButton label="Save Date" (click)="rescheduleEvent()"></button>
     </p-dialog>

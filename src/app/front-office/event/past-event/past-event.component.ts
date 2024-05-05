@@ -15,6 +15,9 @@ export class PastEventComponent implements OnInit {
   selectedDate: Date | null = null;
   editingEventId: number | null = null;
   showDialog = false;
+  filteredEvents: Event[] = [];
+  categories: string[] = []; // Array to hold categories
+  selectedCategory: string = ''; // Selected category
 
 
 
@@ -44,6 +47,9 @@ export class PastEventComponent implements OnInit {
       );
       forkJoin(observables).subscribe(completedEvents => {
         this.pastEvents = completedEvents;
+        this.filteredEvents = completedEvents;
+        this.categories = [...new Set(completedEvents.map(event => event.category))];
+     
       });
     });
   }
@@ -81,6 +87,18 @@ export class PastEventComponent implements OnInit {
   
 
 
+  onCategoryChange(): void {
+    if (this.selectedCategory) {
+      this.filteredEvents = this.pastEvents.filter(event => event.category === this.selectedCategory);
+    } else {
+      this.filteredEvents = [...this.pastEvents];
+    }
+  }
+
+resetFilter(): void {
+  this.selectedCategory = ''; // Clear the selected category
+  this.filteredEvents = [...this.pastEvents]; // Reset filtered events to show all
+}
 
 
 

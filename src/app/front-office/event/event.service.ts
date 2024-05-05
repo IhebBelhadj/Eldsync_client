@@ -76,8 +76,24 @@ getEventBanner(eventId: number): Observable<SafeUrl> {
     })
   );
 }
+public getPopularEvents(): Observable<Event[]> {
+  return this.http.get<Event[]>(`${this.apiUrl}/popular`);
+}
 
 
+getPopularEventsNotRegisteredByUser(userId: number, page: number, size: number): Observable<Event[]> {
+  return this.http.get<Event[]>(`${this.apiUrl}/popular/not-registered/${userId}?page=${page}&size=${size}`);
+}
+
+
+getNextEvent(): Observable<any> {
+  return this.retrieveAllEvents().pipe(
+    map(events => events
+      .filter(event => new Date(event.date) > new Date() && event.status === 'APPROVED')
+      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())[0]
+    )
+  );
+}
   
 
   public retrieveEvent(idEvent: number): Observable<Event> {
@@ -100,6 +116,7 @@ getEventBanner(eventId: number): Observable<SafeUrl> {
 public getEventDetails(idEvent: number): Observable<any> {
   return this.http.get(`${this.apiUrl}/getEventDetails/${idEvent}`);}
 
+  
   
 
   public filterEventsByCategory(category: string): Observable<Event[]> {

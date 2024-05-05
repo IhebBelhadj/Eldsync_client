@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { catchError, forkJoin, map, of } from 'rxjs';
 import { EventStatus } from '../event/event-status';
 import { EventService } from '../event/event.service';
@@ -7,7 +8,9 @@ import { EventService } from '../event/event.service';
 @Component({
   selector: 'app-event-user',
   templateUrl: './event-user.component.html',
-  styleUrl: './event-user.component.scss'
+  styleUrl: './event-user.component.scss',
+  providers: [MessageService]
+
 })
 export class EventUserComponent implements OnInit {
 
@@ -20,11 +23,31 @@ export class EventUserComponent implements OnInit {
   displayDialog: boolean = false;
   fromDate: Date = new Date();  // Optionally initialize to today's date
   toDate: Date = new Date();    // Optionally initialize to today's date
+  nextEvent: any;
 
-  constructor(private eventService: EventService, private router: Router) {}
+  userId: number = 2;  
+
+  filteredEvents: Event[] = [];
+  categories: string[] = []; 
+  selectedCategory: string = ''; 
+
+  constructor(private eventService: EventService, private router: Router,private messageService: MessageService) {}
 
   ngOnInit(): void {
-    this.getEventsByStatus(); // Optionally call to load all events initially or wait for user input
+    this.getEventsByStatus(); 
+    this.loadNextEvent(); 
+
+  }
+
+  
+  loadNextEvent(): void {
+    this.eventService.getNextEvent().subscribe({
+      next: (event) => {
+        this.nextEvent = event;
+        console.log('Next event:', this.nextEvent);
+      },
+      error: (error) => console.error('Failed to load the next event:', error)
+    });
   }
 
   paginate(event: any): void {
@@ -33,7 +56,18 @@ export class EventUserComponent implements OnInit {
     this.getEventsByStatus();  // Refetch or rearrange the events list according to new pagination
   }
 
-  
+  onCategoryChange(): void {
+    if (this.selectedCategory) {
+      this.filteredEvents = this.events.filter(event => event.category === this.selectedCategory);
+    } else {
+      this.filteredEvents = [...this.events];
+    }
+  }
+
+  resetFilter(): void {
+    this.selectedCategory = '';
+    this.filteredEvents = [...this.events];
+  }
 
   getEventsByStatus(): void { // Renamed method for clarity
     this.eventService.retrieveAllEvents().subscribe(events => {
@@ -82,6 +116,8 @@ export class EventUserComponent implements OnInit {
 
     forkJoin(observables).subscribe(completedEvents => {
       this.events = completedEvents;
+      this.filteredEvents = completedEvents;
+        this.categories = [...new Set(completedEvents.map(event => event.category))];
     });
   }
 
@@ -98,9 +134,8 @@ export class EventUserComponent implements OnInit {
 
 
   registerToEvent(eventId: number): void {
-    const userId = 2; 
   
-    this.eventService.registerUserForEvent(userId, eventId).subscribe({
+    this.eventService.registerUserForEvent(this.userId, eventId).subscribe({
       next: () => { 
         console.log('Registered successfully');
         alert('You have successfully registered for the event!');
@@ -124,6 +159,18 @@ navigateToAttendedEvents(): void {
 
 
 
+showToast() {
+  this.messageService.add({
+    key: 'confirm', 
+    severity: 'info', 
+    summary: 'Notification', 
+    detail: 'Operation performed successfully'
+  });
+}
+
+onReject() {
+  this.messageService.clear('confirm');
+}
 
 
 
@@ -137,5 +184,12 @@ navigateToAttendedEvents(): void {
     this.router.navigate(['/frontOffice/eventUser/eventUserCalender']);
   }
 
+  GoRecommandation(): void {
+    this.router.navigate(['/frontOffice/eventUser/eventRecommandation']);
+  }
 
+
+  onConfirm(): void {
+    this.router.navigate(['/frontOffice/eventUser/eventRecommandation']);
+  }
 }

@@ -32,6 +32,7 @@ export class EventUserCalenderComponent implements OnInit {
   fileData: File | null = null;
   selectedLocation: string | null = null; // This will hold the selected location as a string
   filteredLocations: string[] = [];
+  nextEvent: any;
 
 
   selectedFile: File;
@@ -85,6 +86,8 @@ private loadStatus(): void
           this.loadEvents();
           this.loadStatus();
           this.loadCategories();
+          this.loadNextEvent();  // Load the next event on initialization
+
         }
 
 
@@ -95,7 +98,15 @@ private loadStatus(): void
         }
   
 
-
+        loadNextEvent(): void {
+          this.eventService.getNextEvent().subscribe({
+            next: (event) => {
+              this.nextEvent = event;
+              console.log('Next event:', this.nextEvent);
+            },
+            error: (error) => console.error('Failed to load the next event:', error)
+          });
+        }
 
   loadEvents(): void 
       {

@@ -1,8 +1,22 @@
-<h1> Card View
-</h1>
+
+
+
 
 <div class="form-group">
   <div class="card">
+    <h2 style="color: #333; font-size: 20px; font-family: 'Times New Roman', Times, serif;">
+      <i class="pi pi-calendar" style="color: blue;font-weight: bold; " aria-hidden="true"></i> Upcoming Event: 
+      <span style="font-weight: bold; font-family: 'Times New Roman', Times, serif;color: #333">
+          {{ nextEvent.name }}
+      </span>
+  </h2>
+  <h2 style="color: #333; font-size: 20px; font-family: 'Times New Roman', Times, serif;">
+      <i class="pi pi-clock" aria-hidden="true"  style="color: blue;font-weight: bold; " ></i> Event Date: 
+      <span style="font-weight: bold; font-family: 'Times New Roman', Times, serif;color: #333">
+          {{ nextEvent.date }}
+      </span>
+  </h2>
+  
     
     <div class="grid formgrid">
       
@@ -19,18 +33,45 @@
   
 
           <div class="inline-flex">
-          <button pButton type="button" label="" (click)="getEventsByDateRange()" icon="pi pi-search" class="p-button-primary mr-3" ></button>
-          <button pButton type="button" label="Suggest" class="p-button-success mr-3" icon="pi pi-plus" (click)="GoAdd()"></button>
-          <button pButton type="button" label="Calnder" class="p-button-secondary mr-3" icon="pi pi-calendar" (click)="GoCalender()"></button>
-          <button pButton type="button" label="Attended Events" class="p-button-info" (click)="navigateToAttendedEvents()"></button>
+          <button pButton pRipple type="button" label="" (click)="getEventsByDateRange()" icon="pi pi-search" class="p-button-rounded p-button-outlined mr-3" ></button>
+          <button pButton type="button" label="Suggest" class="p-button-text mr-3" icon="pi pi-plus" (click)="GoAdd()"></button>
+          <button pButton type="button" label="Schedular" class="p-button-text mr-3" icon="pi pi-calendar" (click)="GoCalender()"></button>
+          <button pButton pRipple type="button" label="" class="p-button-rounded p-button-info p-button-outlined mr-3"  icon="pi pi-eye"  (click)="navigateToAttendedEvents()"></button>
+           <button pButton pRipple type="button" label="" (click)="showToast()" icon="pi pi-bell" class="p-button-rounded p-button-outlined mr-3" ></button>
+          <p-toast 
+          position="top-center" 
+          key="confirm" 
+          (onClose)="onReject()" 
+          [baseZIndex]="5000">
+              <ng-template let-message pTemplate="message">
+                  <div class="flex flex-column align-items-start" style="flex: 1">
+                      <div class="flex align-items-center gap-2">
+                          <p-avatar 
+                              image="https://imgs.search.brave.com/ueR-t5W1-E6t5jZz8ZeKJbOyU80p4RM6u8uJnl-wCGI/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9jZG4u/ZHJpYmJibGUuY29t/L3VzZXJ1cGxvYWQv/NzExMTI1Ny9maWxl/L29yaWdpbmFsLTRh/Y2JkN2NjMGYwYmIz/ZmE0YzdjZjA2OGZj/MmZiNDgyLnBuZz9y/ZXNpemU9NDAweDA"
+                              shape="circle" />
+                          <span class="font-bold text-900">
+                              EldSync Team 
+                          </span>
+                      </div>
+                      <div class="font-medium text-lg my-3 text-400">
+                      <h3>There is some events you may be intersted in !! </h3>                        
+                      </div>
+                      <p-button size="small" label="View More" (click)="onConfirm()" />
+                  </div>
+              </ng-template>
+      </p-toast>
+          <p-dropdown [options]="categories" [(ngModel)]="selectedCategory" placeholder="Select a category" (onChange)="onCategoryChange()" styleClass="mr-3"></p-dropdown>
+          <button pButton pRipple type="button" label="" icon="pi pi-refresh" (click)="resetFilter()" class="p-button-rounded p-button-warning p-button-outlined"></button>
+         
+
+       
     </div>
   </div>
 </div>
-<p-paginator [rows]="rows" [totalRecords]="totalRecords" (onPageChange)="paginate($event)" styleClass="paginator-custom" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[5, 10, 20]"></p-paginator>
 
 
 <div class="container">
-      <div *ngFor="let event of events" class="card">
+      <div *ngFor="let event of filteredEvents" class="card">
         <img class="card-img-top" [src]="event.bannerUrl || 'assets/default-image.jpg'" alt="Banner">
         <div class="card-body">
           <h5 class="card-title">{{ event.name }}</h5>
@@ -58,6 +99,8 @@
 
       </div>
   </p-dialog>
+  <p-paginator [rows]="rows" [totalRecords]="totalRecords" (onPageChange)="paginate($event)" styleClass="paginator-custom" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[5, 10, 20]"></p-paginator>
+
   
   
     

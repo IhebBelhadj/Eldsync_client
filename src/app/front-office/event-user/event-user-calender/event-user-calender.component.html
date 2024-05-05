@@ -1,12 +1,10 @@
-<p>event-user-calender works!</p>
-<img *ngIf="eventBannerUrl | async as bannerUrl" class="event-banner" [src]="bannerUrl" alt="Event Banner">
+
 
 <div class="calendar-container">
   <ng-container *ngIf="calendarOptions">
     <full-calendar #calendar [options]="calendarOptions">
       
     </full-calendar>
-    <button pButton pRipple icon="pi pi-chevron-left" iconPos="left" (click)="GoBack()" class="p-button-secondary custom-button"></button>
   </ng-container>
 </div>
 
@@ -38,6 +36,9 @@
 </p-dialog>
 </div>
 </div>
+
+<button pButton type="button" label="Go Back" class="p-button-warning mr-3" icon="pi pi-arrow-left" (click)="GoBack()"></button>
+
 
 
 

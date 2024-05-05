@@ -1,0 +1,28 @@
+<div>
+      <h2>Popular Events You Haven't Registered For</h2>
+      <p-table [value]="events" *ngIf="events && events.length">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Location</th>
+            <th>Date</th>
+            <th>Action</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-event>
+          <tr>
+            <td>{{ event.name }}</td>
+            <td>{{ event.description }}</td>
+            <td>{{ event.location }}</td>
+            <td>{{ event.date | date:'mediumDate' }}</td>
+            <td>
+                  <button pButton type="button" label="Register" class="p-button-info" (click)="registerToEvent(event.idEvent)"></button>
+            </td>
+
+          </tr>
+        </ng-template>
+      </p-table>
+      <p *ngIf="!events || !events.length">No events available to display.</p>
+    </div>
+    

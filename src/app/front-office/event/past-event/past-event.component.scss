@@ -1,56 +1,11 @@
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px; /* Add margin above the table for spacing */
-
-
-}
-.form-group {
-  margin-bottom: 20px; /* Add margin below the button container */
-}
-
-th, td {
-  padding: 12px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-  border-right: 1px solid #ddd; 
-}
-/* Target only the td elements that contain buttons */
-td.action-cell {
-  text-align: center; /* Center-align the content inside the cell */
-  vertical-align: middle; /* Center-align vertically */
-  
-}
-
-
 th {
-  font-size: 18px;
-  font-weight: bold;
-  text-transform: uppercase;
-  background: linear-gradient(to bottom right, orange, wheat) !important; // Stylish gradient background
-  color: black;
-  text-align: center; /* Center the header titles */
-
-  font-family: 'Times New Roman', serif;
-}
-
-tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-tr:nth-child(odd) {
-  background-color: #fff;
-}
-
-tr:hover {
-  background-color: #ddd;
-}
-
-th:last-child, td:last-child {
-  border-right: none;
-}
-
-.event-banner {
-  max-width: 100%; /* This will constrain the image to the cell width */
-  height: auto; /* Keep the aspect ratio of the image */
-}
+      font-size: 16px;
+      font-weight: bold;
+      color: black;
+      text-align: center; /* Center the header titles */
+    
+      font-family: 'Times New Roman', serif;
+    }
+    tr:hover {
+      background-color: wheat;
+    }
