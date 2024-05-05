@@ -1,11 +1,11 @@
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {interval, Subject, Subscription, switchMap, takeUntil} from 'rxjs';
-import {WebsocketService} from '../../../../service/webSocket.service';
-import {ChatService} from '../../../../service/chatService';
-import {UserService} from '../../../../service/login.service';
-import {Status, Users} from '../../../../api/users';
-import {ChatMessage} from "../../../../api/chatMessage";
-import {ChatRoom} from "../../../../api/chatRoom";
+import {WebsocketService} from '../../services/webSocket.service';
+import {ChatService} from '../../services/chatService';
+import {UserService} from '../../services/login.service';
+import {Status, Users} from '../../api/users';
+import {ChatMessage} from "../../api/chatMessage";
+import {ChatRoom} from "../../api/chatRoom";
 
 @Component({
     selector: 'app-chat',

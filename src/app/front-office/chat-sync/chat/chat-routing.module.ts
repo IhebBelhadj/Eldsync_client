@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ChatRoutingRoutingModule } from './chat-routing-routing.module';
 import {ChatComponent} from "./chat.component";
-import {ChatService} from "../../../../service/chatService";
+import {ChatService} from "../../services/chatService";
 import {FormsModule} from "@angular/forms";
 import {DividerModule} from "primeng/divider";
 import {OrderListModule} from "primeng/orderlist";
@@ -12,7 +12,6 @@ import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
 import {InputTextModule} from "primeng/inputtext";
 import {DataViewModule} from "primeng/dataview";
-import {WebsocketService} from "../../../../service/webSocket.service";
 
 
 @NgModule({

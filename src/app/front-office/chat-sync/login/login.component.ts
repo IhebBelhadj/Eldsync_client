@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { WebsocketService } from "../../../../service/webSocket.service";
-import { UserService } from "../../../../service/login.service";
-import {Users} from "../../../../api/users";
+import { WebsocketService } from "../../services/webSocket.service";
+import { UserService } from "../../services/login.service";
 
 @Component({
     selector: 'app-login',
