@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Output, Renderer2} from '@angular/core';
 import {RouterLink, RouterLinkActive} from "@angular/router";
-import {SharedLifePulseService} from "../../../../service/sharedLifePulse.service";
+import {SharedLifePulseService} from "../../services/sharedLifePulse.service";
 
 @Component({
   selector: 'app-bottomTabs',

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {SharedLifePulseService} from "../../../service/sharedLifePulse.service";
+import {SharedLifePulseService} from "../services/sharedLifePulse.service";
 
 
 @Component({
