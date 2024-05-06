@@ -8,8 +8,8 @@ import {MessageService, SharedModule} from "primeng/api";
 import {Table, TableModule} from "primeng/table";
 import {ToastModule} from "primeng/toast";
 import {ToolbarModule} from "primeng/toolbar";
-import {VitalSigns} from "../../../../api/vitalSigns";
-import {ElderlyVitalSignesService} from "../../../../service/elderlyVitalSignes.service";
+import {VitalSigns} from "../../api/vitalSigns";
+import {ElderlyVitalSignesService} from "../../services/elderlyVitalSignes.service";
 import {DatePipe, NgStyle} from "@angular/common";
 
 @Component({

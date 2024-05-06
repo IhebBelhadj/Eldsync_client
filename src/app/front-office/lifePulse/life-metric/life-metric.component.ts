@@ -10,8 +10,8 @@ import {MessageService, SharedModule} from "primeng/api";
 import {Table, TableModule} from "primeng/table";
 import {ToastModule} from "primeng/toast";
 import {ToolbarModule} from "primeng/toolbar";
-import {HealthMetric} from "../../../../api/healthMetric";
-import {ElderlyHealthMetricService} from "../../../../service/elderlyHealthMetric.service";
+import {HealthMetric} from "../../api/healthMetric";
+import {ElderlyHealthMetricService} from "../../services/elderlyHealthMetric.service";
 import {NgClass, NgStyle} from "@angular/common";
 
 @Component({
