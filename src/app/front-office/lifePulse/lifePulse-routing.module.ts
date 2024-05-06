@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { LifePulseComponent } from "./lifePulse.component";
-import {HealthTrackComponent} from "../health/healthTrack/healthTrack.component";
-import {VitalSignesComponent} from "../health/vitalSignes/vitalSignes.component";
 import {ChatbotComponent} from "./chatbot/chatbot.component";
 import {NotesComponent} from "./notes/notes.component";
 import {TelehealthComponent} from "./telehealth/telehealth.component";

@@ -1,5 +1,5 @@
 import { Component} from '@angular/core';
-import {GroqService} from "../../../../service/groq.service";
+import {GroqService} from "../../services/groq.service";
 import {FormsModule} from "@angular/forms";
 import {NgClass, NgForOf, NgOptimizedImage} from "@angular/common";
 import {InputTextModule} from "primeng/inputtext";
