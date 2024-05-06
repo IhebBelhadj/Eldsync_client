@@ -10,7 +10,7 @@ import {ToastModule} from "primeng/toast";
 import {ToolbarModule} from "primeng/toolbar";
 import {VitalSigns} from "../../api/vitalSigns";
 import {ElderlyVitalSignesService} from "../../services/elderlyVitalSignes.service";
-import {DatePipe, NgClass, NgStyle} from "@angular/common";
+import {DatePipe, NgClass, NgIf, NgStyle} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {CalendarModule} from "primeng/calendar";
 
@@ -31,7 +31,8 @@ import {CalendarModule} from "primeng/calendar";
         DatePipe,
         NgClass,
         FormsModule,
-        CalendarModule
+        CalendarModule,
+        NgIf
     ],
   templateUrl: './life-vital.component.html',
   styleUrl: './life-vital.component.scss',
@@ -44,28 +45,42 @@ export class LifeVitalComponent implements OnInit {
 
 
 @ViewChild('filter') filter!: ElementRef;
-    vitalSignes: VitalSigns[] = [];
+    vitalSign: VitalSigns[] = [];
     vitalSigns : VitalSigns = {};
     loading: boolean = true;
     vitalSigneEdit: boolean = false;
     vitalSigneDelete : boolean = false;
+    vitalSignAdd: boolean = false;
     vitalSignsAdd: boolean = false;
+    vitalSignsEdit: boolean = false;
     oxygenSaturationEdited: boolean = false;
     temperatureEdited: boolean = false;
     heartRateEdited: boolean = false;
     respiratoryRateEdited: boolean = false;
+
+    latestUpdates: VitalSigns;
     constructor(private elderlyVitalSignesService: ElderlyVitalSignesService ,private service: MessageService) {
 
     }
 
     ngOnInit() {
         this.loadVitalSignes();
+        this.getLatestUpdates();
     }
-
+    getLatestUpdates() {
+        this.elderlyVitalSignesService.getLatestAttributeUpdates().subscribe(
+            (data: VitalSigns) => {
+                this.latestUpdates = data;
+            },
+            (error) => {
+                console.error('Error fetching latest updates:', error);
+            }
+        );
+    }
     loadVitalSignes() {
         this.elderlyVitalSignesService.getAllVitalSigns().subscribe(
             vitalSignes => {
-                this.vitalSignes = vitalSignes;
+                this.vitalSign = vitalSignes;
                 this.loading = false;
             },
             error => {
@@ -84,34 +99,12 @@ export class LifeVitalComponent implements OnInit {
         table.clear();
         this.filter.nativeElement.value = '';
     }
-
-    editVitalSigns(vitalSigne: VitalSigns) {
-        this.vitalSignsAdd = true;
-        this.vitalSigns = { ...vitalSigne };
-
-    }
-
-    deleteVitalSigns(vitalSigne: VitalSigns) {
-        this.vitalSigneDelete = true;
-        this.vitalSigns = { ...vitalSigne };
-    }
-
-    confirmDeleteSelected() {
-        this.showSuccessViaToast();
-    }
-
-    showErrorViaToast() {
-        this.vitalSigneDelete = false;
-        this.service.add({ key: 'tst', severity: 'error', summary: 'Error', detail: 'Deletion failed' , life: 1000 });
-    }
-
-    showSuccessViaToast() {
-        this.service.add({ key: 'tst', severity: 'success', summary: 'Success', detail: 'Successful Deletion ' , life: 1000 });
-    }
-
+    /*add*/
     addVitalSigns(vitalSigne: VitalSigns) {
-        this.vitalSignsAdd =! this.vitalSignsAdd;
+        this.vitalSigns = { ...vitalSigne };
+        this.vitalSignsAdd =true;
     }
+
 
     hideAdd() {
         this.vitalSignsAdd=false;
@@ -119,9 +112,92 @@ export class LifeVitalComponent implements OnInit {
 
     saveAdd() {
         console.log('Saving health metrics:', this.vitalSigns);
-        this.vitalSigns = {};
+        this.vitalSignAdd = true;
         this.hideAdd();
     }
+    confirmAddSelected() {
+        console.log('Deleting vital sign:', this.vitalSigns);
+        this.elderlyVitalSignesService.addVitalSigns(this.vitalSigns).subscribe(() => {
+            this.showSuccessViaToast('Vital sign added successfully.');
+            this.loadVitalSignes(); // Reload data after deletion
+            this.vitalSignAdd = false; // Hide the confirmation dialog
+            this.getLatestUpdates();
+        }, error => {
+            console.error('Error deleting vital sign:', error);
+            this.showErrorViaToast('Failed to add vital sign.');
+            this.vitalSignAdd = false; // Hide the confirmation dialog
+        });
+        this.vitalSigns = {};
+    }
+/*edit*/
+    editVitalSigns(vitalSigne: VitalSigns) {
+        this.vitalSignsEdit = true;
+        this.vitalSigns = { ...vitalSigne };
+        this.elderlyVitalSignesService.getVitalSignsById(this.vitalSigns.id).subscribe(() => {
+
+        }, error => {
+            console.error('Error fetching vital sign:', error);
+
+
+        });
+
+    }
+    confirmEditSelected() {
+        console.log('Updating vital sign:', this.vitalSigns);
+        this.elderlyVitalSignesService.updateVitalSigns(this.vitalSigns.id!, this.vitalSigns).subscribe(() => {
+            this.showSuccessViaToast('Vital sign updated successfully.');
+            this.loadVitalSignes(); // Reload data after update
+            this.vitalSigneEdit = false; // Hide the confirmation dialog
+            this.getLatestUpdates();
+        }, error => {
+            console.error('Error updating vital sign:', error);
+            this.showErrorViaToast('Failed to update vital sign.');
+            this.vitalSigneEdit = false; // Hide the confirmation dialog
+        });
+        this.vitalSigns = {};
+    }
+    hideEdit() {
+        this.vitalSignsEdit=false;
+    }
+
+    saveEdit() {
+        this.vitalSigneEdit = true;
+        console.log('Saving health metrics:', this.vitalSigns);
+        this.hideEdit();
+    }
+    /*delete*/
+    deleteVitalSigns(vitalSigne: VitalSigns) {
+        this.vitalSigneDelete = true;
+        this.vitalSigns = { ...vitalSigne };
+    }
+
+    confirmDeleteSelected() {
+        console.log('Deleting vital sign:', this.vitalSigns);
+        this.elderlyVitalSignesService.deleteVitalSigns(this.vitalSigns.id).subscribe(() => {
+            this.showSuccessViaToast('Vital sign deleted successfully.');
+            this.loadVitalSignes(); // Reload data after deletion
+            this.vitalSigneDelete = false; // Hide the confirmation dialog
+            this.getLatestUpdates();
+        }, error => {
+            console.error('Error deleting vital sign:', error);
+            this.showErrorViaToast('Failed to delete vital sign.');
+            this.vitalSigneDelete = false; // Hide the confirmation dialog
+        });
+        this.vitalSigns = {};
+    }
+
+    /*toast*/
+    showErrorViaToast(message: string) {
+        this.vitalSigneDelete = false;
+        this.service.add({ key: 'tst', severity: 'error', summary: 'Error', detail: message, life: 1000 });
+    }
+
+    showSuccessViaToast(message: string) {
+        this.service.add({ key: 'tst', severity: 'success', summary: 'Success', detail: message, life: 1000 });
+    }
+
+
+    /*safety*/
     isSafe(value: number | undefined): boolean {
         // Define safe ranges or thresholds for each vital sign
         const safeRanges = {
