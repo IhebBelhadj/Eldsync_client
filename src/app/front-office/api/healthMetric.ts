@@ -1,5 +1,3 @@
-import {HealthAlerts} from "./healthAlerts";
-import {Profile} from "./profile";
 
 export interface HealthMetric {
     id?: number;
