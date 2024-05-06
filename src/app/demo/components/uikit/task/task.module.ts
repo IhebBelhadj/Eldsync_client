@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { FormLayoutDemoComponent } from './formlayoutdemo.component';
-import { FormLayoutDemoRoutingModule } from './formlayoutdemo-routing.module';
+import { TaskComponent } from './task.component';
+import { TaskRoutingModule } from './task-routing.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AutoCompleteModule } from "primeng/autocomplete";
 import { CalendarModule } from "primeng/calendar";
 import { ChipsModule } from "primeng/chips";
@@ -13,12 +13,19 @@ import { CascadeSelectModule } from "primeng/cascadeselect";
 import { MultiSelectModule } from "primeng/multiselect";
 import { InputTextareaModule } from "primeng/inputtextarea";
 import { InputTextModule } from "primeng/inputtext";
+import { TableModule } from 'primeng/table';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import { DialogModule } from 'primeng/dialog';
+import { ChartModule } from 'primeng/chart';
+import { Button, ButtonModule } from 'primeng/button';
+
 
 @NgModule({
-	imports: [
-		CommonModule,
-		FormsModule,
-		FormLayoutDemoRoutingModule,
+  declarations: [TaskComponent],
+  imports: [
+    CommonModule,
+    TaskRoutingModule,
+    FormsModule,
 		AutoCompleteModule,
 		CalendarModule,
 		ChipsModule,
@@ -28,8 +35,15 @@ import { InputTextModule } from "primeng/inputtext";
 		CascadeSelectModule,
 		MultiSelectModule,
 		InputTextareaModule,
-		InputTextModule
-	],
-	declarations: [FormLayoutDemoComponent]
+		InputTextModule,
+		ReactiveFormsModule,
+		TableModule,
+		ReactiveFormsModule,
+		DialogModule,
+		FormsModule,
+		ChartModule,
+		ButtonModule
+
+  ]
 })
-export class FormLayoutDemoModule { }
+export class TaskModule { }

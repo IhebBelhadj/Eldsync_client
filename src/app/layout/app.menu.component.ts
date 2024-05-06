@@ -16,7 +16,15 @@ export class AppMenuComponent implements OnInit {
             {
                 label: 'Test label',
                 items: [
-                    { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] }
+                    { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] },
+                    { label: 'Form Layo', icon: 'pi pi-fw pi-id-card', routerLink: ['/uikit/medicaments'] },
+                    { label: 'Medication', icon: 'pi pi-fw pi-table', routerLink: ['/uikit/medication'] },
+                    { label: 'Calendar', icon: 'pi pi-fw pi-table', routerLink: ['/uikit/medication/calendarMedication'] },
+                    { label: 'Task', icon: 'pi pi-fw pi-table' , routerLink: ['/uikit/task'] }
+
+
+
+
                 ]
             },
             {
@@ -37,7 +45,10 @@ export class AppMenuComponent implements OnInit {
                     { label: 'Message', icon: 'pi pi-fw pi-comment', routerLink: ['/uikit/message'] },
                     { label: 'File', icon: 'pi pi-fw pi-file', routerLink: ['/uikit/file'] },
                     { label: 'Chart', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/uikit/charts'] },
-                    { label: 'Misc', icon: 'pi pi-fw pi-circle', routerLink: ['/uikit/misc'] }
+                    { label: 'Misc', icon: 'pi pi-fw pi-circle', routerLink: ['/uikit/misc'] },
+                   
+
+
                 ]
             },
             {

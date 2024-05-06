@@ -20,6 +20,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { CheckboxModule } from 'primeng/checkbox';
+import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
     declarations: [AppComponent, NotfoundComponent],
@@ -46,6 +47,10 @@ import { CheckboxModule } from 'primeng/checkbox';
         IconService,
         PhotoService,
         ProductService,
+        HttpClientModule,
+        ReactiveFormsModule,
+        
+
     ],
     bootstrap: [AppComponent],
 })
