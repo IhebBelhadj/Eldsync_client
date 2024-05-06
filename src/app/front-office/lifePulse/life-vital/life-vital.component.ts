@@ -10,7 +10,9 @@ import {ToastModule} from "primeng/toast";
 import {ToolbarModule} from "primeng/toolbar";
 import {VitalSigns} from "../../api/vitalSigns";
 import {ElderlyVitalSignesService} from "../../services/elderlyVitalSignes.service";
-import {DatePipe, NgStyle} from "@angular/common";
+import {DatePipe, NgClass, NgStyle} from "@angular/common";
+import {FormsModule} from "@angular/forms";
+import {CalendarModule} from "primeng/calendar";
 
 @Component({
   selector: 'app-life-vital',
@@ -26,7 +28,10 @@ import {DatePipe, NgStyle} from "@angular/common";
         ToastModule,
         ToolbarModule,
         NgStyle,
-        DatePipe
+        DatePipe,
+        NgClass,
+        FormsModule,
+        CalendarModule
     ],
   templateUrl: './life-vital.component.html',
   styleUrl: './life-vital.component.scss',
@@ -40,13 +45,14 @@ export class LifeVitalComponent implements OnInit {
 
 @ViewChild('filter') filter!: ElementRef;
     vitalSignes: VitalSigns[] = [];
-    vitalSigne : VitalSigns = {};
+    vitalSigns : VitalSigns = {};
     loading: boolean = true;
     vitalSigneEdit: boolean = false;
     vitalSigneDelete : boolean = false;
-    vitalSigneAdd: boolean = false;
+    vitalSignsAdd: boolean = false;
     oxygenSaturationEdited: boolean = false;
     temperatureEdited: boolean = false;
+    heartRateEdited: boolean = false;
     respiratoryRateEdited: boolean = false;
     constructor(private elderlyVitalSignesService: ElderlyVitalSignesService ,private service: MessageService) {
 
@@ -80,14 +86,14 @@ export class LifeVitalComponent implements OnInit {
     }
 
     editVitalSigns(vitalSigne: VitalSigns) {
-        this.vitalSigneAdd = true;
-        this.vitalSigne = { ...vitalSigne };
+        this.vitalSignsAdd = true;
+        this.vitalSigns = { ...vitalSigne };
 
     }
 
     deleteVitalSigns(vitalSigne: VitalSigns) {
         this.vitalSigneDelete = true;
-        this.vitalSigne = { ...vitalSigne };
+        this.vitalSigns = { ...vitalSigne };
     }
 
     confirmDeleteSelected() {
@@ -104,15 +110,17 @@ export class LifeVitalComponent implements OnInit {
     }
 
     addVitalSigns(vitalSigne: VitalSigns) {
-        this.vitalSigneAdd =! this.vitalSigneAdd;
+        this.vitalSignsAdd =! this.vitalSignsAdd;
     }
 
-    hideVitalSigneADD() {
-
+    hideAdd() {
+        this.vitalSignsAdd=false;
     }
 
-    saveVitalSigns() {
-
+    saveAdd() {
+        console.log('Saving health metrics:', this.vitalSigns);
+        this.vitalSigns = {};
+        this.hideAdd();
     }
     isSafe(value: number | undefined): boolean {
         // Define safe ranges or thresholds for each vital sign
@@ -123,9 +131,9 @@ export class LifeVitalComponent implements OnInit {
         };
 
         // Determine which vital sign is being checked
-        const vitalSign = value === this.vitalSigne.oxygenSaturation ? 'oxygenSaturation' :
-            value === this.vitalSigne.temperature ? 'temperature' :
-                value === this.vitalSigne.respiratoryRate ? 'respiratoryRate' : '';
+        const vitalSign = value === this.vitalSigns.oxygenSaturation ? 'oxygenSaturation' :
+            value === this.vitalSigns.temperature ? 'temperature' :
+                value === this.vitalSigns.respiratoryRate ? 'respiratoryRate' : '';
 
         // If the vital sign is known and within the safe range, return true (safe), otherwise return false (danger)
         return vitalSign && value !== undefined && value >= safeRanges[vitalSign].min && value <= safeRanges[vitalSign].max;

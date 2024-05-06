@@ -5,7 +5,7 @@ import {Observable} from "rxjs";
 
 @Injectable()
 export class ElderlyHealthMetricService {
-    private baseUrl = 'http://localhost:8081/api/healthMetric';
+    private baseUrl = 'http://localhost:8081/api/healthmetrics';
     constructor(private http: HttpClient) { }
 
     getAllHealthMetrics(): Observable<HealthMetric[]> {
@@ -29,6 +29,10 @@ export class ElderlyHealthMetricService {
     }
     createHealthAlertsForDangerousLevels(healthMetric: HealthMetric): Observable<HealthMetric> {
         return this.http.post<any>(`${this.baseUrl}/health-alerts`, healthMetric);
+    }
+
+    getLastUpdatesForAttributes(healthMetric: HealthMetric): Observable<HealthMetric> {
+        return this.http.post<any>(`${this.baseUrl}/latest-updates`, healthMetric);
     }
 }
 

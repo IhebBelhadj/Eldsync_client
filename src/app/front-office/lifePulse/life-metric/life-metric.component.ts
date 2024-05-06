@@ -105,12 +105,12 @@ export class LifeMetricComponent implements OnInit {
 
     loadHealthMetric() {
         this.elderlyHealthMetricService.getAllHealthMetrics().subscribe(
-            vitalSignes => {
-                this.healthMetric = vitalSignes;
+            healthMetric => {
+                this.healthMetric = healthMetric;
                 this.loading = false;
             },
             error => {
-                console.error('Error fetching vital signs:', error);
+                console.error('Error fetching Health Metric:', error);
                 this.loading = false;
             }
         );

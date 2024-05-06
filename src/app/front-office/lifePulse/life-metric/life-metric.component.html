@@ -61,7 +61,7 @@
     </div>
     <div class="col-12">
         <div class="card">
-            <h5>Elderly Vital Signs</h5>
+            <h5>Elderly Life Metric</h5>
             <p-table #dt1 [value]="healthMetric" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-gridlines" [paginator]="true" [globalFilterFields]="['observerName', 'cholesterolLvl', 'bloodGlucoseLvl', 'weight', 'height']" responsiveLayout="scroll">
                 <ng-template pTemplate="caption">
                     <div class="flex justify-content-between flex-column sm:flex-row">
@@ -109,15 +109,15 @@
                 </ng-template>
             </p-table>
         </div>
-        <p-dialog [(visible)]="healthMetricAdd" [style]="{width: '450px'}" header="Vital Sign Details" [modal]="true" class="p-fluid " >
+        <p-dialog [(visible)]="healthMetricAdd" [style]="{width: '450px'}" header="Life Metric Details" [modal]="true" class="p-fluid " >
             <ng-template pTemplate="content " >
                 <div class="field">
-                    <p-calendar [showIcon]="true" inputId="date"  [(ngModel)]="healthMetrics.dateMetric" required autofocus></p-calendar>
+                    <p-calendar [showIcon]="true" inputId="date"  [(ngModel)]="healthMetrics.date" required autofocus></p-calendar>
 
                 </div>
                 <div class="field">
                     <label for="name">Name</label>
-                    <input type="text" pInputText id="name" [(ngModel)]="healthMetrics.profile" required />
+                    <input type="text" pInputText id="name" [(ngModel)]="healthMetrics.observerName" required />
                 </div>
                 <div class="field">
                     <label for="oxygen">Cholesterol Lvl</label>

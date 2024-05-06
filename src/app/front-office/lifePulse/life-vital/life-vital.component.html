@@ -63,7 +63,7 @@
         <p-toolbar styleClass="mb-4">
             <ng-template pTemplate="left">
                 <div class="my-2">
-                    <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="addVitalSigns(vitalSigne)"></button>
+                    <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="addVitalSigns(vitalSigns)"></button>
                 </div>
             </ng-template>
 
@@ -110,8 +110,8 @@
 
                         <td>
                             <div class="flex">
-                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editVitalSigns(vitalSigne)"></button>
-                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteVitalSigns(vitalSigne)"></button>
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editVitalSigns(vitalSigns)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteVitalSigns(vitalSigns)"></button>
                             </div>
                         </td>
                     </tr>
@@ -130,15 +130,47 @@
         </div>
     </div>
     <!--Add template for vital signs -->
-    <p-dialog [(visible)]="vitalSigneAdd" [style]="{width: '450px'}" header="Vital Sign Details" [modal]="true" class="p-fluid">
+    <p-dialog [(visible)]="vitalSignsAdd" [style]="{width: '450px'}" header="Vital Sign Details" [modal]="true" class="p-fluid">
         <ng-template pTemplate="content">
-
-
+            <div class="field">
+                <label for="date">Measurement Date</label>
+                <p-calendar [showIcon]="true" id="date" inputId="date" [(ngModel)]="vitalSigns.date" required autofocus></p-calendar>
+            </div>
+            <div class="field">
+                <label for="nameOfObserver">Observer Name</label>
+                <input type="text" pInputText id="nameOfObserver" [(ngModel)]="vitalSigns.nameOfObserver" required />
+            </div>
+            <div class="field">
+                <label for="oxygenSaturation">Oxygen Saturation</label>
+                <input pInputText id="oxygenSaturation" [(ngModel)]="vitalSigns.oxygenSaturation" (input)="updateSafetyStatus('oxygenSaturation')" required />
+                <span [ngClass]="{'pi pi-flag-fill': true, 'text-green-500': isSafe(vitalSigns.oxygenSaturation), 'text-red-500': !isSafe(vitalSigns.oxygenSaturation), 'hidden': !oxygenSaturationEdited }"></span>
+            </div>
+            <div class="field">
+                <label for="temperature">Temperature</label>
+                <input pInputText id="temperature" [(ngModel)]="vitalSigns.temperature" (input)="updateSafetyStatus('temperature')" required />
+                <span [ngClass]="{'pi pi-flag-fill': true, 'text-green-500': isSafe(vitalSigns.temperature), 'text-red-500': !isSafe(vitalSigns.temperature), 'hidden': !temperatureEdited }"></span>
+            </div>
+            <div class="field">
+                <label for="heartRate">Heart Rate</label>
+                <input pInputText id="heartRate" [(ngModel)]="vitalSigns.heartRate" (input)="updateSafetyStatus('heartRate')" required />
+                <span [ngClass]="{'pi pi-flag-fill': true, 'text-green-500': isSafe(vitalSigns.heartRate), 'text-red-500': !isSafe(vitalSigns.heartRate), 'hidden': !heartRateEdited }"></span>
+            </div>
+            <div class="field">
+                <label for="respiratoryRate">Respiratory Rate</label>
+                <input pInputText id="respiratoryRate" [(ngModel)]="vitalSigns.respiratoryRate" (input)="updateSafetyStatus('respiratoryRate')" required />
+                <span [ngClass]="{'pi pi-flag-fill': true, 'text-green-500': isSafe(vitalSigns.respiratoryRate), 'text-red-500': !isSafe(vitalSigns.respiratoryRate), 'hidden': !respiratoryRateEdited }"></span>
+            </div>
+            <div class="field">
+                <label for="elderName">Elder Name</label>
+                <input type="text" pInputText id="elderName" [(ngModel)]="vitalSigns.nameOfElder" required />
+            </div>
         </ng-template>
         <ng-template pTemplate="footer">
-
+            <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideAdd()"></button>
+            <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveAdd()"></button>
         </ng-template>
     </p-dialog>
+
 
 
     <!--delete template of selected items in table -->
