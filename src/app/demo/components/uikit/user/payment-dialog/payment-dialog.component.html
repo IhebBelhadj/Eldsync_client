@@ -1,0 +1,13 @@
+<div class="popup-container container">
+  <h2 class="mb-4">Choose Services</h2>
+
+  <div class="form-check services-list">
+    <div *ngFor="let service of serviceTypes" class="service-item">
+      <input type="checkbox" class="form-check-input" [(ngModel)]="selectedServices[service]" [value]="service">
+      <label class="form-check-label service-label">
+        {{ service }}
+      </label>
+    </div>
+  </div>
+
+  <button class="btn btn-primary confirm-button mt-4" (click)="addServicesToElder()">Confirm</button></div>

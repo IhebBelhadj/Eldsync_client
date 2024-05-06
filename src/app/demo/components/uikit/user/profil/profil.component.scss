@@ -1,0 +1,71 @@
+@import url("@angular/material/prebuilt-themes/deeppurple-amber.css");
+
+@import url("node_modules/bootstrap/dist/css/bootstrap.min.css");
+
+/* Start Dashboard Section */
+.dashboard {
+    padding: 50px 0;
+  }
+
+  .dashboard .main-content {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+  }
+
+  .dashboard .block-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 30px;
+  }
+
+  .dashboard .inner-block {
+    margin-top: 20px;
+  }
+
+  .dashboard .form-group {
+    margin-bottom: 20px;
+  }
+
+  .dashboard input[type="text"],
+  .dashboard input[type="email"],
+  .dashboard input[type="password"],
+  .dashboard textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  .dashboard input[type="file"] {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .dashboard textarea {
+    height: 150px;
+  }
+
+  .dashboard .button {
+    margin-top: 20px;
+  }
+
+  .dashboard .btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .dashboard .btn:hover {
+    background-color: #0056b3;
+  }
+
+  .dashboard-image {
+    max-width: 40%;
+    height: auto;
+  }

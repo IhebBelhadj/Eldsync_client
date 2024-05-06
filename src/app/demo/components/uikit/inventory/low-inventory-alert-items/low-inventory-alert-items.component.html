@@ -1,0 +1,17 @@
+<div *ngIf="display" class="custom-modal-overlay">
+  <div class="custom-modal">
+    <div class="custom-modal-header">
+      <i class="pi pi-exclamation-triangle animated-icon"></i>
+      <div class="header-content">
+        <span class="header-title">Warning!</span>
+        <span class="header-titles">Low Inventory Items Quantities</span>
+      </div>
+    </div>
+    <ul class="custom-modal-content">
+      <li *ngFor="let item of lowInventoryItems">{{item.name}} (Quantity: {{item.quantity}})</li>
+    </ul>
+    <div class="custom-modal-footer">
+      <button (click)="display=false">Ok</button>
+    </div>
+  </div>
+</div>

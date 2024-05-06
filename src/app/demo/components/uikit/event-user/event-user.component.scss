@@ -1,0 +1,53 @@
+.container {
+      padding: 20px;
+      display: flex;
+      flex-wrap: wrap; // Allows the cards to wrap onto the next line
+      justify-content: space-between; // Distributes space between and around content items along the main axis
+    
+      .card {
+        flex: 0 1 48%; // Takes up almost half of the container width
+        margin-bottom: 20px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        border: none;
+        transition: transform 0.2s;
+    
+        &:hover {
+          transform: scale(1.03);
+        }
+    
+        .card-img-top {
+          width: 100%;
+          height: auto; // Adjust based on your preference
+          object-fit: cover;
+        }
+    
+        .card-body {
+          padding: 15px;
+          background: #fff;
+    
+          .card-title {
+            font-size: 25px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #333;
+          }
+    
+          .card-text {
+            font-size: 14px;
+            color: #666;
+          }
+    
+          .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+    
+            &:hover {
+              background-color: #0056b3;
+              border-color: #004085;
+            }
+          }
+        }
+      }
+    }
+    
+    

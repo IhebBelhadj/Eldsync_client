@@ -1,0 +1,62 @@
+@import "./_variables.scss";
+
+.btnDocker {
+   background-color: $bgWhite;
+    color: $black3;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.btnDocker:hover {
+    background-color: $black3;
+    color: $bgWhite;
+}
+
+::ng-deep .genericBtn {
+    background-color: $black3;
+    color: $white ;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+::ng-deep .genericBtn:hover {
+    background-color: $black2;
+    color: $white ;
+}
+
+::ng-deep .genericSlider {
+   .p-slider-handle {
+        background: $white;
+        border: 2px solid $black3;
+    }
+
+    .p-slider-handle:hover {
+        background: $black3;
+        border: 2px solid $black3;
+        transition: all 0.2s;
+    }
+
+    .p-slider-range {
+        background: $black3;
+    }
+}
+
+::ng-deep .HAPPY-bg {
+    background-color: $background-happy;
+}
+
+::ng-deep .SAD-bg {
+    background-color: $background-sad;
+}
+
+::ng-deep .LOVING-bg {
+    background-color: $background-loving;
+}
+
+::ng-deep .ANGRY-bg {
+    background-color: $background-angry;
+}
+
+::ng-deep .GRATEFUL-bg {
+    background-color: $background-grateful;
+}

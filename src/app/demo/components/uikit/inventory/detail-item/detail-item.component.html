@@ -1,0 +1,59 @@
+<!-- detail-item.component.html -->
+<div *ngIf="item; else noItemTemplate" class="grid p-fluid">
+      <div class="col-12 md:col-6">
+        <div class="card">
+          <h2>Item Details</h2>
+          <div class="formgroup">
+            <div class="field">
+              <label><strong>ID:</strong></label>
+              <div>{{item.id}}</div>
+            </div>
+          </div>
+          <div class="formgroup">
+            <div class="field">
+              <label><strong>Name:</strong></label>
+              <div>{{item.name}}</div>
+            </div>
+          </div>
+          <div class="formgroup">
+            <div class="field">
+              <label><strong>Description:</strong></label>
+              <div>{{item.description}}</div>
+            </div>
+          </div>
+          <div class="formgroup">
+            <div class="field">
+              <label><strong>Quantity:</strong></label>
+              <div>{{item.quantity}}</div>
+            </div>
+          </div>
+          <div class="formgroup">
+            <div class="field">
+              <label><strong>Unit Price:</strong></label>
+              <div>{{item.unitPrice | currency}}</div>
+            </div>
+          </div>
+          <div class="formgroup">
+            <div class="field">
+              <label><strong>Expiry Date:</strong></label>
+              <div>{{item.expiryDate | date:'mediumDate'}}</div>
+            </div>
+          </div>
+          <div class="formgroup">
+            <div class="field">
+              <label><strong>Category:</strong></label>
+              <div>{{item.category}}</div>
+            </div>
+          </div>
+          <div class="grid p-fluid">
+            <div class="col-12">
+              <button pButton type="button" label="Go Back" icon="pi pi-chevron-left" (click)="goBack()" class="p-button-secondary"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-template #noItemTemplate>
+      <p>No item details available.</p>
+    </ng-template>
+    

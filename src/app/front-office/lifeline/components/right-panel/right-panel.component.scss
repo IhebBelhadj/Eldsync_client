@@ -1,0 +1,57 @@
+@import '../../styles/_variables.scss';
+.rightPanel {
+    width: 35rem;
+}
+.rightPanelContent {
+    height: 90%;
+
+}
+
+.panelContentWrapper {
+
+}
+
+.HAPPY-tagBg {
+    ::ng-deep .p-tag {
+        background-color: $color-happy;
+        color: $black0;
+        padding: 0.5rem;
+    }
+}
+
+.SAD-tagBg {
+    ::ng-deep .p-tag {
+        background-color: $color-sad;
+        color: $black0;
+        padding: 0.5rem;
+    }
+}
+
+.LOVING-tagBg {
+    ::ng-deep .p-tag {
+        background-color: $color-loving;
+        color: $black0;
+        padding: 0.5rem;
+    }
+}
+
+.ANGRY-tagBg {
+    ::ng-deep .p-tag {
+        background-color: $color-angry;
+        color: $black0;
+        padding: 0.5rem;
+    }
+}
+
+.GRATEFUL-tagBg {
+    ::ng-deep .p-tag {
+        background-color: $color-grateful;
+        color: $black0;
+        padding: 0.5rem;
+    }
+}
+
+
+
+
+

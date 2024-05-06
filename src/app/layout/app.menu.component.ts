@@ -1,5 +1,9 @@
+
 import {OnInit, Renderer2} from '@angular/core';
 import { Component } from '@angular/core';
+
+
+
 import { LayoutService } from './service/app.layout.service';
 import {AppConfigComponent} from "./config/app.config.component";
 import {AppMenuitemComponent} from "./app.menuitem.component";
@@ -19,12 +23,21 @@ export class AppMenuComponent implements OnInit {
             {
                 label: 'Test label',
                 items: [
-                    { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] }
+                    { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] },
+                    { label: 'Form Layo', icon: 'pi pi-fw pi-id-card', routerLink: ['/uikit/medicaments'] },
+                    { label: 'Medication', icon: 'pi pi-fw pi-table', routerLink: ['/uikit/medication'] },
+                    { label: 'Calendar', icon: 'pi pi-fw pi-table', routerLink: ['/uikit/medication/calendarMedication'] },
+                    { label: 'Task', icon: 'pi pi-fw pi-table' , routerLink: ['/uikit/task'] }
+
+
+
+
                 ]
             },
             {
                 label: 'UI Components',
                 items: [
+
                     { label: 'chatSync', icon: 'pi pi-fw pi-comment', routerLink: ['/frontOffice/login'] },
                     { label: 'Life Pulse', icon: 'pi pi-fw pi-heart', routerLink: ['/frontOffice/lifePulse'] , customClick: () => this.onLifePulseClick()},
                     { label: 'Form Layout', icon: 'pi pi-fw pi-id-card', routerLink: ['/uikit/formlayout'],customClickItems: () => this.onItemClick() },
@@ -43,6 +56,11 @@ export class AppMenuComponent implements OnInit {
                     { label: 'File', icon: 'pi pi-fw pi-file', routerLink: ['/uikit/file'],customClickItems: () => this.onItemClick()  },
                     { label: 'Chart', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/uikit/charts'],customClickItems: () => this.onItemClick()  },
                     { label: 'Misc', icon: 'pi pi-fw pi-circle', routerLink: ['/uikit/misc'],customClickItems: () => this.onItemClick()  }
+
+
+                   
+
+
                 ]
             },
             {

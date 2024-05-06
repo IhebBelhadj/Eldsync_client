@@ -1,0 +1,40 @@
+<div class="container mt-2">
+      <div class="form-group">
+
+
+<button type="button" pButton label="Exsit" icon="pi pi-arrow-left" class="p-button-warning mr-2" (click)="GoHome()"></button>
+</div>
+<div class="form-group">
+
+<table>
+      <thead>
+        <tr>
+          <th>Event Name</th>
+          <th>Date</th>
+          <th>Location</th>
+          <th>Status</th>
+          <th style="width: 200px;">Banner</th>
+          <th>Description</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let event of pastEvents"> <!-- Ensure async pipe here if pastEvents is an Observable -->
+          <td>{{ event.name }}</td>
+          <td>{{ event.date | date:'mediumDate' }}</td>
+          <td>{{ event.location }}</td>
+          <td>{{ event.status }}</td>
+          <td>
+            <img [src]="event.bannerUrl" alt="Event Banner" class="event-banner"> 
+          </td>
+          <td>{{ event.description }}</td>
+          <td class="action-cell" style="width: 200px;"> <!-- Add the class here -->
+            <button type="button" pButton label="Refactor" icon="pi pi-cog" style="  background-color: #FFCC99;color: black;" (click)="viewEvent(event.idEvent)"></button>
+        </td>
+
+        </tr>
+      </tbody>
+    </table>
+</div>
+    </div>
+    
