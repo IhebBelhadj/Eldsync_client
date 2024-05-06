@@ -28,7 +28,8 @@ import { BrowserModule } from '@angular/platform-browser';
         PhotoService,
         ProductService,
         HttpClientModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        
 
     ],
     bootstrap: [AppComponent],

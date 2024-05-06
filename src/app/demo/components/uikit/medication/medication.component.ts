@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Medication } from './model/medication';
 import { CalendarOptions } from '@fullcalendar/core'; // useful for typechecking
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
   templateUrl: './medication.component.html',
   styleUrl: './medication.component.scss'
 })
-export class MedicationComponent {
+export class MedicationComponent{
   medicationList: Medication[] = [];
   searchTerm: string = '';
   calendarOptions: CalendarOptions = {

@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TaskComponent } from './task.component';
+import { TaskRoutingModule } from './task-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AutoCompleteModule } from "primeng/autocomplete";
 import { CalendarModule } from "primeng/calendar";
@@ -12,22 +14,18 @@ import { MultiSelectModule } from "primeng/multiselect";
 import { InputTextareaModule } from "primeng/inputtextarea";
 import { InputTextModule } from "primeng/inputtext";
 import { TableModule } from 'primeng/table';
+import { FullCalendarModule } from '@fullcalendar/angular';
 import { DialogModule } from 'primeng/dialog';
-import { AddTaskComponent } from './add-task/add-task.component';
-import { UpdateTaskComponent } from './update-task/update-task.component';
-import { TaskRoutingModule } from './task-routing.module';
-import { TasksComponent } from './tasks.component';
-import { Task } from '../medication/model/task';
-
-
+import { ChartModule } from 'primeng/chart';
+import { Button, ButtonModule } from 'primeng/button';
 
 
 @NgModule({
-  declarations: [AddTaskComponent,UpdateTaskComponent,TasksComponent],
+  declarations: [TaskComponent],
   imports: [
-        CommonModule,
-		TaskRoutingModule,
-        FormsModule,
+    CommonModule,
+    TaskRoutingModule,
+    FormsModule,
 		AutoCompleteModule,
 		CalendarModule,
 		ChipsModule,
@@ -41,10 +39,10 @@ import { Task } from '../medication/model/task';
 		ReactiveFormsModule,
 		TableModule,
 		ReactiveFormsModule,
-        DropdownModule,
-        DialogModule
-        
-
+		DialogModule,
+		FormsModule,
+		ChartModule,
+		ButtonModule
 
   ]
 })

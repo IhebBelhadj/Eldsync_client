@@ -20,7 +20,8 @@ import { RouterModule } from '@angular/router';
         { path: 'tree', data: { breadcrumb: 'Tree' }, loadChildren: () => import('./tree/treedemo.module').then(m => m.TreeDemoModule) },
         { path: 'menu', data: { breadcrumb: 'Menu' }, loadChildren: () => import('./menus/menus.module').then(m => m.MenusModule) },
         { path: 'medication', data: { breadcrumb: 'Mediaction' }, loadChildren: () => import('./medication/medication.module').then(m => m.MedicamentsModule)},
-        { path: 'task', data: { breadcrumb: 'Task' }, loadChildren: () => import('./tasks/task.module').then(m => m.TaskModule)},
+        { path: 'task', data: { breadcrumb: 'Task' }, loadChildren: () => import('./task/task.module').then(m => m.TaskModule)},
+
 
         { path: '**', redirectTo: '/notfound' },
 

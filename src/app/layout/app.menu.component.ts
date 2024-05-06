@@ -21,7 +21,8 @@ export class AppMenuComponent implements OnInit {
                     { label: 'Form Layo', icon: 'pi pi-fw pi-id-card', routerLink: ['/uikit/medicaments'] },
                     { label: 'Medication', icon: 'pi pi-fw pi-table', routerLink: ['/uikit/medication'] },
                     { label: 'Calendar', icon: 'pi pi-fw pi-table', routerLink: ['/uikit/medication/calendarMedication'] },
-                    { label: 'Task', icon: 'pi pi-fw pi-table', routerLink: ['/uikit/task'] }
+                    { label: 'Task', icon: 'pi pi-fw pi-table' , routerLink: ['/uikit/task'] }
+
 
 
 

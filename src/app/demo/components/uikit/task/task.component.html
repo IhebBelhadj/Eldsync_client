@@ -1,0 +1,268 @@
+<div class="grid">
+  <div class="col-12 lg:col-6 xl:col-4">
+    <div class="card mb-0">
+      <div class="flex justify-content-between mb-3">
+        <div>
+          <span class="block text-500 font-medium mb-3">Completed Task</span>
+          <div class="text-900 font-medium text-xl">{{completedTaskCount}}</div>
+        </div>
+        <div class="flex align-items-center justify-content-center bg-blue-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
+          <i class="pi pi-check-circle text-blue-500 text-xl"></i>
+        </div>
+      </div>
+      <span class="text-green-500 font-medium">{{tasksForTodayCount}} </span>
+      <span class="text-500">since last visit</span>
+    </div>
+  </div>
+  <div class="col-12 lg:col-6 xl:col-4">
+    <div class="card mb-0">
+      <div class="flex justify-content-between mb-3">
+        <div>
+          <span class="block text-500 font-medium mb-3">ToDo Task</span>
+          <div class="text-900 font-medium text-xl">{{todoTaskCount}}</div>
+        </div>
+        <div class="flex align-items-center justify-content-center bg-orange-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
+          <i class="pi pi-list text-orange-500 text-xl"></i>
+        </div>
+      </div>
+      <span class="text-green-500 font-medium">{{tasksForTodayCount}} </span>
+      <span class="text-500">since last week</span>
+    </div>
+  </div>
+  <div class="col-12 lg:col-6 xl:col-4">
+    <div class="card mb-0">
+      <div class="flex justify-content-between mb-3">
+        <div>
+          <span class="block text-500 font-medium mb-3">Cancelled Task</span>
+          <div class="text-900 font-medium text-xl">{{cancelledTaskCount}}</div>
+        </div>
+        <div class="flex align-items-center justify-content-center bg-cyan-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
+          <i class="pi pi-ban text-cyan-500 text-xl"></i>
+        </div>
+      </div>
+      <span class="text-green-500 font-medium">{{tasksForTodayCount}} </span>
+      <span class="text-500">newly registered</span>
+    </div>
+  </div>
+
+  <div class="container justify-content-center align-items-center">
+    <!-- Search input -->
+    <p-inputText [(ngModel)]="searchTerm" placeholder="Rechercher par nom"></p-inputText>
+
+    <!-- Button to open Add Task dialog -->
+    <p-button  label="Ajouter Tâche"  (click)="openTaskFormDialog()"></p-button>
+  
+    <!-- Table -->
+    <p-table [value]="todos" [paginator]="true" [rows]="10" [responsive]="true" [tableStyle]="{'min-width': '60rem'}">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Description</th>
+          <th>AssignedTo</th>
+          <th>Statut</th>
+          <th>Actions</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-task>
+        <tr>
+          <td>{{ task.id }}</td>
+          <td>{{ task.title }}</td>
+          <td>{{ task.description }}</td>
+          <td>{{ task.elder.username }}</td>
+          <td>{{ task.status }}</td>
+          <td>{{ task.elder }}</td>
+
+
+          <td>
+            <!-- Detail button -->
+            
+            <button pButton type="button" icon="pi pi-info" class="p-button-success" (click)="showTaskDetails(task)"></button>
+            <!-- Update button -->
+            <button pButton type="button" icon="pi pi-pencil" class="p-button-info" (click)="openUpdateDialog(task)"></button>
+            <!-- Delete button -->
+            <button pButton type="button" icon="pi pi-trash" class="p-button-danger" (click)="openDeleteDialog(task)"></button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <div class="flex align-items-center justify-content-between">
+          In total there are {{ todos ? todos.length : 0 }} tasks.
+        </div>
+      </ng-template>
+    </p-table>
+    
+  </div>
+  
+
+<!-- Add Task Dialog -->
+<p-dialog header="Ajouter une tâche" [(visible)]="isSlidePanelOpen" [modal]="true" [closable]="true" [responsive]="true">
+  <ng-template pTemplate="content">
+    <form [formGroup]="updateTaskForm" (ngSubmit)="onSubmit()">
+      <div class="p-grid p-fluid">
+        <div class="p-col-4"><label>Nom :</label></div>
+        <div class="p-col-8"><input pInputText formControlName="title"></div>
+        <div class="p-col-4"><label>Description :</label></div>
+        <div class="p-col-8"><input pInputText formControlName="description"></div>
+        <div class="p-col-4"><label>Date :</label></div>
+        <div class="p-col-8"><input type="date" pInputText formControlName="date"></div>
+
+        <div class="p-col-4"><label>Elder :</label></div>
+        <div class="p-col-8">
+          <p-dropdown [options]="elders" formControlName="elder"></p-dropdown>
+        </div>
+
+        <div class="p-col-4"><label>Statut :</label></div>
+        <div class="p-col-8">
+          <p-dropdown formControlName="status" [options]="statusTask" placeholder="Sélectionnez un statut"></p-dropdown>
+        </div>
+      </div>
+      <div class="p-grid p-justify-end">
+        <button pButton type="submit" label="Ajouter" class="p-button-primary"></button>
+      </div>
+    </form>
+  </ng-template>
+</p-dialog>
+
+<!-- Update Task Dialog -->
+<p-dialog header="Modifier une tâche" [(visible)]="isUpdateDialogOpen" [modal]="true" [closable]="true" [responsive]="true">
+  <ng-template pTemplate="content">
+    <form [formGroup]="updateTaskForm" (ngSubmit)="onUpdate()">
+      <div class="p-grid p-fluid">
+        <div class="p-col-4"><label>Nom :</label></div>
+        <div class="p-col-8"><input pInputText formControlName="title"></div>
+        <div class="p-col-4"><label>Description :</label></div>
+        <div class="p-col-8"><input pInputText formControlName="description"></div>
+        <div class="p-col-4"><label>Date :</label></div>
+        <div class="p-col-8"><input type="date" pInputText formControlName="date"></div>
+
+        <div class="p-col-4"><label>Elder :</label></div>
+        <div class="p-col-8">
+          <p-dropdown [options]="elders" formControlName="elder"></p-dropdown>
+        </div>
+
+        <div class="p-col-4"><label>Statut :</label></div>
+        <div class="p-col-8">
+          <p-dropdown formControlName="status" [options]="statusTask" placeholder="Sélectionnez un statut"></p-dropdown>
+        </div>
+      </div>
+      <div class="p-grid p-justify-end">
+        <button pButton type="submit" label="Modifier" class="p-button-primary"></button>
+      </div>
+    </form>
+  </ng-template>
+</p-dialog>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- Add Task Dialog 
+  <p-dialog header="Ajouter une tâche" [(visible)]="isSlidePanelOpen" [modal]="true" [closable]="true" [responsive]="true">
+    <ng-template pTemplate="content">
+      <form [formGroup]="updateTaskForm" (ngSubmit)="onSubmit()">
+        <div class="p-grid p-fluid">
+          <div class="p-col-4"><label>Nom :</label></div>
+          <div class="p-col-8"><input pInputText formControlName="title"></div>
+          <div class="p-col-4"><label>Description :</label></div>
+          <div class="p-col-8"><input pInputText formControlName="description"></div>
+          <div class="p-col-4"><label>Date :</label></div>
+          <div class="p-col-8"><input type="date" pInputText formControlName="date"></div>
+
+          <div class="p-col-4"><label>Elder :</label></div>
+          <div class="p-col-8">
+          <p-dropdown [options]="elders" formControlName="elder"></p-dropdown> 
+          </div>
+
+          <div class="p-col-4"><label>Statut :</label></div>
+          <div class="p-col-8">
+            <p-dropdown formControlName="status" [options]="statusTask" placeholder="Sélectionnez un statut"></p-dropdown>
+          </div>
+        </div>
+        <div class="p-grid p-justify-end">
+          <button pButton type="submit" label="Ajouter" class="p-button-primary"(click)="onSubmit" ></button>
+        </div>
+      </form>
+    </ng-template>
+  </p-dialog>-->
+
+  <!--Modifier-->
+ <!-- <p-dialog header="Modifier la tâche" [(visible)]="isUpdateDialogOpen" [modal]="true" [style]="{ 'width': '39rem', 'height': '30rem' }">
+    <ng-template pTemplate="content">
+      
+      <form [formGroup]="updateTaskForm" (ngSubmit)="onUpdate()">
+        <div class="flex align-items-center gap-3 mb-5">
+          <label for="title" class="font-semibold w-6rem">Nom :</label>
+          <input pInputText id="title" formControlName="title" class="flex-auto" />
+        </div>
+        <div class="flex align-items-center gap-3 mb-5">
+          <label for="description" class="font-semibold w-6rem">Description :</label>
+          <input pInputText id="description" formControlName="description" class="flex-auto" />
+        </div>
+        <div class="flex align-items-center gap-3 mb-5">
+          <label for="status" class="font-semibold w-6rem">Statut :</label>
+          <p-dropdown id="status" formControlName="status" [options]="statusTask" placeholder="Sélectionnez un statut" class="flex-auto"></p-dropdown>
+        </div>
+        <div class="flex align-items-center gap-3 mb-5">
+          <div class="p-col-4"><label>Elder Username: :</label></div>
+          <div class="p-col-8"><input pInputText formControlName="elderUsername"></div>
+        </div>
+
+        
+        <div class="flex justify-content-end gap-2">
+          <button pButton type="button" label="Annuler" class="p-button-secondary" (click)="isUpdateDialogOpen = false"></button>
+          <button pButton type="submit" label="Modifier" class="p-button-primary"></button>
+        </div>
+      </form>
+    </ng-template>
+  </p-dialog>-->
+  
+  <!-- Delete Task Dialog -->
+  <p-dialog header="Confirmer la suppression de la tâche" [(visible)]="isDeleteDialogOpen" [modal]="true" [closable]="true" [responsive]="true">
+    <ng-template pTemplate="content">
+      <div>Êtes-vous sûr de vouloir supprimer cette tâche ?</div>
+      <div class="p-grid p-justify-end">
+        <button pButton type="button" label="Annuler" class="p-button-secondary" (click)="isDeleteDialogOpen = false"></button>
+        <button pButton type="button" label="Confirmer" class="p-button-danger" (click)="onDeleteConfirm()"></button>
+      </div>
+    </ng-template>
+  </p-dialog>
+
+  <!-- Inside the <div class="container"> -->
+
+  <!-- Detail Task Dialog -->
+  <p-dialog header="Détails de la tâche" [(visible)]="isDetailDialogOpen" [modal]="true" [closable]="true" [responsive]="true">
+    <ng-template pTemplate="content">
+      <div *ngIf="selectedTask">
+        <p>Titre : {{ selectedTask.title }}</p>
+        <p>Description : {{ selectedTask.description }}</p>
+        <p>Statut : {{ selectedTask.status }}</p>
+        <!-- Add more details here if needed -->
+      </div>
+    </ng-template>
+  </p-dialog>
+  
+  <!-- Notification Dialog -->
+  <p-dialog header="Notification" [(visible)]="isNotificationDialogOpen" [modal]="true" [closable]="true" [responsive]="true">
+    <ng-template pTemplate="content">
+      <!-- Content of the notification dialog -->
+      <p>{{ notificationMessage }}</p>
+    </ng-template>
+  </p-dialog>
+</div>
