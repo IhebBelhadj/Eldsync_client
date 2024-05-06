@@ -225,7 +225,7 @@
 
         <div class="flex align-items-center justify-content-center">
             <i class="pi pi-exclamation-triangle text-red-500 mr-3" style="font-size: 2rem"></i>
-            <span>Are you sure you want to delete selected products?</span>
+            <span>Are you sure you want to delete selected vital signs?</span>
         </div>
         <ng-template pTemplate="footer">
             <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="showErrorViaToast('Failed to delete vital sign.')"></button>
@@ -238,7 +238,7 @@
 
         <div class="flex align-items-center justify-content-center">
             <i class="pi pi-exclamation-triangle text-red-500 mr-3" style="font-size: 2rem"></i>
-            <span>Are you sure you want to edit selected products?</span>
+            <span>Are you sure you want to edit selected vital signs?</span>
         </div>
         <ng-template pTemplate="footer">
             <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="showErrorViaToast('Failed to edit vital sign.')"></button>
@@ -246,12 +246,12 @@
         </ng-template>
 
     </p-dialog>
-    <!--edit template of selected items in table -->
+    <!--add template of selected items in table -->
     <p-dialog [(visible)]="vitalSignAdd" [style]="{width: '450px'}"  [modal]="true" class="p-fluid">
 
         <div class="flex align-items-center justify-content-center">
             <i class="pi pi-exclamation-triangle text-red-500 mr-3" style="font-size: 2rem"></i>
-            <span>Are you sure you want to add products?</span>
+            <span>Are you sure you want to add vital signs?</span>
         </div>
         <ng-template pTemplate="footer">
             <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="showErrorViaToast('Failed to add vital sign.')"></button>

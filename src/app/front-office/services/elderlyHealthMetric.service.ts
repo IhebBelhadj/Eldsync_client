@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HealthMetric } from '../api/healthMetric';
 import {Observable} from "rxjs";
+import {VitalSigns} from "../api/vitalSigns";
 
 @Injectable()
 export class ElderlyHealthMetricService {
@@ -31,8 +32,8 @@ export class ElderlyHealthMetricService {
         return this.http.post<any>(`${this.baseUrl}/health-alerts`, healthMetric);
     }
 
-    getLastUpdatesForAttributes(healthMetric: HealthMetric): Observable<HealthMetric> {
-        return this.http.post<any>(`${this.baseUrl}/latest-updates`, healthMetric);
+    getLastUpdatesForAttributes(): Observable<HealthMetric> {
+        return this.http.get<VitalSigns>(`${this.baseUrl}/latest-updates`);
     }
 }
 

@@ -1,46 +1,46 @@
 <div class="grid">
-    <div class="col-12 lg:col-6 xl:col-4">
+    <div class="col-12 lg:col-6 xl:col-4" *ngIf="latestUpdates">
         <div class="card mb-0">
             <div class="flex justify-content-between mb-3">
                 <div>
                     <span class="block text-500 font-medium mb-3">Blood glucose lvl</span>
-                    <div class="text-900 font-medium text-xl">37 c</div>
+                    <div class="text-900 font-medium text-xl">{{ latestUpdates.bloodGlucoseLvl }}</div>
                 </div>
                 <div class="flex align-items-center justify-content-center bg-blue-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
                     <i class="pi pi-percentage text-blue-500 text-xl"></i>
                 </div>
             </div>
-            <span class="text-green-500 font-medium">6 days </span>
+            <span class="text-green-500 font-medium">{{ latestUpdates.date | date }} </span>
             <span class="text-500">since last check</span>
         </div>
     </div>
-    <div class="col-12 lg:col-6 xl:col-4">
+    <div class="col-12 lg:col-6 xl:col-4"  *ngIf="latestUpdates">
         <div class="card mb-0">
             <div class="flex justify-content-between mb-3">
                 <div>
                     <span class="block text-500 font-medium mb-3">Cholesterol lvl</span>
-                    <div class="text-900 font-medium text-xl">75</div>
+                    <div class="text-900 font-medium text-xl">{{ latestUpdates.cholesterolLvl }}</div>
                 </div>
                 <div class="flex align-items-center justify-content-center bg-purple-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
                     <i class="pi pi-percentage text-purple-500 text-xl"></i>
                 </div>
             </div>
-            <span class="text-green-500 font-medium">1 day </span>
+            <span class="text-green-500 font-medium">{{ latestUpdates.date | date }}</span>
             <span class="text-500">since last check</span>
         </div>
     </div>
-    <div class="col-12 lg:col-6 xl:col-4">
+    <div class="col-12 lg:col-6 xl:col-4" *ngIf="latestUpdates">
         <div class="card mb-0">
             <div class="flex justify-content-between mb-3">
                 <div>
                     <span class="block text-500 font-medium mb-3">Weight</span>
-                    <div class="text-900 font-medium text-xl">15</div>
+                    <div class="text-900 font-medium text-xl">{{ latestUpdates.weight }}</div>
                 </div>
                 <div class="flex align-items-center justify-content-center bg-cyan-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
                     <i class="pi pi-sort-amount-up-alt text-cyan-500 text-xl"></i>
                 </div>
             </div>
-            <span class="text-green-500 font-medium">5 days </span>
+            <span class="text-green-500 font-medium">{{ latestUpdates.date | date }}</span>
             <span class="text-500">since last check</span>
         </div>
     </div>
@@ -49,7 +49,7 @@
         <p-toolbar styleClass="mb-4">
             <ng-template pTemplate="left">
                 <div class="my-2">
-                    <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                    <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="addHealthMetric(healthMetrics)"></button>
                 </div>
             </ng-template>
 
@@ -91,8 +91,8 @@
                         <td>{{patient.height}}</td>
                         <td>
                             <div class="flex">
-                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editHealthMetric(healthMetric)"></button>
-                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteHealthMetric(healthMetric)"></button>
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editHealthMetric(patient)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteHealthMetric(patient)"></button>
                             </div>
                         </td>
                     </tr>
@@ -141,7 +141,13 @@
                         <span [ngClass]="{'pi pi-flag-fill': true, 'text-green-500': isSafe(healthMetrics.weight), 'text-red-500': !isSafe(healthMetrics.weight), 'hidden': !weightEdited }"></span>
                     </div>
                 </div>
-
+                <div class="field">
+                    <label for="Height">Height</label>
+                    <div class="input-with-icon flex">
+                        <input pInputText id="Height" [(ngModel)]="healthMetrics.height" (input)="updateSafetyStatus('respiratoryRate')" />
+                        <span [ngClass]="{'pi pi-flag-fill': true, 'text-green-500': isSafe(healthMetrics.height), 'text-red-500': !isSafe(healthMetrics.height), 'hidden': !HeightEdited }"></span>
+                    </div>
+                </div>
 
 
 
@@ -154,19 +160,96 @@
             </ng-template>
         </p-dialog>
 
+<!-- edit template -->
+        <p-dialog [(visible)]="healthMetricEdit" [style]="{width: '450px'}" header="Life Metric Details" [modal]="true" class="p-fluid " >
+            <ng-template pTemplate="content " >
+                <div class="field">
+                    <p-calendar [showIcon]="true" inputId="date"  [(ngModel)]="healthMetrics.date" required autofocus></p-calendar>
+
+                </div>
+                <div class="field">
+                    <label for="nameEdit">Name</label>
+                    <input type="text" pInputText id="nameEdit" [(ngModel)]="healthMetrics.observerName" required />
+                </div>
+                <div class="field">
+                    <label for="oxygen">Cholesterol Lvl</label>
+                    <div class="input-with-icon flex">
+                        <input pInputText id="oxygenEdit" [(ngModel)]="healthMetrics.cholesterolLvl" (input)="updateSafetyStatus('oxygenSaturation')" />
+                        <span [ngClass]="{'pi pi-flag-fill': true, 'text-green-500': isSafe(healthMetrics.cholesterolLvl), 'text-red-500': !isSafe(healthMetrics.cholesterolLvl), 'hidden': !cholesterolLvlEdited }"></span>
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="temperature">Blood Glucose Lvl</label>
+                    <div class="input-with-icon flex">
+
+                        <input  pInputText id="temperatureEdit" [(ngModel)]="healthMetrics.bloodGlucoseLvl" (input)="updateSafetyStatus('temperature')" />
+                        <span [ngClass]="{'pi pi-flag-fill': true, 'text-green-500': isSafe(healthMetrics.bloodGlucoseLvl), 'text-red-500': !isSafe(healthMetrics.bloodGlucoseLvl), 'hidden': !bloodGlucoseLvlEdited }"></span>
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="respiratory">Weight</label>
+                    <div class="input-with-icon flex">
+                        <input pInputText id="respiratoryEdit" [(ngModel)]="healthMetrics.weight" (input)="updateSafetyStatus('respiratoryRate')" />
+                        <span [ngClass]="{'pi pi-flag-fill': true, 'text-green-500': isSafe(healthMetrics.weight), 'text-red-500': !isSafe(healthMetrics.weight), 'hidden': !weightEdited }"></span>
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="HeightEdit">Height</label>
+                    <div class="input-with-icon flex">
+                        <input pInputText id="HeightEdit" [(ngModel)]="healthMetrics.weight" (input)="updateSafetyStatus('respiratoryRate')" />
+                        <span [ngClass]="{'pi pi-flag-fill': true, 'text-green-500': isSafe(healthMetrics.weight), 'text-red-500': !isSafe(healthMetrics.height), 'hidden': !HeightEdited }"></span>
+                    </div>
+                </div>
+
+
+
+
+                <!-- Other fields -->
+            </ng-template>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideEdit()"></button>
+                <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveEdit()"></button>
+            </ng-template>
+        </p-dialog>
 
 
 
         <!--delete template of selected items in table -->
-        <p-dialog [(visible)]="healthMetricStat" [style]="{width: '450px'}"  [modal]="true" class="p-fluid">
+        <p-dialog [(visible)]="healthMetricDeleteConfirmation" [style]="{width: '450px'}"  [modal]="true" class="p-fluid">
 
             <div class="flex align-items-center justify-content-center">
                 <i class="pi pi-exclamation-triangle text-red-500 mr-3" style="font-size: 2rem"></i>
                 <span>Are you sure you want to delete selected products?</span>
             </div>
             <ng-template pTemplate="footer">
-                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="showErrorViaToast()"></button>
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="showErrorViaToast('Failed to delete vital sign.')"></button>
                 <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDeleteSelected()"></button>
+            </ng-template>
+
+        </p-dialog>
+        <!--edit template of selected items in table -->
+        <p-dialog [(visible)]="healthMetricEditConfirmation" [style]="{width: '450px'}"  [modal]="true" class="p-fluid">
+
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle text-red-500 mr-3" style="font-size: 2rem"></i>
+                <span>Are you sure you want to edit selected vital signs?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="showErrorViaToast('Failed to edit vital sign.')"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmEditSelected()"></button>
+            </ng-template>
+
+        </p-dialog>
+        <!--add template of selected items in table -->
+        <p-dialog [(visible)]="healthMetricAddConfirmation" [style]="{width: '450px'}"  [modal]="true" class="p-fluid">
+
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle text-red-500 mr-3" style="font-size: 2rem"></i>
+                <span>Are you sure you want to add vital signs?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="showErrorViaToast('Failed to add vital sign.')"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmAddSelected()"></button>
             </ng-template>
 
         </p-dialog>
