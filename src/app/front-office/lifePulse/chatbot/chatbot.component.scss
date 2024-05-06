@@ -1,0 +1,89 @@
+/*
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 400px; !* Adjust height as needed *!
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.chat-history {
+  flex: 1;
+  overflow-y: auto; !* Enable vertical scrolling *!
+}
+
+.message {
+  margin-bottom: 5px;
+}
+
+.chat-input {
+  display: flex;
+  align-items: center;
+}
+
+.chat-input input[type="text"] {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.chat-input button {
+  cursor: pointer;
+}
+*/
+
+
+header {
+  background-color:#b39bf8;
+  padding: 20px;
+  text-align: center;
+
+}
+
+header img {
+  width: 80px;
+}
+
+aside {
+  background-color: #f3fbfd;
+  padding: 20px;
+}
+#field{
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#chat-window {
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  height: 300px;
+  overflow-y: auto;
+}
+
+
+
+
+  /* Add custom styling for chat messages */
+.message {
+  margin-bottom: 10px;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+/* Styling for user messages */
+.user-message {
+
+  width:50%;
+  background-color: #b3e0ff; /* Light blue background */
+  color: #333; /* Dark text color */
+  align-self: flex-end; /* Align user messages to the right */
+}
+
+/* Styling for bot messages */
+.bot-message {
+  align-self: flex-end; /* Align bot messages to the right */
+  margin-left: auto; /* Push bot messages to the right */
+  width:50%;
+  background-color: #e6ffe6; /* Light green background */
+  color: #333; /* Dark text color */
+}

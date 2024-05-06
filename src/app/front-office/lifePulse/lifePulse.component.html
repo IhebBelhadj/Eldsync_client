@@ -1,0 +1,22 @@
+<div class="app-wrapper">
+<!--    <div class="top-section" *ngIf="containerVisible" >
+      this is for the random advice
+    </div>-->
+    <div class="top-section-bar " [class.hidden]="!showTopSectionBar">
+       <app-measurements></app-measurements>
+    </div>
+    <div class="content-wrapper">
+        <div class="content-section clearfix" [ngClass]="{'modified-css-class': modifyCss}">
+            <router-outlet  ></router-outlet>
+        </div>
+        <div class="right-section">
+            <app-rightTabs></app-rightTabs>
+        </div>
+    </div>
+
+    <div class="bottom-section">
+        <app-bottomTabs  (measureTabClicked)="handleMeasureTabClick()" (otherTabClicked)="handleOtherTabClick()"></app-bottomTabs>
+    </div>
+
+
+</div>
