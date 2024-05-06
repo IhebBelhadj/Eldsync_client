@@ -1,0 +1,36 @@
+
+
+    <div id="videos">
+        <video #local_video [muted]="isMicOn" class="video-player" id="user-1" autoplay playsinline></video>
+        <video #remote_video class="video-player" id="user-2" autoplay playsinline></video>
+    </div>
+    <div id="controls">
+
+        <div class="control-container" id="camera-btn" (click)="toggleCamera()">
+            <i class="material-symbols-outlined" [ngClass]="{'videocam_off': isCameraOn, 'videocam': !isCameraOn}">
+                {{ isCameraOn ? 'videocam_off' :'videocam' }}
+            </i>
+        </div>
+
+        <div class="control-container" id="mic-btn" (click)="toggleMic()">
+            <i class="material-symbols-outlined" [ngClass]="{'mic_off':isMicOn,'mic':!isMicOn}">
+                {{ isMicOn ? 'mic_off'  : 'mic' }}
+            </i>
+        </div>
+
+        <div class="control-container" id="call-btn" (click)="call()">
+            <i class="material-symbols-outlined">
+                call
+            </i>
+        </div>
+
+        <a>
+            <div class="control-container" id="leave-btn" (click)="hungup()">
+                <i class="material-symbols-outlined">
+                    logout
+                </i>
+            </div>
+        </a>
+
+    </div>
+

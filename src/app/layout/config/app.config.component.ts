@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {Component, ElementRef, Input, ViewChild} from '@angular/core';
 import { LayoutService } from '../service/app.layout.service';
 import { MenuService } from '../app.menu.service';
 
@@ -8,13 +8,19 @@ import { MenuService } from '../app.menu.service';
 })
 export class AppConfigComponent {
     @Input() minimal: boolean = false;
-
+    @ViewChild('configButton') configButton: ElementRef;
+    showConfigButton = true;
     scales: number[] = [12, 13, 14, 15, 16];
 
     constructor(
         public layoutService: LayoutService,
         public menuService: MenuService
     ) {}
+
+    hideConfigButton() {
+        this.showConfigButton = false;
+        document.querySelector('.layout-config-button')?.classList.add('hidden');
+    }
 
     get visible(): boolean {
         return this.layoutService.state.configSidebarVisible;
