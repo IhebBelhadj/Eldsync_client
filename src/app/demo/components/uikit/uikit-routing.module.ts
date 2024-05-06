@@ -3,6 +3,12 @@ import { RouterModule } from '@angular/router';
 
 @NgModule({
     imports: [RouterModule.forChild([
+        
+        { path: 'event', data: { breadcrumb: 'Event' }, loadChildren: () => import('./event/event.module').then(m => m.EventModule) },
+        { path: 'eventUser', data: { breadcrumb: 'Event' }, loadChildren: () => import('./event-user/event-user.module').then(m => m.EventUserModule) },
+        { path: 'inventory', data: { breadcrumb: 'Inventory' }, loadChildren: () => import('./inventory/inventory.module').then(m => m.InventoryModule) },
+
+        { path: 'user', data: { breadcrumb: 'User' }, loadChildren: () => import('./user/user.module').then(m => m.UserModule) },
         { path: 'button', data: { breadcrumb: 'Button' }, loadChildren: () => import('./button/buttondemo.module').then(m => m.ButtonDemoModule) },
         { path: 'charts', data: { breadcrumb: 'Charts' }, loadChildren: () => import('./charts/chartsdemo.module').then(m => m.ChartsDemoModule) },
         { path: 'file', data: { breadcrumb: 'File' }, loadChildren: () => import('./file/filedemo.module').then(m => m.FileDemoModule) },

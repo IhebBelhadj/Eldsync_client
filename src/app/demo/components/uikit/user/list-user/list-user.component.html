@@ -1,0 +1,79 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <button pButton pRipple label="Add User" icon="pi pi-plus" class="p-button-success mr-2" (click)="navigateToAddUser()"></button>
+                    <button pButton pRipple label="Delete User" icon="pi pi-trash" class="p-button-danger" (click)="showConfirmationDialogForSelectedUsers()" [disabled]="!selectedUsers || !selectedUsers.length"></button>
+                </ng-template>
+            </p-toolbar>
+            <!-- Search input field -->
+            <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center mb-4">
+                <h5 class="m-0">User Management</h5>
+                <span class="block mt-2 md:mt-0 p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..." class="w-full sm:w-auto"/>
+                </span>
+            </div>
+
+            <p-table #dt [value]="users" [columns]="cols" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5, 10, 15]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedUsers" selectionMode="multiple" [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th pSortableColumn="id"><a (click)="sortColumn('id')" >ID</a> <p-sortIcon field="id"></p-sortIcon></th>
+                        <th pSortableColumn="email"><a (click)="sortColumn('email')">Email</a><p-sortIcon field="email"></p-sortIcon></th>
+                        <th pSortableColumn="usernames"><a (click)="sortColumn('usernames')">User Name</a><p-sortIcon field="usernames"></p-sortIcon></th>
+                        <th pSortableColumn="gender"><a (click)="sortColumn('gender')">Gender</a><p-sortIcon field="gender"></p-sortIcon></th>
+                        <th pSortableColumn="phone"><a (click)="sortColumn('phone')">Contact Info</a><p-sortIcon field="phone"></p-sortIcon></th>
+                        <th pSortableColumn="firstName"><a (click)="sortColumn('firstName')">First Name</a><p-sortIcon field="firstName"></p-sortIcon></th>
+                        <th pSortableColumn="lasteName"><a (click)="sortColumn('lasteName')">Last Name</a><p-sortIcon field="lasteName"></p-sortIcon></th>
+                        <th pSortableColumn="cin"><a (click)="sortColumn('cin')">CIN</a><p-sortIcon field="cin"></p-sortIcon></th>
+                        <th>Action</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-user>
+                    <tr>
+                        <td>
+                            <p-tableCheckbox [value]="user"></p-tableCheckbox>
+                        </td>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.gender }}</td>
+                        <td>{{ user.phone }}</td>
+                        <td>{{ user.firstName }}</td>
+                        <td>{{ user.lasteName }}</td>
+                        <td>{{ user.cin }}</td>
+                        <td>
+                            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="updateUser(user.id)"></button>
+                            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="showConfirmationDialog(user)"></button>
+                         </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <p-dialog [(visible)]="deleteProductDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+                <div class="flex align-items-center justify-content-center">
+                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                    <span *ngIf="userToDelete">Are you sure you want to delete <b>{{userToDelete.username}}</b>?</span>
+                </div>
+                <ng-template pTemplate="footer">
+                    <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="cancelDelete()"></button>
+                    <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDelete()"></button>
+                </ng-template>
+            </p-dialog>
+            <p-dialog [(visible)]="deleteSelectedUsersDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+                <div class="flex align-items-center justify-content-center">
+                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                    <span>Are you sure you want to delete the selected users?</span>
+                </div>
+                <ng-template pTemplate="footer">
+                    <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="cancelDeleteSelectedUsers()"></button>
+                    <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDeleteSelectedUsers()"></button>
+                </ng-template>
+            </p-dialog>
+        </div>
+    </div>
+</div>

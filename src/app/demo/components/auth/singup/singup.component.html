@@ -1,0 +1,118 @@
+<section style="background-color: #a6c7eb;">
+    <div class="container py-5">
+      <div class="row d-flex justify-content-center align-items-center">
+        <div class="col">
+          <div class="card card-registration my-4">
+            <div class="row g-0">
+              <div class="col-xl-6 d-none d-xl-block">
+                <img src="../../../../../assets/registre2.jpg"
+                  alt="Sample photo" class="img-fluid"
+                  style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem;" />
+              </div>
+              <div class="col-xl-6">
+                <div class="card-body p-md-5 text-black">
+                  <h3 class="mb-5 text-uppercase">Registration form</h3>
+  
+                  <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+                    <div class="row">
+                      <div class="col-md-6 mb-4">
+                        <div class="form-outline">
+                          <input type="text" id="username" formControlName="username" class="form-control form-control-lg" />
+                          <label class="form-label" for="username">Username</label>
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-4">
+                        <div class="form-outline">
+                          <input type="text" id="firstname" formControlName="firstname" class="form-control form-control-lg" />
+                          <label class="form-label" for="firstname">First name</label>
+                        </div>
+                      </div>
+                    </div>
+  
+                    <div class="row">
+                      <div class="col-md-6 mb-4">
+                        <div class="form-outline">
+                          <input type="text" id="lastename" formControlName="lastename" class="form-control form-control-lg" />
+                          <label class="form-label" for="lastename">Last name</label>
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-4">
+                        <div class="form-outline">
+                          <input type="text" id="email" formControlName="email" class="form-control form-control-lg" />
+                          <label class="form-label" for="email">Email</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                          <div class="form-outline">
+                            <input type="password" id="password" formControlName="password" class="form-control form-control-lg" />
+                            <label class="form-label" for="password">Password</label>
+                          </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                          <div class="form-outline">
+                            <input type="password" id="confirmPassword" formControlName="confirmPassword" class="form-control form-control-lg" />
+                            <label class="form-label" for="confirmPassword">Confirm Password</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6 mb-4">
+                          <label for="femaleGender">Gender</label>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="femaleGender" formControlName="gender" value="FEMALE">
+                            <label class="form-check-label" for="femaleGender">Female</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="maleGender" formControlName="gender" value="MALE">
+                            <label class="form-check-label" for="maleGender">Male</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6 mb-4">
+                          <div class="form-outline">
+                            <input type="text" id="cin" formControlName="cin" class="form-control form-control-lg" />
+                            <label class="form-label" for="cin">CIN (8 digits)</label>
+                            <div *ngIf="signupForm.get('cin').invalid && (signupForm.get('cin').dirty || signupForm.get('cin').touched)">
+                              <div *ngIf="signupForm.get('cin').errors.required">CIN is required.</div>
+                              <div *ngIf="signupForm.get('cin').errors.pattern">CIN must be 8 digits.</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                          <div class="form-outline">
+                            <input type="text" id="phone" formControlName="phone" class="form-control form-control-lg" />
+                            <label class="form-label" for="phone">Phone (8 digits)</label>
+                            <div *ngIf="signupForm.get('phone').invalid && (signupForm.get('phone').dirty || signupForm.get('phone').touched)">
+                              <div *ngIf="signupForm.get('phone').errors.required">Phone number is required.</div>
+                              <div *ngIf="signupForm.get('phone').errors.pattern">Phone number must be 8 digits.</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      
+  
+                    <!-- Add the remaining form fields -->
+  
+                    <div class="d-flex justify-content-end pt-3">
+                      <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-light btn-lg" (click)="signupForm.reset()">Reset all</button>
+                      <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-warning btn-lg ms-2" [disabled]="signupForm.invalid">Submit form</button>
+                    </div>
+                    
+                  </form>
+                  <p class="outer-link">
+                    already have an account? <a href="/auth/login">login now</a>
+                  </p>
+  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  

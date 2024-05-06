@@ -9,22 +9,42 @@ import { CountryService } from './demo/service/country.service';
 import { CustomerService } from './demo/service/customer.service';
 import { EventService } from './demo/service/event.service';
 import { IconService } from './demo/service/icon.service';
-import { NodeService } from './demo/service/node.service';
 import { PhotoService } from './demo/service/photo.service';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { GraphQLModule } from './graphql.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { CheckboxModule } from 'primeng/checkbox';
 import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
     declarations: [AppComponent, NotfoundComponent],
-    imports: [AppRoutingModule, AppLayoutModule,BrowserModule,ReactiveFormsModule,HttpClientModule],
+    imports: [
+        AppRoutingModule,
+        AppLayoutModule,
+        HttpClientModule,
+        GraphQLModule,
+        BrowserAnimationsModule,
+        ReactiveFormsModule,
+        MatSnackBarModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatDialogModule,
+        MatIconModule,
+        FormsModule,
+        CheckboxModule,
+    ],
     providers: [
         { provide: LocationStrategy, useClass: PathLocationStrategy },
         CountryService,
         CustomerService,
         EventService,
         IconService,
-        NodeService,
         PhotoService,
         ProductService,
         HttpClientModule,
@@ -34,4 +54,4 @@ import { BrowserModule } from '@angular/platform-browser';
     ],
     bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
