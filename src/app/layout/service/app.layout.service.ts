@@ -68,7 +68,10 @@ export class LayoutService {
             config.colorScheme !== this._config.colorScheme
         );
     }
-
+    hideMenu() {
+        this.state.staticMenuMobileActive = false;
+        this.state.staticMenuDesktopInactive = true;
+    }
     onMenuToggle() {
         if (this.isOverlay()) {
             this.state.overlayMenuActive = !this.state.overlayMenuActive;

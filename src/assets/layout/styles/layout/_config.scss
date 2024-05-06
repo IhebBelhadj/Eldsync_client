@@ -30,6 +30,9 @@
     &:hover {
         background: var(--primary-400);
     }
+    .hidden {
+        display: none;
+    }
 }
 
 .layout-config-sidebar {
