@@ -22,41 +22,37 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { CheckboxModule } from 'primeng/checkbox';
-import { BrowserModule } from '@angular/platform-browser';
 
+import { MessageService } from 'primeng/api';
 
 @NgModule({
-    declarations: [AppComponent, NotfoundComponent],
-    imports: [
-        AppRoutingModule,
-        AppLayoutModule,
-        HttpClientModule,
-        GraphQLModule,
-        BrowserAnimationsModule,
-        ReactiveFormsModule,
-        MatSnackBarModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatDialogModule,
-        MatIconModule,
-        FormsModule,
-        CheckboxModule,
-    ],
-    providers: [
-        { provide: LocationStrategy, useClass: PathLocationStrategy },
-        { provide: AppConfigComponent, useClass: AppConfigComponent },
-        CountryService,
-        CustomerService,
-        EventService,
-        IconService,
-        PhotoService,
-        ProductService,
-        HttpClientModule,
-        ReactiveFormsModule,
-        
-
-    ],
-    bootstrap: [AppComponent],
+  declarations: [AppComponent, NotfoundComponent],
+  imports: [
+    AppRoutingModule,
+    AppLayoutModule,
+    HttpClientModule,
+    GraphQLModule,
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
+    MatSnackBarModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDialogModule,
+    MatIconModule,
+    FormsModule,
+    CheckboxModule,
+  ],
+  providers: [
+    { provide: LocationStrategy, useClass: PathLocationStrategy },
+    CountryService,
+    CustomerService,
+    EventService,
+    IconService,
+    PhotoService,
+    ProductService,
+    MessageService
+  ],
+  bootstrap: [AppComponent],
 
 })
 export class AppModule { }

@@ -1,0 +1,14 @@
+<p-dialog [visible]="inspectorVisible" #inspector [showHeader]="false" (onShow)="onInspectorShow()"
+  (onHide)="onInspectorHide()" [modal]="true" [style]="{ width: '75vw' }" [draggable]="false" [resizable]="false">
+
+  <div class="toolbar fixed top-0 right-0">
+
+    <button pButton pRipple icon="pi pi-times" (click)="onInspectorHide()"
+      class="p-button-rounded p-button-text m-3 closeBtn"></button>
+  </div>
+  <div class="imageContainer">
+
+    <p-image [src]="imageToInspect" alt="Image" width="100%" />
+  </div>
+
+</p-dialog>

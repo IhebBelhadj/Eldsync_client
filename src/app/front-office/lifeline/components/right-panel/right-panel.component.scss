@@ -51,7 +51,23 @@
     }
 }
 
+.barContent {
+  min-height: 3rem;
+  width: 100%;
+}
 
+.dialWrapper {
+  position: fixed;
+  right: 5rem;
+}
+
+::ng-deep .dialBtn {
+  width: 3rem;
+  height: 3rem;
+  background: none;
+  color: $black0;
+  border: none;
+}
 
 
 

@@ -1,100 +1,125 @@
 <div class="dotFormWrapper flex flex-column">
-    <!-- <div class="titleSection flex justify-content-between align-items-center p-3"> -->
-    <!--     <h2 class="text-2xl font-bold text-gray-800">Create new dot</h2> -->
-    <!--     <button pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded" pTooltip="Delete dot" -->
-    <!--         tooltipPosition="top"></button> -->
-    <!-- </div> -->
-    <div class="contentSection p-3 flex-1 overflow-auto" [style]="{fontSize: '4rem'}">
-        <ng-container *ngIf="dotForm$ | async as dotForm">
+  <!-- <div class="titleSection flex justify-content-between align-items-center p-3"> -->
+  <!--     <h2 class="text-2xl font-bold text-gray-800">Create new dot</h2> -->
+  <!--     <button pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded" pTooltip="Delete dot" -->
+  <!--         tooltipPosition="top"></button> -->
+  <!-- </div> -->
+  <div class="contentSection p-3 flex-1 overflow-auto" [style]="{fontSize: '4rem'}">
+    <ng-container *ngIf="dotForm$ | async as dotForm">
 
-            <div class="emotionSelection m-4 flex gap-5 justify-content-center align-items-center">
-                <button pButton pRipple type="button" icon="fa-regular fa-face-laugh-beam"
-                    class="p-button-rounded p-button-text inactiveBtn" [style]="{fontSize: '4rem'}" data-emotion="HAPPY"
-                    #happyBtn (click)="selectEmotion(happyBtn)"
-                    [class.activeHappy]="dotForm.selectedEmotion === EmotionType.HAPPY"></button>
-                <button pButton pRipple type="button" icon="fa-regular fa-face-frown-open"
-                    class="p-button-rounded p-button-text inactiveBtn" [style]="{fontSize: '4rem'}" data-emotion="SAD"
-                    #sadBtn (click)="selectEmotion(sadBtn)"
-                    [class.activeSad]="dotForm.selectedEmotion === EmotionType.SAD"></button>
-                <button pButton pRipple type="button" icon="fa-regular fa-face-angry"
-                    class="p-button-rounded p-button-text inactiveBtn" [style]="{fontSize: '4rem'}" data-emotion="ANGRY"
-                    #angryBtn (click)="selectEmotion(angryBtn)"
-                    [class.activeAngry]="dotForm.selectedEmotion === EmotionType.ANGRY"></button>
-                <button pButton pRipple type="button" icon="fa-regular fa-face-grin-hearts"
-                    class="p-button-rounded p-button-text inactiveBtn" [style]="{fontSize: '4rem'}"
-                    data-emotion="LOVING" #lovingBtn (click)="selectEmotion(lovingBtn)"
-                    [class.activeLoving]="dotForm.selectedEmotion === EmotionType.LOVING"></button>
-                <button pButton pRipple type="button" icon="fa-regular fa-face-smile-beam"
-                    class="p-button-rounded p-button-text inactiveBtn" [style]="{fontSize: '4rem'}"
-                    data-emotion="GRATEFUL" #gratefulBtn (click)="selectEmotion(gratefulBtn)"
-                    [class.activeGrateful]="dotForm.selectedEmotion === EmotionType.GRATEFUL"></button>
+      <div class="emotionSelection m-4 flex gap-5 justify-content-center align-items-center">
+        <button pButton pRipple type="button" icon="fa-regular fa-face-laugh-beam"
+          class="p-button-rounded p-button-text inactiveBtn" [style]="{fontSize: '4rem'}" data-emotion="HAPPY" #happyBtn
+          (click)="selectEmotion(happyBtn)"
+          [class.activeHappy]="dotForm.selectedEmotion === EmotionType.HAPPY"></button>
+        <button pButton pRipple type="button" icon="fa-regular fa-face-frown-open"
+          class="p-button-rounded p-button-text inactiveBtn" [style]="{fontSize: '4rem'}" data-emotion="SAD" #sadBtn
+          (click)="selectEmotion(sadBtn)" [class.activeSad]="dotForm.selectedEmotion === EmotionType.SAD"></button>
+        <button pButton pRipple type="button" icon="fa-regular fa-face-angry"
+          class="p-button-rounded p-button-text inactiveBtn" [style]="{fontSize: '4rem'}" data-emotion="ANGRY" #angryBtn
+          (click)="selectEmotion(angryBtn)"
+          [class.activeAngry]="dotForm.selectedEmotion === EmotionType.ANGRY"></button>
+        <button pButton pRipple type="button" icon="fa-regular fa-face-grin-hearts"
+          class="p-button-rounded p-button-text inactiveBtn" [style]="{fontSize: '4rem'}" data-emotion="LOVING"
+          #lovingBtn (click)="selectEmotion(lovingBtn)"
+          [class.activeLoving]="dotForm.selectedEmotion === EmotionType.LOVING"></button>
+        <button pButton pRipple type="button" icon="fa-regular fa-face-smile-beam"
+          class="p-button-rounded p-button-text inactiveBtn" [style]="{fontSize: '4rem'}" data-emotion="GRATEFUL"
+          #gratefulBtn (click)="selectEmotion(gratefulBtn)"
+          [class.activeGrateful]="dotForm.selectedEmotion === EmotionType.GRATEFUL"></button>
 
-            </div>
-            <div class="emotionIntensity m-4">
-                <p-slider #slider [ext-tooltip]="emotionIntensity" stickTo=".p-slider-handle"
-                    (onChange)="onIntensityChange($event)" tooltipPosition="top" [tooltipOptions]='sliderTooltipOptions'
-                    [(ngModel)]="dotForm.emotionIntensity" [step]="1" [max]="5" [min]='1' styleClass="genericSlider"
-                    [appendTo]="sliderAppendTo"></p-slider>
-            </div>
-            <div class="timeSelection m-4">
-                <p-calendar [(ngModel)]="dotForm.eventDate" (onchange)="onDateChange($event)" [iconDisplay]="'input'"
-                    [showTime]="true" [showIcon]="true" styleClass="p-calendar-override"></p-calendar>
-            </div>
+      </div>
+      <div class="emotionIntensity m-4">
+        <p-slider #slider [ext-tooltip]="emotionIntensity" stickTo=".p-slider-handle"
+          (onChange)="onIntensityChange($event)" tooltipPosition="top" [tooltipOptions]='sliderTooltipOptions'
+          [(ngModel)]="dotForm.emotionIntensity" [step]="1" [max]="5" [min]='1' styleClass="genericSlider"
+          [appendTo]="sliderAppendTo"></p-slider>
+      </div>
+      <div class="timeSelection m-4">
+        <p-calendar [(ngModel)]="dotForm.eventDate" (onchange)="onDateChange($event)" [iconDisplay]="'input'"
+          [showTime]="true" [showIcon]="true" styleClass="p-calendar-override"></p-calendar>
+      </div>
 
-            <div class="dotDescription m-2">
-                <tiptap-editor class="editorStyles" [editor]="editor" [extensions]="extensions"
-                    [(ngModel)]="dotForm.dotDescription"></tiptap-editor>
-                <tiptap-floating-menu [editor]="editor">
-                    <div class="floatingMenuWrapper">
+      <div class="dotDescription m-2">
+        <tiptap-editor class="editorStyles" [editor]="editor" [extensions]="extensions"
+          [(ngModel)]="dotForm.dotDescription"></tiptap-editor>
+        <tiptap-floating-menu [editor]="editor">
+          <div class="floatingMenuWrapper">
 
-                        <button (click)="editor.chain().focus().toggleHeading({ level: 1 }).run()"
-                            [class.is-active]="editor.isActive('heading', { level: 1 })">
-                            h1
-                        </button>
-                        <button (click)="editor.chain().focus().toggleHeading({ level: 2 }).run()"
-                            [class.is-active]="editor.isActive('heading', { level: 2 })">
-                            h2
-                        </button>
-                        <button (click)="editor.chain().focus().toggleBulletList().run()"
-                            [class.is-active]="editor.isActive('bulletList')">
-                            bullet list
-                        </button>
-                    </div>
-                </tiptap-floating-menu>
-
-
-            </div>
-            <div class="assetSection m-2 mt-5">
-                <p-fileUpload name="demo[]" url="./upload.php" chooseLabel=" " [showCancelButton]="false"
-                    [showUploadButton]="false" (onUpload)="onUpload($event)" [multiple]="true" accept="image/*"
-                    [maxFileSize]="1000000" chooseStyleClass="chooseButton">
-
-                    <ng-template pTemplate="content">
-                        <ul *ngIf="dotForm.uploadedFiles.length; else noItemsTemplate">
-                            <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
-                        </ul>
-                        <ng-template #noItemsTemplate>
-                            <div class="noUploads">
-
-                                <p>Append attachements</p>
-                                <i class="fa-solid fa-photo-film"></i>
-                            </div>
-                        </ng-template>
-                    </ng-template>
-
-
-                </p-fileUpload>
-
-            </div>
-
-        </ng-container>
+            <button (click)="editor.chain().focus().toggleHeading({ level: 2 }).run()"
+              [class.is-active]="editor.isActive('heading', { level: 2 })">
+              <i class="fa-solid fa-t"></i>
+            </button>
+            <button (click)="editor.chain().focus().toggleHeading({ level: 3 }).run()"
+              [class.is-active]="editor.isActive('heading', { level: 3 })">
+              <i class="fa-solid fa-h"></i>
+            </button>
+            <button (click)="editor.chain().focus().toggleParagraph().run()"
+              [class.is-active]="editor.isActive('paragraph')">
+              <i class="fa-solid fa-paragraph"></i>
+            </button>
+            <button (click)="editor.chain().focus().toggleBulletList().run()"
+              [class.is-active]="editor.isActive('bulletList')">
+              <i class="fa-solid fa-list"></i>
+            </button>
+            <button (click)="editor.chain().focus().toggleOrderedList().run()"
+              [class.is-active]="editor.isActive('orderedList')">
+              <i class="fa-solid fa-list-ol"></i>
+            </button>
+            <button (click)="editor.chain().focus().toggleBold().run()" [class.is-active]="editor.isActive('bold')">
+              <i class="fa-solid fa-bold"></i>
+            </button>
+            <button (click)="editor.chain().focus().toggleItalic().run()" [class.is-active]="editor.isActive('italic')">
+              <i class="fa-solid fa-italic"></i>
+            </button>
+            <button (click)="editor.chain().focus().toggleStrike().run()" [class.is-active]="editor.isActive('strike')">
+              <i class="fa-solid fa-strikethrough"></i>
+            </button>
 
 
 
+            <button (click)="editor.chain().focus().toggleBlockquote().run()"
+              [class.is-active]="editor.isActive('blockquote')">
+              <i class="fa-solid fa-quote-left"></i>
+            </button>
 
-    </div>
-    <div class="validationSection flex justify-content-end m-4">
-        <p-button label="Create dot" icon="pi pi-check" iconPos="left" styleClass="genericBtn"
-            (onClick)="createDot()"></p-button>
-    </div>
+          </div>
+        </tiptap-floating-menu>
+
+
+      </div>
+      <div class="assetSection m-2 mt-5">
+        <p-fileUpload #uploader chooseLabel=" " [customUpload]="true" (onSelect)="onSelect($event)"
+          (uploadHandler)="onUpload($event)" (onRemove)="onRemove($event)" [showCancelButton]="false"
+          [showUploadButton]="false" (onUpload)="onUpload($event)" [multiple]="true" accept="image/*"
+          [maxFileSize]="1000000" chooseStyleClass="chooseButton">
+
+          <ng-template pTemplate="content">
+            <ul *ngIf="selectedAssetCount; else noItemsTemplate">
+              <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+            </ul>
+            <ng-template #noItemsTemplate>
+              <div class="noUploads">
+
+                <p>Append attachements</p>
+                <i class="fa-solid fa-photo-film"></i>
+              </div>
+            </ng-template>
+          </ng-template>
+
+
+        </p-fileUpload>
+
+      </div>
+
+    </ng-container>
+
+
+
+
+  </div>
+  <div class="validationSection flex justify-content-end m-4">
+    <p-button label="Create dot" icon="pi pi-check" iconPos="left" styleClass="genericBtn"
+      (onClick)="createDot()"></p-button>
+  </div>
 </div>
