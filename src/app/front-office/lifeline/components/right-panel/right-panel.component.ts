@@ -14,7 +14,8 @@ import { ConfirmationStateService } from '../../state/confirmation-state.service
 import { LifelineDataService } from '../../state/lifeline-data.service';
 import { DotContentComponent } from '../dot-content/dot-content.component';
 import { SpeedDialModule } from 'primeng/speeddial';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
+import { DotService } from '../../services/dot.service';
 
 @Component({
   selector: 'lifeline-right-panel',
@@ -52,7 +53,7 @@ export class RightPanelComponent implements OnInit, OnDestroy {
   emotionState$: Observable<EmotionState>;
 
   dotOptions: MenuItem[] = [
-    { label: 'Delete', icon: 'pi pi-trash', command: () => { console.log('Delete') } },
+    { label: 'Delete', icon: 'pi pi-trash', command: () => { this.removeCurrentDot() } },
     { label: 'Edit', icon: 'pi pi-pencil', command: () => { console.log('Edit') } },
   ]
 
@@ -62,6 +63,8 @@ export class RightPanelComponent implements OnInit, OnDestroy {
     private lifelineData: LifelineDataService,
     private confirmationService: ConfirmationStateService,
     private changeDetector: ChangeDetectorRef,
+    private dotService: DotService,
+    private messageService: MessageService,
   ) { }
 
   ngOnInit() {
@@ -162,11 +165,54 @@ export class RightPanelComponent implements OnInit, OnDestroy {
       });
   }
 
+
+  removeCurrentDot() {
+
+    this.confirmationService.addToQueue('deleteCurrentDot', {
+      message: 'Are you sure you want to remove the currently selected dot?',
+    });
+
+    const resultSub = this.confirmationService.confirmationResult$
+      .subscribe(result => {
+        if (result.eventId === 'deleteCurrentDot') {
+          if (result.result === 'success') {
+            // Logic to delete the dot
+            this.commitRemoveCurrentDot();
+          } else {
+            console.log('Dot deletion canceled');
+          }
+          resultSub.unsubscribe();
+        }
+      });
+  }
+
   cancelDotCreation() {
 
     console.log('removing dot from state');
     this.lifelineService.setRightPanel(false);
+    this.messageService.add(
+      { key: 'dotCreation', severity: 'info', summary: 'Dot creation', detail: 'Canceled dot creation' }
+    );
     this.lifelineData.resetDotForm();
+    this.lifelineService.setSelectedEmotion(null);
+    this.lifelineService.setSelectedEmotionIntensity(0);
+
+  }
+
+  commitRemoveCurrentDot() {
+
+    console.log('removing current dot from state');
+    console.log(this.lifelineData.snapshot.selectedDotId)
+    const currentDot = this.lifelineData.snapshot.selectedDotId;
+    console.log('Current dot:', currentDot);
+    this.lifelineService.setRightPanel(false);
+
+    this.dotService.deleteDot(currentDot).subscribe((res) => {
+      console.log('Dot deleted:', res);
+      this.messageService.add(
+        { key: 'dotCreation', severity: 'info', summary: 'Dot creation', detail: 'Dot deleted!' }
+      );
+    });
     this.lifelineService.setSelectedEmotion(null);
     this.lifelineService.setSelectedEmotionIntensity(0);
 
@@ -174,6 +220,8 @@ export class RightPanelComponent implements OnInit, OnDestroy {
 
   closePanel() {
     this.lifelineService.setRightPanel(false);
+    this.lifelineService.setSelectedEmotion(null);
+    this.lifelineService.setSelectedEmotionIntensity(0);
   }
 
 
