@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, map, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, distinctUntilChanged, map, Observable, throwError } from 'rxjs';
 import { EmotionType } from '../models/emotionType';
 import { DotService } from '../services/dot.service';
 import { DotInput } from '../models/dot-input';
@@ -15,10 +15,19 @@ export interface DotForm {
   uploadedFiles: Asset[]
 }
 
+export interface EmotionRates {
+  happy: number,
+  angry: number,
+  sad: number,
+  loving: number,
+  grateful: number
+}
+
 export interface LifelineData {
   dotForm: DotForm,
   selectedDot: Dot | null,
   selectedDotId: string | null,
+  emotionRates: EmotionRates
 }
 
 @Injectable({
@@ -36,6 +45,14 @@ export class LifelineDataService {
     },
     selectedDot: null,
     selectedDotId: null,
+
+    emotionRates: {
+      happy: 0,
+      sad: 0,
+      loving: 0,
+      grateful: 0,
+      angry: 0
+    }
   });
 
   constructor(
@@ -69,10 +86,25 @@ export class LifelineDataService {
     );
   }
 
+  get emotionRates$(): any {
+    return this.stateSubject.asObservable().pipe(
+      distinctUntilChanged((prev, curr) => prev.emotionRates === curr.emotionRates),
+
+      map(state => state.emotionRates)
+    )
+  }
+
   updateDotForm(dotForm: Partial<DotForm>) {
 
     const currentState = this.stateSubject.getValue();
     const updatedState = { ...currentState, dotForm: { ...currentState.dotForm, ...dotForm } };
+    this.stateSubject.next(updatedState);
+
+  }
+
+  updateEmotionRates(emotionRates: Partial<EmotionRates>) {
+    const currentState = this.stateSubject.getValue();
+    const updatedState = { ...currentState, emotionRates: { ...currentState.emotionRates, ...emotionRates } };
     this.stateSubject.next(updatedState);
 
   }

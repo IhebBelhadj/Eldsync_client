@@ -6,17 +6,19 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { DotService } from '../../services/dot.service';
 import { Dot } from '../../models/dot';
-import { map, Subscription } from 'rxjs';
+import { map, Observable, Subscription } from 'rxjs';
 import { DotCreationCancelState, LifelineStateService } from '../../state/lifeline-state.service';
 import moment from 'moment';
 import { DotInspectComponent } from '../dot-inspect/dot-inspect.component';
-import { LifelineDataService } from '../../state/lifeline-data.service';
+import { EmotionRates, LifelineDataService } from '../../state/lifeline-data.service';
 import { Knob, KnobModule } from 'primeng/knob';
+import { EmotionType } from '../../models/emotionType';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'lifeline-calendar',
   standalone: true,
-  imports: [CommonModule, FullCalendarModule, CommonModule, ButtonModule, DotInspectComponent, KnobModule],
+  imports: [FormsModule, CommonModule, FullCalendarModule, CommonModule, ButtonModule, DotInspectComponent, KnobModule],
   providers: [DatePipe],
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.scss'
@@ -64,6 +66,8 @@ export class CalendarComponent implements AfterViewInit, OnDestroy {
   dotEvent: Event;
   dotSelector: ElementRef;
 
+  emotionRates$: Observable<EmotionRates>;
+
   constructor(
     private crd: ChangeDetectorRef,
     private dotService: DotService,
@@ -79,6 +83,8 @@ export class CalendarComponent implements AfterViewInit, OnDestroy {
         console.log("updated calendar")
         this.calendarUpdate();
       });
+
+    this.emotionRates$ = this.lifelineData.emotionRates$;
   }
 
   ngOnDestroy(): void {
@@ -115,7 +121,6 @@ export class CalendarComponent implements AfterViewInit, OnDestroy {
 
   calendarUpdate() {
     this.updateCalendarTitle();
-    this.crd.detectChanges();
     const startDate = this.calendarApi.view.currentStart;
     const endDate = this.calendarApi.view.currentEnd;
 
@@ -131,6 +136,52 @@ export class CalendarComponent implements AfterViewInit, OnDestroy {
             emotionIntensity
         `).pipe(
       map((data: Dot[]) => {
+
+        // calculate stats
+        const emotionRates = {
+          happy: 0,
+          sad: 0,
+          loving: 0,
+          grateful: 0,
+          angry: 0
+        };
+
+        // Calculate total dots for normalization
+        let totalDots = 0;
+
+        data.forEach(dot => {
+          totalDots += dot.emotionIntensity;
+          switch (dot.emotionType) {
+            case EmotionType.HAPPY:
+              emotionRates.happy += dot.emotionIntensity;
+              break;
+            case EmotionType.SAD:
+              emotionRates.sad += dot.emotionIntensity;
+              break;
+            case EmotionType.LOVING:
+              emotionRates.loving += dot.emotionIntensity;
+              break;
+            case EmotionType.GRATEFUL:
+              emotionRates.grateful += dot.emotionIntensity;
+              break;
+            case EmotionType.ANGRY:
+              emotionRates.angry += dot.emotionIntensity;
+              break;
+
+          }
+        });
+
+        Object.keys(emotionRates).forEach(emotion => {
+          emotionRates[emotion] /= totalDots;
+          emotionRates[emotion] *= 100;
+        });
+
+        this.lifelineData.updateEmotionRates(emotionRates);
+
+        console.log(this.lifelineData.snapshot.emotionRates);
+
+        this.crd.detectChanges();
+
         // Transform eventDate to date format
         return data.map(dot => ({
           ...dot,
@@ -144,6 +195,9 @@ export class CalendarComponent implements AfterViewInit, OnDestroy {
         this.events = data;
         console.log('data:', data);
       });
+
+    this.crd.detectChanges();
+
   }
 
   onEventHover(hoverState: boolean, selector: ElementRef, event: Event, dot: Dot) {
@@ -183,6 +237,11 @@ export class CalendarComponent implements AfterViewInit, OnDestroy {
     this.lifelineState.setRightPanelAction('show');
     this.lifelineState.setRightPanel(true);
     this.lifelineData.setSelectedDotId(dot.idDot);
+  }
+
+  getEmotionSaturation(emotionRate: number) {
+    const scaledSaturation = 0.2 + (emotionRate / 100) * 2;
+    return scaledSaturation;
   }
 
 

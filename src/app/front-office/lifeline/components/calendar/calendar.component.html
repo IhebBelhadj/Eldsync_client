@@ -6,42 +6,52 @@
       <h1 class="calendarTitle">{{calendarTitle?.month}}</h1>
       <h3 class="calendarSubtitle">{{calendarTitle?.year}}</h3>
     </div>
-    <div class="monthStats">
-      <div class="statGroup flex align-items-center happyStats relative">
+    <div *ngIf="emotionRates$ | async as emotionRates" class="monthStats">
+      <div class="statGroup flex align-items-center happyStats relative"
+        [style.filter]="'saturate(' + getEmotionSaturation(emotionRates.happy)  + ')'">
 
-        <p-knob #happyRateKnob [readonly]="true" strokeWidth="5" valueTemplate="" valueColor="#5ff4c8" />
+        <p-knob [ngModel]="emotionRates.happy" #happyRateKnob [readonly]="true" strokeWidth="5" rangeColor="#ecebf2"
+          valueTemplate="" valueColor="#5ff4c8" />
         <button pButton pRipple type="button" icon="fa-regular fa-face-laugh-beam" disabled
           class="p-button-rounded p-button-text btnHappy btnCenter" [style]="{fontSize: '4rem'}"></button>
 
       </div>
 
-      <div class="statGroup flex align-items-center happyStats relative">
+      <div class="statGroup flex align-items-center happyStats relative"
+        [style.filter]="'saturate(' + getEmotionSaturation(emotionRates.sad)  + ')'">
 
-        <p-knob #happyRateKnob [readonly]="true" strokeWidth="5" valueTemplate="" valueColor="#5ff4c8" />
+        <p-knob [ngModel]="emotionRates.sad" #happyRateKnob [readonly]="true" strokeWidth="5" rangeColor="#ecebf2"
+          valueTemplate="" valueColor="#a4c3fc" />
         <button pButton pRipple type="button" icon="fa-regular fa-face-frown-open" disabled
           class="p-button-rounded p-button-text btnSad btnCenter" [style]="{fontSize: '4rem'}"></button>
 
       </div>
 
-      <div class="statGroup flex align-items-center happyStats relative">
+      <div class="statGroup flex align-items-center happyStats relative"
+        [style.filter]="'saturate(' + getEmotionSaturation(emotionRates.loving)  + ')'">
 
-        <p-knob #happyRateKnob [readonly]="true" strokeWidth="5" valueTemplate="" valueColor="#5ff4c8" />
+        <p-knob [ngModel]="emotionRates.loving" #happyRateKnob [readonly]="true" strokeWidth="5" rangeColor="#ecebf2"
+          valueTemplate="" valueColor="#ffc0cb" />
         <button pButton pRipple type="button" icon="fa-regular fa-face-grin-hearts" disabled
           class="p-button-rounded p-button-text btnLoving btnCenter" [style]="{fontSize: '4rem'}"></button>
 
       </div>
 
-      <div class="statGroup flex align-items-center happyStats relative">
+      <div class="statGroup flex align-items-center happyStats relative"
+        [style.filter]="'saturate(' + getEmotionSaturation(emotionRates.grateful)  + ')'">
 
-        <p-knob #happyRateKnob [readonly]="true" strokeWidth="5" valueTemplate="" valueColor="#5ff4c8" />
+        <p-knob [ngModel]="emotionRates.grateful" #happyRateKnob [readonly]="true" strokeWidth="5" rangeColor="#ecebf2"
+          valueTemplate="" valueColor="#f4d95f" />
         <button pButton pRipple type="button" icon="fa-regular fa-face-smile-beam" disabled
           class="p-button-rounded p-button-text btnGrateful btnCenter" [style]="{fontSize: '4rem'}"></button>
 
       </div>
 
-      <div class="statGroup flex align-items-center happyStats relative">
+      <div class="statGroup flex align-items-center happyStats relative"
+        [style.filter]="'saturate(' + getEmotionSaturation(emotionRates.angry)  + ')'">
 
-        <p-knob #happyRateKnob [readonly]="true" strokeWidth="5" valueTemplate="" valueColor="#5ff4c8" />
+        <p-knob [ngModel]="emotionRates.angry" #happyRateKnob [readonly]="true" strokeWidth="5" rangeColor="#ecebf2"
+          valueTemplate="" valueColor="#ef5b5b" />
         <button pButton pRipple type="button" icon="fa-regular fa-face-angry" disabled
           class="p-button-rounded p-button-text btnAngry btnCenter" [style]="{fontSize: '4rem'}"></button>
 
