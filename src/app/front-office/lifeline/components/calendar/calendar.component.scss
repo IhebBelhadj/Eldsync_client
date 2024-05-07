@@ -90,6 +90,12 @@
     margin-bottom: -1.2rem;
 }
 
+.calendarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 
 .eventContent {
     cursor: pointer;
@@ -123,5 +129,45 @@
     }
 
 
+
+}
+
+
+.btnCenter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.monthStats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+
+.btnHappy {
+        color: $color-happy;
+}
+
+.btnSad {
+
+      color: $color-sad;
+}
+
+.btnLoving {
+
+        color: $color-loving;
+}
+
+.btnAngry {
+        color: $color-angry;
+
+}
+
+.btnGrateful {
+          color: $color-grateful;
 
 }

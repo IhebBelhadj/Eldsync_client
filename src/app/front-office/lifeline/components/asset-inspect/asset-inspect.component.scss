@@ -1,0 +1,12 @@
+@import '../../styles/_variables.scss';
+
+::ng-deep .p-carousel .p-carousel-indicators .p-carousel-indicator.p-highlight button {
+  background: $black3 !important;
+}
+
+.closeBtn {
+  background: #fff;
+  color: $black3;
+}
+
+

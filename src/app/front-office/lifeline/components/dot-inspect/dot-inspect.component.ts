@@ -9,62 +9,62 @@ import { EmotionState, emotionStates } from '../../state/emotion.states';
 import { TagModule } from 'primeng/tag';
 
 @Component({
-    selector: 'lifeline-dot-inspect',
-    standalone: true,
-    imports: [OverlayPanelModule, CommonModule, TagModule],
-    templateUrl: './dot-inspect.component.html',
-    styleUrl: './dot-inspect.component.scss'
+  selector: 'lifeline-dot-inspect',
+  standalone: true,
+  imports: [OverlayPanelModule, CommonModule, TagModule],
+  templateUrl: './dot-inspect.component.html',
+  styleUrl: './dot-inspect.component.scss'
 })
 export class DotInspectComponent implements OnInit, OnDestroy {
 
 
-    selectedDot: Dot;
-    emotionState: EmotionState;
+  selectedDot: Dot;
+  emotionState: EmotionState;
 
-    @ViewChild('op') overlayPanel!: OverlayPanel;
+  @ViewChild('op') overlayPanel!: OverlayPanel;
 
-    stateSubscription!: Subscription;
-    constructor(private lifelineState: LifelineStateService) { }
+  stateSubscription!: Subscription;
+  constructor(private lifelineState: LifelineStateService) { }
 
-    onPanelShow() {
-        this.lifelineState.setDotInspect(true); // Set dotInspectOpen to true when panel is shown
-    }
+  onPanelShow() {
+    this.lifelineState.setDotInspect(true); // Set dotInspectOpen to true when panel is shown
+  }
 
-    onPanelHide() {
-        this.lifelineState.setDotInspect(false); // Set dotInspectOpen to false when panel is hidden
-    }
+  onPanelHide() {
+    this.lifelineState.setDotInspect(false); // Set dotInspectOpen to false when panel is hidden
+  }
 
-    ngOnInit() {
-        this.stateSubscription = this.lifelineState.dotInspectOpen$.subscribe((isOpen: boolean) => {
-            if (this.overlayPanel) {
-                if (isOpen) {
-                    const dotInspectData = this.lifelineState.dotInspectDataSnapshot;
-                    this.selectedDot = dotInspectData.dot;
-                    console.log("showing overlay panel", dotInspectData);
+  ngOnInit() {
+    this.stateSubscription = this.lifelineState.dotInspectOpen$.subscribe((isOpen: boolean) => {
+      if (this.overlayPanel) {
+        if (isOpen) {
+          const dotInspectData = this.lifelineState.dotInspectDataSnapshot;
+          this.selectedDot = dotInspectData.dot;
+          console.log("showing overlay panel", dotInspectData);
 
-                    this.emotionState = emotionStates.find(
-                        emotionState => emotionState.emotion === this.selectedDot.emotionType
-                    )?.states.find(
-                        s => s.intensity === this.selectedDot.emotionIntensity
-                    );
+          this.emotionState = emotionStates.find(
+            emotionState => emotionState.emotion === this.selectedDot.emotionType
+          )?.states.find(
+            s => s.intensity === this.selectedDot.emotionIntensity
+          );
 
-                    this.overlayPanel.show(dotInspectData.event, dotInspectData.selector); // Show the overlay panel
-                } else {
-                    this.overlayPanel.hide(); // Hide the overlay panel
-                }
-            }
-        });
-    }
-
-    ngOnDestroy() {
-        if (this.stateSubscription) {
-            this.stateSubscription.unsubscribe();
+          this.overlayPanel.show(dotInspectData.event, dotInspectData.selector); // Show the overlay panel
+        } else {
+          this.overlayPanel.hide(); // Hide the overlay panel
         }
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.stateSubscription) {
+      this.stateSubscription.unsubscribe();
     }
+  }
 
 
-    getEmotionClass(emotionType: EmotionType): string {
-        return emotionType ? `${emotionType as string}-tagBg` : '';
+  getEmotionClass(emotionType: EmotionType): string {
+    return emotionType ? `${emotionType as string}-tagBg` : '';
 
-    }
+  }
 }

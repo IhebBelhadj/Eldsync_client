@@ -11,165 +11,179 @@ import { DotCreationCancelState, LifelineStateService } from '../../state/lifeli
 import moment from 'moment';
 import { DotInspectComponent } from '../dot-inspect/dot-inspect.component';
 import { LifelineDataService } from '../../state/lifeline-data.service';
+import { Knob, KnobModule } from 'primeng/knob';
 
 @Component({
-    selector: 'lifeline-calendar',
-    standalone: true,
-    imports: [FullCalendarModule, CommonModule, ButtonModule, DotInspectComponent],
-    providers: [DatePipe],
-    templateUrl: './calendar.component.html',
-    styleUrl: './calendar.component.scss'
+  selector: 'lifeline-calendar',
+  standalone: true,
+  imports: [CommonModule, FullCalendarModule, CommonModule, ButtonModule, DotInspectComponent, KnobModule],
+  providers: [DatePipe],
+  templateUrl: './calendar.component.html',
+  styleUrl: './calendar.component.scss'
 })
 export class CalendarComponent implements AfterViewInit, OnDestroy {
 
-    @ViewChild('calendar') calendar: FullCalendarComponent;
+  @ViewChild('calendar') calendar: FullCalendarComponent;
 
 
+  @ViewChild('happyRateKnob') happyRateKnob: Knob;
+  @ViewChild('sadRateKnob') sadRateKnob: Knob;
+  @ViewChild('angryRateKnob') angryRateKnob: Knob;
+  @ViewChild('gratefulRateKnob') gratefulRateKnob: Knob;
+  @ViewChild('lovingRateKnob') lovingRateKnob: Knob;
 
-    calendarTitle = {
-        year: '',
-        month: ''
-    };
+  calendarTitle = {
+    year: '',
+    month: ''
+  };
 
-    events: Dot[] = [];
+  events: Dot[] = [];
 
-    calendarOptions: CalendarOptions = {
-        plugins: [dayGridPlugin],
-        initialView: 'dayGridMonth',
-        weekends: true,
-        height: screen.height * 0.6,
-        headerToolbar: false,
-        viewDidMount: this.viewDidMount.bind(this),
-        fixedWeekCount: false,
-        events: this.events,
+  calendarOptions: CalendarOptions = {
+    plugins: [dayGridPlugin],
+    initialView: 'dayGridMonth',
+    weekends: true,
+    height: screen.height * 0.6,
+    headerToolbar: false,
+    viewDidMount: this.viewDidMount.bind(this),
+    fixedWeekCount: false,
+    events: this.events,
 
-    };
+  };
 
-    stateSubscription!: Subscription;
+  stats = {
+    happyRate: 30,
+    sadRate: 0,
+    angryRate: 0,
+    gratefulRate: 0,
+    lovingRate: 0,
+  }
 
-    dotEvent: Event;
-    dotSelector: ElementRef;
+  stateSubscription!: Subscription;
 
-    constructor(
-        private crd: ChangeDetectorRef,
-        private dotService: DotService,
-        private datePipe: DatePipe,
-        private lifelineState: LifelineStateService,
-        private lifelineData: LifelineDataService,
-    ) { };
+  dotEvent: Event;
+  dotSelector: ElementRef;
 
-    ngAfterViewInit() {
-        this.stateSubscription = this.lifelineState.calendarCurrentDate$
-            .subscribe((date: Date) => {
-                this.calendarApi.gotoDate(date);
-                console.log("updated calendar")
-                this.calendarUpdate();
-            });
-    }
+  constructor(
+    private crd: ChangeDetectorRef,
+    private dotService: DotService,
+    private datePipe: DatePipe,
+    private lifelineState: LifelineStateService,
+    private lifelineData: LifelineDataService,
+  ) { };
 
-    ngOnDestroy(): void {
-        if (this.stateSubscription)
-            this.stateSubscription.unsubscribe();
-    }
-
-    seekLeft() {
-        const prevDate = moment(this.lifelineState.calendarCurrentDateSnapshot).subtract(1, 'months').toDate();
-        this.lifelineState.setCalendarCurrentDate(prevDate);
+  ngAfterViewInit() {
+    this.stateSubscription = this.lifelineState.calendarCurrentDate$
+      .subscribe((date: Date) => {
+        this.calendarApi.gotoDate(date);
+        console.log("updated calendar")
         this.calendarUpdate();
-    }
+      });
+  }
 
-    seekRight() {
-        const nextDate = moment(this.lifelineState.calendarCurrentDateSnapshot).add(1, 'months').toDate();
-        this.lifelineState.setCalendarCurrentDate(nextDate);
-        this.calendarUpdate();
-    }
+  ngOnDestroy(): void {
+    if (this.stateSubscription)
+      this.stateSubscription.unsubscribe();
+  }
 
-    updateCalendarTitle() {
-        const currentDate = this.calendarApi.getDate();
-        this.calendarTitle.year = currentDate.getFullYear().toString();
-        this.calendarTitle.month = currentDate.toLocaleString('default', { month: 'long' });
-    }
+  seekLeft() {
+    const prevDate = moment(this.lifelineState.calendarCurrentDateSnapshot).subtract(1, 'months').toDate();
+    this.lifelineState.setCalendarCurrentDate(prevDate);
+    this.calendarUpdate();
+  }
 
-    viewDidMount() {
-        console.log('viewDidMount');
-        this.calendarUpdate();
-    }
+  seekRight() {
+    const nextDate = moment(this.lifelineState.calendarCurrentDateSnapshot).add(1, 'months').toDate();
+    this.lifelineState.setCalendarCurrentDate(nextDate);
+    this.calendarUpdate();
+  }
 
-    get calendarApi() {
-        return this.calendar.getApi();
-    }
+  updateCalendarTitle() {
+    const currentDate = this.calendarApi.getDate();
+    this.calendarTitle.year = currentDate.getFullYear().toString();
+    this.calendarTitle.month = currentDate.toLocaleString('default', { month: 'long' });
+  }
 
-    calendarUpdate() {
-        this.updateCalendarTitle();
-        this.crd.detectChanges();
-        const startDate = this.calendarApi.view.currentStart;
-        const endDate = this.calendarApi.view.currentEnd;
+  viewDidMount() {
+    console.log('viewDidMount');
+    this.calendarUpdate();
+  }
 
-        const startDateString = this.datePipe.transform(startDate, 'yyyy-MM-ddTHH:mm:ss');
-        const endDateString = this.datePipe.transform(endDate, 'yyyy-MM-ddTHH:mm:ss');
+  get calendarApi() {
+    return this.calendar.getApi();
+  }
+
+  calendarUpdate() {
+    this.updateCalendarTitle();
+    this.crd.detectChanges();
+    const startDate = this.calendarApi.view.currentStart;
+    const endDate = this.calendarApi.view.currentEnd;
+
+    const startDateString = this.datePipe.transform(startDate, 'yyyy-MM-ddTHH:mm:ss');
+    const endDateString = this.datePipe.transform(endDate, 'yyyy-MM-ddTHH:mm:ss');
 
 
-        this.dotService.searchDots({ elderId: 1, startDate: startDateString, endDate: endDateString }, `
+    this.dotService.searchDots({ elderId: 1, startDate: startDateString, endDate: endDateString }, `
             idDot
             eventDate
             dotMarkdown
             emotionType
             emotionIntensity
         `).pipe(
-            map((data: Dot[]) => {
-                // Transform eventDate to date format
-                return data.map(dot => ({
-                    ...dot,
-                    eventDate: new Date(dot.eventDate),
-                    date: new Date(dot.eventDate),
-                    background: "#FF0"
-                }));
-            })
-        )
-            .subscribe((data: Dot[]) => {
-                this.events = data;
-                console.log('data:', data);
-            });
+      map((data: Dot[]) => {
+        // Transform eventDate to date format
+        return data.map(dot => ({
+          ...dot,
+          eventDate: new Date(dot.eventDate),
+          date: new Date(dot.eventDate),
+          background: "#FF0"
+        }));
+      })
+    )
+      .subscribe((data: Dot[]) => {
+        this.events = data;
+        console.log('data:', data);
+      });
+  }
+
+  onEventHover(hoverState: boolean, selector: ElementRef, event: Event, dot: Dot) {
+
+    if (!hoverState) {
+      this.lifelineState.setDotInspect(false);
+      return;
     }
 
-    onEventHover(hoverState: boolean, selector: ElementRef, event: Event, dot: Dot) {
+    console.log("before", this.lifelineState.snapshot.dotInspectOpen);
 
-        if (!hoverState) {
-            this.lifelineState.setDotInspect(false);
-            return;
-        }
+    this.lifelineState.setDotInspectData(event, selector, dot);
+    this.lifelineState.setDotInspect(true);
+    console.log("after", this.lifelineState.snapshot.dotInspectOpen)
 
-        console.log("before", this.lifelineState.snapshot.dotInspectOpen);
+  }
 
-        this.lifelineState.setDotInspectData(event, selector, dot);
-        this.lifelineState.setDotInspect(true);
-        console.log("after", this.lifelineState.snapshot.dotInspectOpen)
 
+  showDotDetails(dot: Dot) {
+    console.log("show details");
+    this.lifelineState.setDotInspectData(null, null, dot);
+    const snapshot = this.lifelineState.snapshot;
+    const isCreatingDot = snapshot.rightPanelAction == "add" && snapshot.rightPanelOpen;
+    console.log("isCreatingDot", isCreatingDot);
+    if (isCreatingDot) {
+      this.lifelineState.initCancelDotCreationRequest$().subscribe(value => {
+        if (value != DotCreationCancelState.VALIDATED) return;
+        this.showRightPanelDotDetails(dot);
+      });
+    } else {
+      this.showRightPanelDotDetails(dot);
     }
 
+  }
 
-    showDotDetails(dot: Dot) {
-        console.log("show details");
-        this.lifelineState.setDotInspectData(null, null, dot);
-        const snapshot = this.lifelineState.snapshot;
-        const isCreatingDot = snapshot.rightPanelAction == "add" && snapshot.rightPanelOpen;
-        console.log("isCreatingDot", isCreatingDot);
-        if (isCreatingDot) {
-            this.lifelineState.initCancelDotCreationRequest$().subscribe(value => {
-                if (value != DotCreationCancelState.VALIDATED) return;
-                this.showRightPanelDotDetails(dot);
-            });
-        } else {
-            this.showRightPanelDotDetails(dot);
-        }
-
-    }
-
-    showRightPanelDotDetails(dot: Dot) {
-        this.lifelineState.setRightPanelAction('show');
-        this.lifelineState.setRightPanel(true);
-        this.lifelineData.setSelectedDotId(dot.idDot);
-    }
+  showRightPanelDotDetails(dot: Dot) {
+    this.lifelineState.setRightPanelAction('show');
+    this.lifelineState.setRightPanel(true);
+    this.lifelineData.setSelectedDotId(dot.idDot);
+  }
 
 
 }

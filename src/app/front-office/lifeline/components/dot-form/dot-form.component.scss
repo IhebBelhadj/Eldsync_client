@@ -114,6 +114,37 @@
     gap: 1rem;
 }
 
+::ng-deep .tiptap p.is-editor-empty:first-child::before {
+  color: #adb5bd;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+.floatingMenuWrapper {
+  display: flex;
+  padding: 1rem;
+  background: $black0;
+  border-radius: 0.5rem;
+  margin-top: -6rem;
+
+  button {
+    background: none;
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    color: #fff;
+    border: none;
+    outline: none;
+  }
+
+ ::ng-deep .is-active {
+    background: #fff !important;
+    color: $black0 !important;
+  }
+}
+
 
 
 
