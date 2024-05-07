@@ -1,0 +1,22 @@
+
+
+<header>
+    <img src="./assets/layout/images/dr_El.png" alt="El Logo">
+    <h1>Chat with dr. EL!</h1>
+    <p>Hello! I'm your friendly EL chatbot...</p>
+</header>
+
+
+
+<main id="chat-window">
+    <div *ngFor="let msg of messages" [ngClass]="{'user-message': msg.isUser, 'bot-message': !msg.isUser}" class="message">{{ msg.text }}</div>
+</main>
+
+<aside id="sidebar">
+    <div class="field" id="field">
+    <input pInputText type="text" id="user-question" [(ngModel)]="message" placeholder="Ask a question..." style="width:90%" >
+
+        <button pButton type="button" (click)="sendMessage()" style="background-color:#b39bf8 ; border: none"> <i class="pi pi-send "></i></button>
+    </div>
+</aside>
+

@@ -1,0 +1,23 @@
+<div class="tabs notes-tab" >
+    <a class="tab notes-tab" routerLink="notes" routerLinkActive="selected" (click)="handleClickNotes()">
+        <div class="tab-tile">
+            <i class="material-symbols-outlined">
+                notes
+            </i>
+        </div>
+    </a>
+    <a class="tab chat-tab" routerLink="chatbot" routerLinkActive="selected" (click)="handleClickChat()" >
+        <div class="tab-tile">
+            <i class="material-symbols-outlined">
+               chat
+            </i>
+        </div>
+    </a>
+    <a class="tab task-tab" routerLink="todos" routerLinkActive="selected"(click)="handleClickTodo()"  >
+        <div class="tab-tile">
+            <i class="material-symbols-outlined">
+                task_alt
+            </i>
+        </div>
+    </a>
+</div>

@@ -1,0 +1,176 @@
+<div class="grid">
+    <div class="col-12 lg:col-6 xl:col-4">
+        <div class="card mb-0">
+            <div class="flex justify-content-between mb-3">
+                <div>
+                    <span class="block text-500 font-medium mb-3">Blood glucose lvl</span>
+                    <div class="text-900 font-medium text-xl">37 c</div>
+                </div>
+                <div class="flex align-items-center justify-content-center bg-blue-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
+                    <i class="pi pi-percentage text-blue-500 text-xl"></i>
+                </div>
+            </div>
+            <span class="text-green-500 font-medium">6 days </span>
+            <span class="text-500">since last check</span>
+        </div>
+    </div>
+    <div class="col-12 lg:col-6 xl:col-4">
+        <div class="card mb-0">
+            <div class="flex justify-content-between mb-3">
+                <div>
+                    <span class="block text-500 font-medium mb-3">Cholesterol lvl</span>
+                    <div class="text-900 font-medium text-xl">75</div>
+                </div>
+                <div class="flex align-items-center justify-content-center bg-purple-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
+                    <i class="pi pi-percentage text-purple-500 text-xl"></i>
+                </div>
+            </div>
+            <span class="text-green-500 font-medium">1 day </span>
+            <span class="text-500">since last check</span>
+        </div>
+    </div>
+    <div class="col-12 lg:col-6 xl:col-4">
+        <div class="card mb-0">
+            <div class="flex justify-content-between mb-3">
+                <div>
+                    <span class="block text-500 font-medium mb-3">Weight</span>
+                    <div class="text-900 font-medium text-xl">15</div>
+                </div>
+                <div class="flex align-items-center justify-content-center bg-cyan-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
+                    <i class="pi pi-sort-amount-up-alt text-cyan-500 text-xl"></i>
+                </div>
+            </div>
+            <span class="text-green-500 font-medium">5 days </span>
+            <span class="text-500">since last check</span>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <p-toolbar styleClass="mb-4">
+            <ng-template pTemplate="left">
+                <div class="my-2">
+                    <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="right">
+                <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
+                <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help" (click)="dt1.exportCSV()"></button>
+            </ng-template>
+        </p-toolbar>
+    </div>
+    <div class="col-12">
+        <div class="card">
+            <h5>Elderly Life Metric</h5>
+            <p-table #dt1 [value]="healthMetric" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-gridlines" [paginator]="true" [globalFilterFields]="['observerName', 'cholesterolLvl', 'bloodGlucoseLvl', 'weight', 'height']" responsiveLayout="scroll">
+                <ng-template pTemplate="caption">
+                    <div class="flex justify-content-between flex-column sm:flex-row">
+                        <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash" (click)="clear(dt1)" style="width: 50% ; margin-right: 20px"></button>
+                        <span class="p-input-icon-left mb-2">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)" placeholder="Search Keyword" class="w-full"/>
+                    </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="min-width: 12rem">Name of Observer</th>
+                        <th style="min-width: 10rem">Cholesterol Level (mg/dL)</th>
+                        <th style="min-width: 10rem">Blood Glucose Level (mg/dL)</th>
+                        <th style="min-width: 10rem">Weight (kg)</th>
+                        <th style="min-width: 12rem">Height (cm)</th>
+
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-patient>
+                    <tr>
+                        <td>{{patient.observerName}}</td>
+                        <td>{{patient.cholesterolLvl}}</td>
+                        <td>{{patient.bloodGlucoseLvl}}</td>
+                        <td>{{patient.weight}}</td>
+                        <td>{{patient.height}}</td>
+                        <td>
+                            <div class="flex">
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editHealthMetric(healthMetric)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteHealthMetric(healthMetric)"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="5">No elderly patients found.</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="loadingbody">
+                    <tr>
+                        <td colspan="5">Loading elderly patients data. Please wait.</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        <p-dialog [(visible)]="healthMetricAdd" [style]="{width: '450px'}" header="Life Metric Details" [modal]="true" class="p-fluid " >
+            <ng-template pTemplate="content " >
+                <div class="field">
+                    <p-calendar [showIcon]="true" inputId="date"  [(ngModel)]="healthMetrics.date" required autofocus></p-calendar>
+
+                </div>
+                <div class="field">
+                    <label for="name">Name</label>
+                    <input type="text" pInputText id="name" [(ngModel)]="healthMetrics.observerName" required />
+                </div>
+                <div class="field">
+                    <label for="oxygen">Cholesterol Lvl</label>
+                    <div class="input-with-icon flex">
+                        <input pInputText id="oxygen" [(ngModel)]="healthMetrics.cholesterolLvl" (input)="updateSafetyStatus('oxygenSaturation')" />
+                        <span [ngClass]="{'pi pi-flag-fill': true, 'text-green-500': isSafe(healthMetrics.cholesterolLvl), 'text-red-500': !isSafe(healthMetrics.cholesterolLvl), 'hidden': !cholesterolLvlEdited }"></span>
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="temperature">Blood Glucose Lvl</label>
+                    <div class="input-with-icon flex">
+
+                        <input  pInputText id="temperature" [(ngModel)]="healthMetrics.bloodGlucoseLvl" (input)="updateSafetyStatus('temperature')" />
+                        <span [ngClass]="{'pi pi-flag-fill': true, 'text-green-500': isSafe(healthMetrics.bloodGlucoseLvl), 'text-red-500': !isSafe(healthMetrics.bloodGlucoseLvl), 'hidden': !bloodGlucoseLvlEdited }"></span>
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="respiratory">Weight</label>
+                    <div class="input-with-icon flex">
+                        <input pInputText id="respiratory" [(ngModel)]="healthMetrics.weight" (input)="updateSafetyStatus('respiratoryRate')" />
+                        <span [ngClass]="{'pi pi-flag-fill': true, 'text-green-500': isSafe(healthMetrics.weight), 'text-red-500': !isSafe(healthMetrics.weight), 'hidden': !weightEdited }"></span>
+                    </div>
+                </div>
+
+
+
+
+
+                <!-- Other fields -->
+            </ng-template>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideADD()"></button>
+                <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveADD()"></button>
+            </ng-template>
+        </p-dialog>
+
+
+
+
+        <!--delete template of selected items in table -->
+        <p-dialog [(visible)]="healthMetricStat" [style]="{width: '450px'}"  [modal]="true" class="p-fluid">
+
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle text-red-500 mr-3" style="font-size: 2rem"></i>
+                <span>Are you sure you want to delete selected products?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="showErrorViaToast()"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDeleteSelected()"></button>
+            </ng-template>
+
+        </p-dialog>
+        <p-toast key="tst"></p-toast>
+    </div>
+
+</div>

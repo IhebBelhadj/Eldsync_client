@@ -10,6 +10,8 @@ import { CustomerService } from './demo/service/customer.service';
 import { EventService } from './demo/service/event.service';
 import { IconService } from './demo/service/icon.service';
 import { PhotoService } from './demo/service/photo.service';
+
+import {AppConfigComponent} from "./layout/config/app.config.component";
 import { HttpClientModule } from '@angular/common/http';
 import { GraphQLModule } from './graphql.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -20,6 +22,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { CheckboxModule } from 'primeng/checkbox';
+
 import { MessageService } from 'primeng/api';
 
 @NgModule({
@@ -50,5 +53,6 @@ import { MessageService } from 'primeng/api';
     MessageService
   ],
   bootstrap: [AppComponent],
+
 })
 export class AppModule { }

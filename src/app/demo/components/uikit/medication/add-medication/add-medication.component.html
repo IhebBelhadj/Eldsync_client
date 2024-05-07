@@ -1,0 +1,86 @@
+<div class="container justify-content-center align-items-center">
+    <form class="card p-2 form-group" [formGroup]="medicationForm">
+        <!-- Question 1 -->
+        <div class="p-field">
+            <label for="name">What medication would you like to add?</label>
+            <input id="name" type="text" pInputText formControlName="name" >
+            <div *ngIf="medicationForm.get('name')?.invalid && medicationForm.get('name')?.touched" class="p-error">
+                Medication is required
+            </div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="p-field">
+            <label for="form">What form is the medication?</label>
+            <p-dropdown id="form" [options]="medicationForms" formControlName="form" placeholder="Select form"></p-dropdown>
+            <div *ngIf="medicationForm.get('form')?.invalid && medicationForm.get('form')?.touched" class="p-error">
+                Form is required
+            </div>
+        </div>
+        
+        <!-- Question 3 -->
+        <div class="p-field">
+            <label for="purpose">What are you taking it for?</label>        
+            <input id="purpose" type="text" pInputText formControlName="purpose" >
+            <div *ngIf="medicationForm.get('purpose')?.invalid && medicationForm.get('purpose')?.touched" class="p-error">
+                Purpose is required
+            </div>
+        </div>
+        
+        <!-- Question 4 -->
+        <div class="p-field">
+            <label for="dosage">What is the dosage of the medication?</label>
+            <input id="dosage" type="text" pInputText formControlName="dosage">
+            <div *ngIf="medicationForm.get('dosage')?.invalid && medicationForm.get('dosage')?.touched" class="p-error">
+                Dosage is required
+            </div>
+        </div>
+
+        <!-- Question 5 -->
+        <div class="p-field">
+            <label for="frequency">What is the frequency of the medication?</label>
+            <p-dropdown id="frequency" [options]="medicationFrequencies" formControlName="frequency" placeholder="Select frequency"></p-dropdown>
+            <div *ngIf="medicationForm.get('frequency')?.invalid && medicationForm.get('frequency')?.touched" class="p-error">
+                Frequency is required
+            </div>
+        </div>
+
+        <!-- Question 6 -->
+        <div class="p-field">
+            <label for="startDate">When did you start taking the medication?</label>
+            <input id="startDate" type="date" pInputText formControlName="startDate" >
+            <div *ngIf="medicationForm.get('startDate')?.invalid && medicationForm.get('startDate')?.touched" class="p-error">
+                Start date is required
+            </div>
+        </div>
+
+        <div class="p-field">
+            <label for="endDate">When will you stop taking the medication?</label>
+            <input id="endDate" type="date" pInputText formControlName="endDate" >
+            <div *ngIf="medicationForm.get('endDate')?.invalid && medicationForm.get('endDate')?.touched" class="p-error">
+                End date is required
+            </div>
+        </div>
+
+        <!-- Question 8 -->
+        <div class="p-field">
+            <label for="instructions">Any specific instructions?</label>
+            <p-dropdown id="instructions" [options]="medicationInstructions" formControlName="instructions" placeholder="Select instruction"></p-dropdown>
+            <div *ngIf="medicationForm.get('instructions')?.invalid && medicationForm.get('instructions')?.touched" class="p-error">
+                Instructions is required
+            </div>
+        </div>
+
+
+        <!-- Question 9 -->
+        <div class="p-field">
+            <label for="dosageTime">What is the dosage time?</label>
+            <input id="dosageTime" type="text" pInputText formControlName="dosageTime" >
+            <div *ngIf="medicationForm.get('dosageTime')?.invalid && medicationForm.get('dosageTime')?.touched" class="p-error">
+                Dosage time is required
+            </div>
+            <button type="submit" pButton class="p-button-info" (click)="save()">Save</button>
+        </div>
+        
+    </form>
+</div>

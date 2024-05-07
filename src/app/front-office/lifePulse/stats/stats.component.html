@@ -1,0 +1,81 @@
+<div class="grid p-fluid">
+    <div class="col-12 lg:col-6 xl:col-3">
+        <div class="card mb-0">
+            <div class="flex justify-content-between mb-3">
+                <div>
+                    <span class="block text-500 font-medium mb-3">Health Color</span>
+
+                </div>
+                <div class="flex align-items-center justify-content-center bg-blue-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
+                    <i class="pi pi-heart-fill text-red-500 text-xl"></i>
+                </div>
+
+            </div>
+            <p-splitButton label="Color" icon="pi pi-plus" [model]="items" styleClass="p-button-info custom-button" (onClick)="toggleColorCubes()"></p-splitButton>
+            <div class="color-cubes-container" *ngIf="showColorCubes">
+
+                <button pButton pRipple type="button" class="color-cube p-button-outlined p-button-success" style="background-color: green"></button>
+                <button pButton pRipple type="button" class="color-cube p-button-outlined p-button-danger" style="background-color: red"></button>
+                <button pButton pRipple type="button" class="color-cube p-button-outlined p-button-warning" style="background-color: orange"></button>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-12 lg:col-6 xl:col-4">
+        <div class="card mb-0">
+            <div class="flex justify-content-between mb-3">
+                <div>
+                    <span *ngIf="showHeader" class="block text-500 font-medium mb-3">Month</span>
+                </div>
+                <div *ngIf="showHeader" class="flex align-items-center justify-content-center bg-orange-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
+                    <i class="pi pi-history text-orange-500 text-xl"></i>
+                </div>
+                <!-- Dropdown for selecting month view -->
+                <p-dropdown *ngIf="showCal" [options]="monthOptions" [(ngModel)]="selectedMonth" [style]="{'width':'100%' }"></p-dropdown>
+
+                <!-- Calendar component (conditionally displayed based on selectedMonth) -->
+                <p-calendar *ngIf="showCal" placeholder="Select Month" [view]="selectedMonth" dateFormat="mm/yy"  [readonlyInput]="true" style="margin-left: 5px"></p-calendar>
+            </div>
+            <p-splitButton label="Months" icon="pi pi-plus" [model]="months" styleClass="p-button-warning custom-button"   (click)="showCalendar()"></p-splitButton>
+
+        </div>
+    </div>
+    <div class="col-12 lg:col-6 xl:col-5">
+        <div class="card mb-0">
+            <div class="flex justify-content-between mb-3">
+                <div>
+                    <span class="block text-500 font-medium mb-3">Calender</span>
+                </div>
+                <div class="flex align-items-center justify-content-center bg-cyan-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
+                    <button class="calendar-btn"><i class="pi pi-calendar text-cyan-500 text-xl"></i></button>
+
+                </div>
+
+            </div>
+            <!-- Calendar -->
+            <!-- Calendar -->
+            <div class="calendar">
+
+                <div class="week">
+
+                    <div class="day" style="margin-top: -9px;padding-right : 20px;" *ngFor="let day of currentWeek; let i = index" [ngClass]="{ 'highlight': isToday(i) }">{{ day }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 lg:col-6">
+        <div class="card">
+            <h5>health journey</h5>
+            <p-chart type="line" [data]="lineData" [options]="lineOptions"></p-chart>
+
+        </div>
+
+    </div>
+    <div class="col-12 lg:col-6">
+        <div class="card">
+            <h5>Alerts</h5>
+            <p-chart type="bar" [data]="barData" [options]="barOptions"></p-chart>
+        </div>
+    </div>
+</div>
+
