@@ -50,4 +50,50 @@
       }
     }
     
-    
+    .btn1{
+      color: black;
+    }  
+    .btn2{
+      color: green;
+    }  
+    .btn1:hover{
+      color: white;
+      background-color:black ;
+    }  
+    .btn2:hover{
+      color: white;
+      background-color:green ;
+
+    }  
+
+    .tst{
+      color:green;
+  }
+  
+  .tst:hover{
+      color:white;
+      background-color: green;
+  }
+
+  .introjs-tooltip {
+    max-width: 800px !important; /* Larger width for more content space */
+    min-width: 350px !important; /* Minimum width to maintain size */
+    font-size: 16px !important; /* Larger font for better readability */
+    padding: 20px 25px !important; /* More padding for better text display */
+    background-color: #333 !important; /* Dark background */
+    color: #fff !important; /* Light color text for contrast */
+    border-radius: 8px !important; /* Rounded corners */
+    box-shadow: 0 4px 20px rgba(0,0,0,0.75) !important; /* Deeper shadow for 3D effect */
+}
+
+/* Optional: Style the buttons within the tooltip for consistency */
+.introjs-button {
+    color: #fff !important;
+    background-color: #555 !important; /* Darker buttons */
+    border-color: #444 !important; /* Matching border color */
+}
+
+.introjs-button:hover, .introjs-button:focus {
+    background-color: #666 !important; /* Lighter on hover/focus */
+    border-color: #555 !important;
+}

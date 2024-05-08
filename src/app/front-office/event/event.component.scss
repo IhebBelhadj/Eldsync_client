@@ -75,5 +75,39 @@
     font-family: 'Times New Roman', serif;
   }
   tr:hover {
-    background-color: wheat;
+    background-color: #CFDBD5;
   }
+
+  .custom-hover-button {
+    color: black; /* Optional: change the text color on hover */
+}
+.custom-hover-buttonn {
+    color: green; /* Optional: change the text color on hover */
+
+}
+.custom-hover-buttonnn {
+    color: orangered; /* Optional: change the text color on hover */
+
+}
+
+
+
+
+  .custom-hover-button:hover {
+    background: black; /* Example: orange to yellow gradient */
+    color: white; /* Optional: change the text color on hover */
+    border: none;
+}
+.custom-hover-buttonn:hover {
+    background: green; /* Example: orange to yellow gradient */
+    color: white; /* Optional: change the text color on hover */
+    border: none;
+
+}
+.custom-hover-buttonnn:hover {
+    background: orangered; /* Example: orange to yellow gradient */
+    color: white; /* Optional: change the text color on hover */
+    border: none;
+
+}
+

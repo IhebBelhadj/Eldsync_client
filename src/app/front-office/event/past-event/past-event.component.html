@@ -1,13 +1,16 @@
 
+<h1 style="text-align: center; font-family: 'Poppins', sans-serif; color: black; font-size: 40px; padding: 20px;font-weight:Bold">Event Concluded</h1>
+
   <div class="container mt-2">
-    <h1>Event List</h1>
+
       <div class="form-group">
       <div class="card">
       
       <div class="col-12 mb-2 lg:col-4 lg:mb-0">
-        <button type="button" pButton label="Exit" icon="pi pi-arrow-left" class="p-button-warning mr-2" (click)="GoHome()"></button>
-        <p-dropdown [options]="categories" [(ngModel)]="selectedCategory" placeholder="Select a category" (onChange)="onCategoryChange()"></p-dropdown>
-        <button type="button" pButton label="Reset" icon="pi pi-refresh" (click)="resetFilter()" class="p-button-text"></button>
+        <button type="button" pButton label="Exit" icon="pi pi-arrow-left" class="p-button-rounded p-button-success p-button-text mr-2" style=" color:orangered" (click)="GoHome()"></button>
+        <p-dropdown  [options]="categories" [(ngModel)]="selectedCategory" placeholder="Select a category" (onChange)="onCategoryChange()" class="bold-dropdown"></p-dropdown>
+        <button pButton pRipple type="button" type="button" label="Reset" icon="pi pi-refresh" (click)="resetFilter()" class="p-button-rounded p-button-success p-button-text" style=" color:black"></button>
+
 
   
       </div>
@@ -33,14 +36,14 @@
       </ng-template>
       <ng-template pTemplate="body" let-event>
         <tr>
-          <td>{{ event.name }}</td>
+          <td style="font-weight:bold">{{ event.name }}</td>
           <td>{{ event.description }}</td>
           <td>{{ event.location }}</td>
           <td>{{ event.status }}</td>
           <td style="width: 200px;"><img [src]="event.bannerUrl || 'assets/default-image.jpg'" style="width: 100%; height: auto;" alt="Banner for {{ event.name }} " ></td>
           <td>{{ event.date | date:'mediumDate' }}</td>
           <td>
-            <button type="button" pButton label="Reschedule" icon="pi pi-calendar-plus" (click)="openReschedule(event)"></button>
+            <button pButton pRipple type="button" label="Reshedule" icon="pi pi-calendar-plus" (click)="openReschedule(event)" class="p-button-rounded p-button-success p-button-text buttonsd" ></button>
           </td>
         </tr>
       </ng-template>
@@ -48,7 +51,7 @@
 
     <p-dialog header="Reschedule Event" [(visible)]="showDialog" [style]="{width: '400px'}">
       <p-calendar [(ngModel)]="selectedDate" [showIcon]="true"></p-calendar>
-      <button type="button" pButton label="Save Date" (click)="rescheduleEvent()"></button>
+      <button pButton pRipple type="button" type="button" pButton label="Save Date" class="p-button-rounded p-button-success p-button-text" style=" color:black" (click)="rescheduleEvent()"></button>
     </p-dialog>
   </div>
 </div>

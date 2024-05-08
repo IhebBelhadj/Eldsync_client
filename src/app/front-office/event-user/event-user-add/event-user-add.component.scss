@@ -49,4 +49,28 @@
     color: white !important; /* White text color for the button */
     border: 1px solid green !important; /* Green border for the button */
   }
-  
+  .center-content {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically, remove if not needed */
+}
+
+@media (max-width: 768px) {
+    .center-content {
+        flex-direction: column; /* Stack vertically on smaller screens */
+    }
+}
+.butonesd:hover{
+    background: green; /* Example: orange to yellow gradient */
+    color: white; /* Optional: change the text color on hover */
+    border: none;
+}
+.butonesdd:hover{
+    background: black; /* Example: orange to yellow gradient */
+    color: white; /* Optional: change the text color on hover */
+    border: none;
+}
+.butonesdd{
+    background: white; /* Example: orange to yellow gradient */
+    color: black; /* Optional: change the text color on hover */
+}

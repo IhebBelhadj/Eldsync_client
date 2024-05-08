@@ -1,6 +1,59 @@
 <!-- Event List -->
 
-<button pButton type="button" label="Go Back" class="p-button-info" icon="pi pi-arrow-left" (click)="GoBack()" ></button>
+<h1 style="text-align: center; font-family: 'Poppins', sans-serif; color: black; font-size: 40px; padding: 20px;font-weight:Bold">
+  List of Attended Events</h1>
+
+
+  <div class="form-group">
+    <div class="card">
+      <h2 style="color: #333; font-size: 20px; font-family: 'Times New Roman', Times, serif;">
+        <i class="pi pi-calendar" style="color: blue;font-weight: bold; " aria-hidden="true"></i> Upcoming Event: 
+        <span style="font-weight: bold; font-family: 'Times New Roman', Times, serif;color: #333">
+            {{ nextEvent.name }}
+        </span>
+    </h2>
+    <h2 style="color: #333; font-size: 20px; font-family: 'Times New Roman', Times, serif;">
+        <i class="pi pi-clock" aria-hidden="true"  style="color: blue;font-weight: bold; " ></i> Event Date: 
+        <span style="font-weight: bold; font-family: 'Times New Roman', Times, serif;color: #333">
+            {{ nextEvent.date }}
+        </span>
+    </h2>
+    
+      
+      <div class="grid formgrid">
+        
+
+            <div class="inline-flex">
+            <button pButton pRipple type="button" label="Sort Events By Date " icon="pi pi-clock" class="p-button-text" style="color: purple;" (click)="sortEventsByNewestFirst()" ></button>
+         
+      </div>
+    </div>
+  </div>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <div class="container">
@@ -10,16 +63,17 @@
       <h5 class="card-title">{{ event.name }}</h5>
       <p class="card-text">{{ event.location }}</p>
       <p class="card-text"><small class="text-muted">{{ event.date | date }}</small></p>
-        <button pButton type="button" label="View Details" (click)="selectEvent(event)"></button>
+        <button pButton type="button"  icon="pi pi-eye" label="View Details" (click)="selectEvent(event)" class="p-button-rounded p-button-success p-button-outlined butonesd"></button>
     </div>
   </div>
 </div>
 
 <!-- Event Details Dialog -->
-<p-dialog header="Event Details" [(visible)]="displayDetailsDialog" [style]="{width: '40vw'}" [contentStyle]="{'padding': '24px'}" [baseZIndex]="1000">
+<p-dialog header="Event Details" [(visible)]="displayDetailsDialog" [style]="{'width': '40vw'}" [contentStyle]="{'padding': '24px'}" [baseZIndex]="1000" >
   <ng-template pTemplate="content">
     <div *ngIf="selectedEvent" style="font-family: 'Arial', sans-serif; color: #333;">
-    
+      <p><strong>Category:</strong> {{ selectedEvent.idEvent }}</p>
+
       <h2 style="color: #0056b3; margin-bottom: 12px;">{{ selectedEvent.name }}</h2>
       <p><strong>Date:</strong> {{ selectedEvent.date | date:'fullDate' }}</p>
       <p><strong>Category:</strong> {{ selectedEvent.category }}</p>
@@ -32,3 +86,5 @@
     </div>
   </ng-template>
 </p-dialog>
+<div class="btnexsit"><button pButton pRipple label="Go Back" icon="pi pi-chevron-left" iconPos="left" (click)="GoBack()"  class="p-button-rounded p-button-info p-button-outlined butonesdd"></button>
+</div>

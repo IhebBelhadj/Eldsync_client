@@ -21,13 +21,13 @@ import { ToastModule } from 'primeng/toast';
 
 
 import { PaginatorModule } from 'primeng/paginator';
+import { EventConsultationComponent } from './event-consultation/event-consultation.component';
 import { EventUserAddComponent } from './event-user-add/event-user-add.component';
 import { EventUserAttendenceComponent } from './event-user-attendence/event-user-attendence.component';
 import { EventUserCalenderComponent } from './event-user-calender/event-user-calender.component';
 import { EventUserRecommandedComponent } from './event-user-recommanded/event-user-recommanded.component';
 import { EventUserRoutingModule } from './event-user-routing.module';
 import { EventUserComponent } from './event-user.component';
-
 
 
 
@@ -56,6 +56,6 @@ InputTextareaModule,
 EventUserRoutingModule
   ],
   
-  declarations: [EventUserComponent,EventUserAddComponent,EventUserCalenderComponent,EventUserAttendenceComponent,EventUserRecommandedComponent]
+  declarations: [EventConsultationComponent,EventUserComponent,EventUserAddComponent,EventUserCalenderComponent,EventUserAttendenceComponent,EventUserRecommandedComponent]
 })
 export class EventUserModule { }

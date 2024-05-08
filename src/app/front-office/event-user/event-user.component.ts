@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import introJs from 'intro.js';
 import { MessageService } from 'primeng/api';
 import { catchError, forkJoin, map, of } from 'rxjs';
 import { EventStatus } from '../event/event-status';
 import { EventService } from '../event/event.service';
+
 
 @Component({
   selector: 'app-event-user',
@@ -25,17 +27,24 @@ export class EventUserComponent implements OnInit {
   toDate: Date = new Date();    // Optionally initialize to today's date
   nextEvent: any;
 
-  userId: number = 2;  
+  userId: number = 3;  
 
   filteredEvents: Event[] = [];
   categories: string[] = []; 
   selectedCategory: string = ''; 
+
+
+  RegisterDialog: boolean = false;
+  dialogMessage: string = '';
+  //  private tour: Shepherd.Tour;
+
 
   constructor(private eventService: EventService, private router: Router,private messageService: MessageService) {}
 
   ngOnInit(): void {
     this.getEventsByStatus(); 
     this.loadNextEvent(); 
+
 
   }
 
@@ -66,7 +75,7 @@ export class EventUserComponent implements OnInit {
 
   resetFilter(): void {
     this.selectedCategory = '';
-    this.filteredEvents = [...this.events];
+    this.getEventsByStatus(); 
   }
 
   getEventsByStatus(): void { // Renamed method for clarity
@@ -137,12 +146,11 @@ export class EventUserComponent implements OnInit {
   
     this.eventService.registerUserForEvent(this.userId, eventId).subscribe({
       next: () => { 
-        console.log('Registered successfully');
-        alert('You have successfully registered for the event!');
+        this.showDialoog('You have successfully registered for the event! You can check the list of events registred in "Attended"');
       },
       error: err => {
         console.error('Registration failed:', err);
-        alert('Failed to register for the event.');
+        this.showDialoog('You have successfully registered for the event!');
       }
     });
   }
@@ -172,7 +180,14 @@ onReject() {
   this.messageService.clear('confirm');
 }
 
+showDialoog(message: string) {
+  this.dialogMessage = message;
+  this.RegisterDialog = true;
+}
 
+hideDialoog() {
+  this.RegisterDialog = false;
+}
 
 
 
@@ -192,4 +207,88 @@ onReject() {
   onConfirm(): void {
     this.router.navigate(['/frontOffice/eventUser/eventRecommandation']);
   }
-}
+
+  ngAfterViewInit(): void {
+    this.startTour();
+  }
+
+
+
+
+
+  startTour() {
+    const intro = introJs();
+
+    intro.setOptions({
+      steps: [
+        
+        {
+          element: '#viewrButton',
+          intro: 'This shows the name of the closest upcoming event. It’s the next event you might like to attend!',
+          position: 'top'
+        },
+        {
+          element: '#registerButton',
+          intro: 'Here you can see the date when the event is happening. Mark your calendar!',
+          position: 'top'
+        },
+        {
+          element: '#searchButton',
+          intro: 'Use this button to find events on specific dates. Just choose the dates you’re interested in and see what’s available.',
+          position: 'top'
+        },
+        {
+          element: '#suggestButton',
+          intro: 'Not sure what to do? Click here for suggestions on fun events you might enjoy.',
+          position: 'top'
+        },
+        {
+          element: '#schedulerButton',
+          intro: 'This is your calendar. It helps you see all scheduled events organized month by month',
+          position: 'top'
+        },
+        {
+          element: '#attendedButton',
+          intro: 'View a list of all the events you have signed up for.',
+          position: 'top'
+        },
+        {
+          element: '#notificationsButton',
+          intro: 'Check here often for notifications about exciting new events that match your interests!.',
+          position: 'top'
+        }
+      ],
+      exitOnOverlayClick: false,
+      showBullets: false,
+      showStepNumbers: false,
+      nextLabel: 'Next',
+      prevLabel: 'Back',
+      skipLabel: 'Skip',
+      doneLabel: 'Finish'
+    });
+
+    intro.start();
+  }
+
+
+
+
+
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

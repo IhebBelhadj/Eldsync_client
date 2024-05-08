@@ -36,7 +36,7 @@ input[type="file"] {
 
 /* Custom button styling */
 .custom-file-upload .ui-button {
-      background-color: #007bff;
+      background-color: black;
       color: white;
       padding: 10px 20px;
       border: none;
@@ -56,4 +56,16 @@ input[type="file"] {
   
     /* Styles for the file input and image are the same as previously defined */
     
-    
+    .butonesd:hover{
+      background: green; /* Example: orange to yellow gradient */
+      color: white; /* Optional: change the text color on hover */
+      border: none;
+  }
+  .butonesdd{
+    color: black; /* Optional: change the text color on hover */
+}
+  .butonesdd:hover{
+      background: black; /* Example: orange to yellow gradient */
+      color: white; /* Optional: change the text color on hover */
+      border: none;
+  }

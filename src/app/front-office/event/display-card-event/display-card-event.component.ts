@@ -14,6 +14,11 @@ export class DisplayCardEventComponent implements OnInit {
   displayDialog: boolean = false;
   fromDate: Date = new Date();  // Optionally initialize to today's date
   toDate: Date = new Date();    // Optionally initialize to today's date
+  displayDeleteDialog: boolean = false;
+  idToDelete: number | null = null;
+
+  displayInfoDialog: boolean = false;
+  infoMessage: string = '';
 
   constructor(private eventService: EventService, private router: Router) {}
 
@@ -31,22 +36,55 @@ export class DisplayCardEventComponent implements OnInit {
     });
   }
 
-  getEventsByDateRange(): void {
-    if (!this.fromDate || !this.toDate || this.fromDate > this.toDate) {
-      alert("Please check the dates. Start date should not be later than end date.");
-      return;
-    }
-
-    const validFromDate = new Date(this.fromDate); // Ensure this is a Date object
-    const validToDate = new Date(this.toDate);     // Ensure this is a Date object
-
-    this.eventService.getEventsByDonationDateRange(validFromDate, validToDate).subscribe(events => {
-      const approvedEvents = events.filter(event => event.status === EventStatus.PENDING);
-      this.handleEventBanners(approvedEvents);
-    }, error => {
-      console.error('Error fetching events by date range:', error);
+  sortEventsByNewestFirst(): void {
+    this.events.sort((a, b) => {
+      const dateA = new Date(a.date); // Assuming 'date' is the field that stores event date
+      const dateB = new Date(b.date);
+      return dateB.getTime() - dateA.getTime(); // Sorts in descending order
     });
   }
+  
+ 
+
+  getEventsByDateRange(): void {
+    if (!this.fromDate || !this.toDate || this.fromDate > this.toDate) {
+      this.infoMessage = "Please check the dates. Start date should not be later than end date.";
+      this.displayInfoDialog = true;
+
+      return;
+    }
+  
+    const validFromDate = new Date(this.fromDate);
+    const validToDate = new Date(this.toDate);
+  
+    this.eventService.getEventsByDonationDateRange(validFromDate, validToDate).subscribe({
+      next: (events) => {
+        const approvedEvents = events.filter(event => event.status === EventStatus.PENDING);
+        if (approvedEvents.length === 0) {
+          this.infoMessage = "There are no events in this range of date. Try another period.";
+          this.displayInfoDialog = true;
+                } else {
+          this.handleEventBanners(approvedEvents);
+        }
+      },
+      error: (error) => {
+        if (error.status === 404) {
+          // Handle the 404 error
+          this.infoMessage = "There are no events in this range of date. Try another period.";
+          this.displayInfoDialog = true;
+                } else {
+          console.error('Error fetching events by date range:', error);
+        }
+      }
+    });
+  }
+
+  closeInfoDialog(): void {
+    this.displayInfoDialog = false;
+  }
+
+
+  
   handleEventBanners(approvedEvents: any[]): void {
     let observables = approvedEvents.map(event => 
       this.eventService.getEventBanner(event.idEvent).pipe(
@@ -96,4 +134,34 @@ export class DisplayCardEventComponent implements OnInit {
     });
   }
   
+
+  showDialogToDelete(idEvent: number): void {
+    this.idToDelete = idEvent;
+    this.displayDeleteDialog = true;
+  }
+
+  confirmDelete(): void {
+    if (this.idToDelete !== null) {
+      this.eventService.removeEvent(this.idToDelete).subscribe(
+        () => {
+          console.log('Event deleted successfully.');
+          this.events = this.events.filter((event) => event.idEvent !== this.idToDelete);
+          this.getEventsByStatus(); // Refresh list if needed
+          this.displayDeleteDialog = false; // Close the dialog
+          this.idToDelete = null; // Reset the id to delete
+        },
+        (error) => {
+          console.error('Error removing event:', error);
+          this.displayDeleteDialog = false; // Close the dialog
+          this.idToDelete = null; // Reset the id to delete
+        }
+      );
+    }
+  }
+
+  resetEvents(): void {
+    this.getEventsByStatus(); 
+  
+}
+
 }

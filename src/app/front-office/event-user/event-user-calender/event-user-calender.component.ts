@@ -33,8 +33,8 @@ export class EventUserCalenderComponent implements OnInit {
   selectedLocation: string | null = null; // This will hold the selected location as a string
   filteredLocations: string[] = [];
   nextEvent: any;
-
-
+  confirmationDialog: boolean = false;
+  confirmationMessage: string = "";
   selectedFile: File;
   eventBannerUrl: Observable<SafeUrl>;
   @ViewChild('fileInput', { static: false }) fileInput!: ElementRef;
@@ -125,6 +125,8 @@ private loadStatus(): void
             location: event.location,
             price: event.price,
             bannerUrl: event.bannerData,
+            backgroundColor: event.status === 'APPROVED' ? 'green' : 'grey',  // Set the event color based on status
+
           }));
           console.log('Events for FullCalendar:', this.events); // Check the date here
 
@@ -244,12 +246,26 @@ openEditDialog(event: any): void
         this.cdr.detectChanges();  // Force Angular to check for changes
     }
 
+    
+  closeAddDialog(): void 
+  {
+      console.log('Closing Edit Dialog');
+      this.displayAddDialog = false; // Consider what behavior you want here
+      this.cdr.detectChanges();  // Force Angular to check for changes
+  }
+
+
 
 
   onCancel(): void 
     {
       console.log('Edit Canceled');
       this.closeEditDialog();
+    }
+    onCancelAdd(): void 
+    {
+      console.log('Adding Event Canceled');
+      this.closeAddDialog();
     }
 
 
@@ -320,6 +336,8 @@ onFileSelected(event: any)
           next: () => {
             console.log('Event updated successfully');
             this.closeEditDialog();
+            this.confirmationMessage = "Updated successfully, waiting for admin approval";
+            this.confirmationDialog = true;
             this.loadEvents(); // Refresh the list of events
           },
           error: error => {
@@ -355,6 +373,8 @@ onFileSelected(event: any)
         error: (error) => console.error('Error creating event:', error)
       });
       this.displayAddDialog=false;
+      this.confirmationMessage = "Added successfully, waiting for admin approval";
+      this.confirmationDialog = true;
     }
   
 

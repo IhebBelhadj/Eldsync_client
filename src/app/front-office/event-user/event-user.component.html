@@ -4,13 +4,13 @@
 
 <div class="form-group">
   <div class="card">
-    <h2 style="color: #333; font-size: 20px; font-family: 'Times New Roman', Times, serif;">
+    <h2 style="color: #333; font-size: 20px; font-family: 'Times New Roman', Times, serif;" id="viewrButton">
       <i class="pi pi-calendar" style="color: blue;font-weight: bold; " aria-hidden="true"></i> Upcoming Event: 
       <span style="font-weight: bold; font-family: 'Times New Roman', Times, serif;color: #333">
           {{ nextEvent.name }}
       </span>
   </h2>
-  <h2 style="color: #333; font-size: 20px; font-family: 'Times New Roman', Times, serif;">
+  <h2 style="color: #333; font-size: 20px; font-family: 'Times New Roman', Times, serif;" id="registerButton">
       <i class="pi pi-clock" aria-hidden="true"  style="color: blue;font-weight: bold; " ></i> Event Date: 
       <span style="font-weight: bold; font-family: 'Times New Roman', Times, serif;color: #333">
           {{ nextEvent.date }}
@@ -22,22 +22,22 @@
       
 
           <span class="p-input-icon-left p-input-icon-right mr-3">
-            <label for="fromDate" class="mr-3">From Day</label>
+            <label for="fromDate" class="mr-1">From Day</label>
             <p-calendar [(ngModel)]="fromDate" inputId="fromDate"></p-calendar>
           </span>
 
           <span class="p-input-icon-left p-input-icon-right">
-            <label for="toDate" class="mr-3">To Day</label>
-            <p-calendar [(ngModel)]="toDate" inputId="toDate" class="mr-3"></p-calendar>
+            <label for="toDate" class="mr-1">To Day</label>
+            <p-calendar [(ngModel)]="toDate" inputId="toDate" class="mr-1"></p-calendar>
           </span>
   
 
           <div class="inline-flex">
-          <button pButton pRipple type="button" label="" (click)="getEventsByDateRange()" icon="pi pi-search" class="p-button-rounded p-button-outlined mr-3" ></button>
-          <button pButton type="button" label="Suggest" class="p-button-text mr-3" icon="pi pi-plus" (click)="GoAdd()"></button>
-          <button pButton type="button" label="Schedular" class="p-button-text mr-3" icon="pi pi-calendar" (click)="GoCalender()"></button>
-          <button pButton pRipple type="button" label="" class="p-button-rounded p-button-info p-button-outlined mr-3"  icon="pi pi-eye"  (click)="navigateToAttendedEvents()"></button>
-           <button pButton pRipple type="button" label="" (click)="showToast()" icon="pi pi-bell" class="p-button-rounded p-button-outlined mr-3" ></button>
+          <button  id="searchButton" pButton pRipple type="button" label="Search" (click)="getEventsByDateRange()" icon="pi pi-search" class="p-button-text search" ></button>
+          <button  id="suggestButton" pButton type="button" label="Suggest" style="color: green;" class="p-button-text  addevent" icon="pi pi-plus" (click)="GoAdd()"></button>
+          <button  id="schedulerButton"  pButton type="button" label="Schedular" style="color: black;" class="p-button-text  calenderschedular " icon="pi pi-calendar" (click)="GoCalender()"></button>
+          <button  id="attendedButton"  pButton pRipple type="button" label="Attended" class="p-button-text AttendedEvents"  icon="pi pi-eye"  (click)="navigateToAttendedEvents()"   style="color: orangered;"></button>
+           <button  id="notificationsButton" pButton pRipple type="button" label="Notifications" (click)="showToast()" icon="pi pi-bell" class="p-button-text Notifications " style="color: black;"></button>
           <p-toast 
           position="top-center" 
           key="confirm" 
@@ -60,8 +60,8 @@
                   </div>
               </ng-template>
       </p-toast>
-          <p-dropdown [options]="categories" [(ngModel)]="selectedCategory" placeholder="Select a category" (onChange)="onCategoryChange()" styleClass="mr-3"></p-dropdown>
-          <button pButton pRipple type="button" label="" icon="pi pi-refresh" (click)="resetFilter()" class="p-button-rounded p-button-warning p-button-outlined"></button>
+          <p-dropdown [options]="categories" [(ngModel)]="selectedCategory" placeholder="Select a category" (onChange)="onCategoryChange()"></p-dropdown>
+          <button pButton pRipple type="button" label="Refresh" icon="pi pi-refresh" (click)="resetFilter()" class="p-button-text" style="color: orangered;"></button>
          
 
        
@@ -77,8 +77,14 @@
           <h5 class="card-title">{{ event.name }}</h5>
           <p class="card-text">{{ event.location }}</p>
           <p class="card-text"><small class="text-muted">{{ event.date | date }}</small></p>
-          <button pButton type="button" label="View Details" class="p-button-secondary mr-3" icon="pi pi-eye" (click)="showDialog(event)"></button>
-          <button pButton type="button" label="Register" class="p-button-success" (click)="registerToEvent(event.idEvent)"></button>
+
+
+
+          
+         <!--<button pButton type="button" label="View Details" class="p-button-secondary mr-3" icon="pi pi-eye" (click)="showDialog(event)"></button>
+          <button pButton type="button" label="Register" class="p-button-success" (click)="registerToEvent(event.idEvent)"></button>--> 
+          <button  pButton type="button" label="View Details"  class="p-button-rounded p-button-success p-button-outlined btn1 mr-2" icon="pi pi-eye"(click)="showDialog(event)"></button>
+          <button  pButton type="button" label="Register"  class="p-button-rounded p-button-success p-button-outlined btn2 mr-2" icon="pi pi-check" (click)="registerToEvent(event.idEvent)"></button>
 
 
         </div>
@@ -101,6 +107,13 @@
   </p-dialog>
   <p-paginator [rows]="rows" [totalRecords]="totalRecords" (onPageChange)="paginate($event)" styleClass="paginator-custom" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[5, 10, 20]"></p-paginator>
 
+  <p-dialog header="Notification" [(visible)]="RegisterDialog" [modal]="true" [style]="{width: '40vw'}">
+    <p>{{ dialogMessage }}</p>
+    <p-footer>
+        <button type="button" pButton label="OK" (click)="hideDialoog()" class="p-button-rounded p-button-success p-button-outlined tst" style="width: 200px;"></button>
+    </p-footer>
+  </p-dialog>
+  
   
   
     

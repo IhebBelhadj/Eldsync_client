@@ -1,22 +1,23 @@
 <div class="container mt-2">
-  <h1>Event List</h1>
+  <h1 style="text-align: center; font-family: 'Poppins', sans-serif; color: black; font-size: 40px; padding: 20px;font-weight:Bold">
+    Event List</h1>
 
   <!-- Search form -->
   <div class="form-group">
     <div class="card">
 			<h5>Search By Location</h5>
 			<div class="grid formgrid">
-      <span class="p-input-icon-left p-input-icon-right">
+      <span class="p-input-icon-left p-input-icon-right mr-2">
         <i class="pi pi-map"></i>
         <input type="text" pInputText placeholder="Search" id="locationSearch" [(ngModel)]="searchLocation">
-        <i class="pi pi-search"></i>
       </span>
-    <div class="col-12 mb-2 lg:col-4 lg:mb-0">
-      <button pButton pRipple type="button" label="" class="p-button-secondary mr-2"  icon="pi pi-search"  (click)="filterEvents()" ></button>
-      <button pButton pRipple type="button" label="" class="p-button-secondary mr-2"  icon="pi pi-plus"  (click)="GoEvent()" ></button>
-      <button pButton pRipple type="button" label="" class="p-button-secondary mr-2"  icon="pi pi-th-large"  (click)="GoToCard()" ></button>
-      <button pButton pRipple type="button" label="Calender" class="p-button-primary mr-2"  icon="pi pi-calendar"  (click)="GoToEventSchedular()" ></button>
-      <button pButton pRipple type="button" label="Past Event" class="p-button-warning"  icon="pi pi-calendar-minus" (click)="GoToPastEvent()" ></button>
+    <div class="inline-flex">
+      <button pButton pRipple type="button" label="" class="p-button-rounded p-button-success p-button-outlined  mr-2"  icon="pi pi-search" style=" color:orangered; " (click)="filterEvents()" ></button>
+      <button pButton pRipple type="button" label="" class="p-button-rounded p-button-success p-button-text  mr-2"  icon="pi pi-refresh"style="color :black "  (click)="refreshEvents()" ></button>
+      <button pButton pRipple type="button" label="Add" class="p-button-rounded p-button-success p-button-text mr-2"  icon="pi pi-plus"  (click)="GoEvent()"style="color:black " ></button>
+      <button pButton pRipple type="button" label="Approve Event" class="p-button-rounded p-button-success p-button-text  mr-2"  icon="pi pi-th-large"  (click)="GoToCard()" style=" color:green " ></button>
+      <button pButton pRipple type="button" label="Calender" class="p-button-rounded p-button-success p-button-text mr-2" style=" color:black " icon="pi pi-calendar"  (click)="GoToEventSchedular()" ></button>
+      <button pButton pRipple type="button" label="Past Event" class="p-button-rounded p-button-success p-button-text" style=" color:orangered"  icon="pi pi-calendar-minus" (click)="GoToPastEvent()" ></button>
 
 
     </div>
@@ -64,9 +65,10 @@
         <td>{{ event.price | currency }}</td>
         <td>{{ event.status }}</td>
         <td  style="width: 200px;">
-          <button type="button" pButton label="" icon="pi pi-eye" class="p-button-info mr-2" (click)="viewEvent(event.idEvent)"></button>
-          <button type="button" pButton label="" icon="pi pi-pencil"  class="p-button-secondary mr-2" (click)="updateEvent(event.idEvent)"></button>
-          <button type="button"  pButton label="" icon="pi pi-trash" class="p-button-danger" (click)="deleteEvent(event.idEvent)"></button>
+          <button pButton pRipple type="button" pButton label="" icon="pi pi-eye" class="p-button-rounded p-button-primary p-button-outlined mr-2 custom-hover-button" (click)="viewEvent(event.idEvent)" ></button>
+          <button pButton pRipple type="button" pButton label="" icon="pi pi-pencil"  class="p-button-rounded p-button-success p-button-outlined mr-2 custom-hover-buttonn" (click)="updateEvent(event.idEvent)"   ></button>
+          <button pButton pRipple type="button"  pButton label="" icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-outlined custom-hover-buttonnn" (click)="deleteEvent(event.idEvent)"  ></button>
+
 
         </td>
       </tr>
@@ -79,14 +81,11 @@
 <p-dialog [(visible)]="displayDialog" [style]="{'width': '50vw'}" [header]="selectedEvent?.name" modal="true" closable="true" [contentStyle]="{'overflow':'hidden'}" class="event-dialog">
   <div *ngIf="selectedEvent" class="event-content">
       <img [src]="selectedEvent.bannerUrl || 'assets/default-image.jpg'" alt="Banner" style="width:100%">
-      <h3  >{{ selectedEvent.location }}</h3>
-      <h4>{{ selectedEvent.price | currency }}</h4>
-      <h4><small>{{ selectedEvent.date | date:'fullDate' }}</small></h4>
-
-      <h5>{{ selectedEvent.description }}</h5>
-      <p>{{ selectedEvent.category }}</p>
-      <p>{{ selectedEvent.location }}</p>
-
-
+      <h3 style="font-family: 'Arial', sans-serif;" >{{ selectedEvent.location }}</h3>
+      <h4 style="font-family: 'Arial', sans-serif;">{{ selectedEvent.price | currency }}</h4>
+      <h4 style="font-family: 'Arial', sans-serif;"><small>{{ selectedEvent.date | date:'fullDate' }}</small></h4>
+      <h5 style="font-family: 'Arial', sans-serif;">{{ selectedEvent.description }}</h5>
+      <p style="font-family: 'Arial', sans-serif;">{{ selectedEvent.category }}</p>
+      <p style="font-family: 'Arial', sans-serif;">{{ selectedEvent.location }}</p>
   </div>
 </p-dialog>

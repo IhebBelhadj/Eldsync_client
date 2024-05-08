@@ -1,0 +1,114 @@
+/* Overall Layout Adjustments */
+.details {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-left: 5px solid #007bff; /* Blue accent border */
+    margin-top: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.event-details {
+    background-color: #ffffff;
+}
+
+.no-events {
+    color: #666;
+    text-align: center;
+    padding: 20px;
+    font-size: 18px;
+}
+
+.exit-button {
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+/* Detail Section Styling */
+.detailss {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.details img.card-img-top {
+    width: 800px;
+    max-width: 100%; /* Responsive width */
+    height: auto; /* Maintain aspect ratio */
+    margin-top: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+}
+
+/* Typography */
+.soustitles {
+    font-family: Arial, sans-serif; /* Updated to Arial */
+    color: #333;
+    font-size: 16px; /* Slightly smaller for less emphasis */
+    padding: 5px;
+    margin: 0;
+}
+
+.titles {
+    color: #0552a4; /* Blue to match border */
+    font-size: 18px;
+    font-family: Arial, sans-serif; /* Updated to Arial */
+    padding: 5px 0; /* Top and bottom padding */
+    font-weight: bold;
+    border-bottom: 2px solid #eee; /* Subtle separator */
+    margin-bottom: 5px; /* Space before the subtitle */
+}
+
+/* Buttons Styling */
+.butonesdd {
+    margin-top: 20px;
+    background-color: transparent;
+    color: black;
+    width: 200px;
+    border: 2px solid black; /* Add border for better visibility */
+    transition: all 0.3s; /* Smooth transition for hover effects */
+}
+
+.butonesdd:hover {
+    background-color: black;
+    color: white;
+}
+
+th{
+    border-top: 2px solid #0552a4; /* Blue accent border */
+    border-bottom: 2px solid #0552a4; /* Blue accent border */
+}
+tr:hover{
+    background-color: #CFDBD5; /* Light grayish-green background */
+
+}
+.ths{
+    font-family: Arial, sans-serif; /* Using Arial font */
+    text-align: center; /* Center aligning the text */
+    font-weight: bold; /* Making the text bold */
+    font-size: 18px;
+
+}
+.ths:hover{
+
+    font-family: Arial, sans-serif; /* Using Arial font */
+    text-align: center; /* Center aligning the text */
+    font-weight: bold; /* Making the text bold */
+    font-size: 18px;
+
+}
+
+.tdsss{
+    text-align: center; /* Center aligning the text */
+
+}
+
+
+.tst{
+    color:green;
+}
+
+.tst:hover{
+    color:white;
+    background-color: green;
+}

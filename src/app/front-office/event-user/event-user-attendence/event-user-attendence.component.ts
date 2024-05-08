@@ -13,16 +13,45 @@ export class EventUserAttendenceComponent  implements OnInit {
   events: Event[] = [];
   selectedEvent: any = null;
   displayDetailsDialog: boolean = false;
+  nextEvent: Event ;
+
 
   constructor(private eventService: EventService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
     this.loadUserEvents(); // Assume 'user123' is the current user's ID
   }
+
+
+  setNextEvent(events: Event[]): void {
+    const currentDateTime = new Date();
+    // Filter for future events and sort by date
+    const futureEvents = events.filter(event => new Date(event.date) > currentDateTime);
+    futureEvents.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    this.nextEvent = futureEvents.length > 0 ? futureEvents[0] : null;
+    if (this.nextEvent) {
+      console.log('Next event:', this.nextEvent);
+    }
+  }
+  
+
+  sortEventsByNewestFirst(): void {
+    this.events.sort((a, b) => {
+      const dateA = new Date(a.date); // Assuming 'date' is the field that stores event date
+      const dateB = new Date(b.date);
+      return dateB.getTime() - dateA.getTime(); // Sorts in descending order
+    });
+  }
+  
+
+
   loadUserEvents(): void {
-    const userId = 2; // Get this dynamically as needed
+    const userId = 3; // This should ideally be fetched dynamically based on the logged-in user.
     this.eventService.getEventsForUser(userId).subscribe({
-      next: (events) => this.handleEventBanners(events),
+      next: (events) => {
+        this.handleEventBanners(events);
+        this.setNextEvent(events);
+      },
       error: (err) => console.error('Failed to load events', err)
     });
   }

@@ -1,4 +1,6 @@
 
+.gheiyth {
+    
 
 ::ng-deep .fc .fc-toolbar.fc-header-toolbar {
     margin-bottom: 5.5rem!important;
@@ -9,9 +11,9 @@
 
     ::ng-deep .fc-daygrid-event, ::ng-deep .fc-timegrid-event, ::ng-deep .fc-list-event {
       width: 100% !important; // Adjust for padding, if any
-      background: linear-gradient(to bottom right, orange, wheat) !important; // Stylish gradient background
-      border: 1px solid darken(orange, 10%) !important; // Consistent border
-      color: black !important; // Text color for readability
+       background: linear-gradient(to bottom right, purple, white) !important; // Stylish gradient background
+      border: 1px solid darken(white, 10%) !important; // Consistent border
+      color: white !important; // Text color for readability
       border-radius: 4px !important; // Rounded corners
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important; // Subtle shadow effect
       transition: transform 0.1s ease-in-out !important; // Smooth hover effect
@@ -23,7 +25,7 @@
   
   ::ng-deep .fc-daygrid-event:hover, ::ng-deep .fc-timegrid-event:hover, ::ng-deep .fc-list-event:hover {
       transform: scale(1.05) !important; // Scale up on hover
-      background: linear-gradient(to bottom right, darkorange, yellow) !important; // Change background on hover
+      background: linear-gradient(to bottom right, black, white) !important; // Change background on hover
   }
 
   ::ng-deep .fc-event-title {
@@ -53,12 +55,12 @@ margin-bottom: 10px;
 ::ng-deep .fc .fc-toolbar-title {
       font-size: 50px; /* Change to the desired font size */
       font-weight: bold; /* Optional: makes the font bold */
-      color: black; /* Optional: sets the color, change as needed */
+      color: purple; /* Optional: sets the color, change as needed */
   }
   
   ::ng-deep .fc .fc-button {
-      background: linear-gradient(to bottom right, orange, wheat) ; // Stylish gradient background
-      border-color: orange; /* Change the border color to match */
+      background: linear-gradient(to bottom right, white, purple) ; // Stylish gradient background
+      border-color: black; /* Change the border color to match */
       color: black; /* Change text color to white for better readability */
   }
   
@@ -93,7 +95,7 @@ margin-bottom: 10px;
         border: none !important;
 
         .fc-day-today {
-         background-color: blanchedalmond;
+         background-color: #CFDBD5;
          border: 1px solid bisque;
     }
 
@@ -165,6 +167,9 @@ margin-bottom: 10px;
     
 /* Custom Styles for the File Input */
 
+
+}
+
 .file-input-container {
     position: relative;
     background-color: #f4f4f4;
@@ -207,3 +212,43 @@ margin-bottom: 10px;
     background-color: #f4f4f4;
     border-top: 1px solid #d3d3d3;
 }
+
+.btnupdate{
+
+   color:purple;
+   margin-top:20px ;
+}
+.btndelete{
+     color:red;
+     margin-top:5px;
+}
+.btnupdate:hover{
+background-color: purple;
+    color:white;
+    margin-top:20px ;
+ }
+ .btndelete:hover{
+    background-color: red;
+      color:white;
+      margin-top:5px;
+ }
+ .btnsave{
+    color:green;
+    margin-top:20px ;
+ }
+ .btnsave:hover{
+    background-color: green;
+    color:white;
+    margin-top:20px ;
+ }
+
+ .btncancel{
+    color:black;
+    margin-top:20px ;
+ }
+
+ .btncancel:hover{
+    background-color: black;
+    color:white;
+    margin-top:20px ;
+ }

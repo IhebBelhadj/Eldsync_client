@@ -13,7 +13,9 @@
 
 <div class="grid p-fluid">
   <div class="col-12 md:col-6">
-<p-dialog header="Event Details" [(visible)]="displayDetailsDialog"  [style]="{width: '40vw'}" [contentStyle]="{'padding': '24px'}" [baseZIndex]="1000">
+<p-dialog  [(visible)]="displayDetailsDialog"  [style]="{width: '35vw'}" [contentStyle]="{'padding': '24px'}" [baseZIndex]="1000">
+  <h3 style="text-align: center; font-family: 'Poppins', sans-serif; color: #5784BA; font-size: 20px; padding: 5px;font-weight:Bold;">Event Details</h3>
+
   <div style="font-family: 'Arial', sans-serif; color: #333;">
     <div style="text-align: center; margin-bottom: 20px;">
       <img *ngIf="selectedEvent?.bannerUrl" [src]="selectedEvent?.bannerUrl" alt="Event Banner" style="width: 100%; height: auto;" >
@@ -30,14 +32,15 @@
       <p>{{ selectedEvent?.description }}</p>
     </div>
     <div style="text-align: right; margin-top: 20px;">
-      <button pButton type="button" label="Update" icon="pi pi-check" class="p-button-secondary" (click)="openEditDialog(selectedEvent)"></button>
+      <button pButton type="button" label="Update" icon="pi pi-check" class="p-button-rounded p-button-success p-button-outlined mr-2 btnupdate" (click)="openEditDialog(selectedEvent)"></button>
+
     </div>
   </div>
 </p-dialog>
 </div>
 </div>
 
-<button pButton type="button" label="Go Back" class="p-button-warning mr-3" icon="pi pi-arrow-left" (click)="GoBack()"></button>
+<button pButton type="button" label="Go Back" class="p-button-warning mr-3 test3" icon="pi pi-arrow-left" (click)="GoBack()" ></button>
 
 
 
@@ -58,19 +61,20 @@
 
 <div class="grid p-fluid">
   <div class="col-12 md:col-6">
-<p-dialog header="Add Event" [(visible)]="displayAddDialog" [style]="{width: '40vw'}">
+<p-dialog header="Helloo Again!!" [(visible)]="displayAddDialog" [style]="{width: '40vw'}">
+  <h3 style="text-align: center; font-family: 'Poppins', sans-serif; color: #5784BA; font-size: 20px; padding: 5px;font-weight:Bold;">Add Event</h3>
   <form [formGroup]="eventForm">
     
     <div class="form-group">
       <div class="field">
-        <label for="name">Name:</label>
+        <label for="name" style="font-weight: bold;">Name:</label>
         <input formControlName="name" type="text" pInputText placeholder="Event Name">
       </div>
     </div>
 
     <div class="form-group">
       <div class="field">
-        <label for="description">Description:</label>
+        <label for="description" style="font-weight: bold;">Description:</label>
         <textarea formControlName="description" rows="5" cols="30" pInputTextarea placeholder="Event Description"></textarea>
       </div>
     </div>
@@ -78,15 +82,18 @@
 
     <div class="form-group">
       <div class="field">
-        <label for="date">Date:</label>
-        <span>{{ eventForm.get('date').value | date: 'longDate' }}</span>
+        <label for="date" style="font-weight: bold;">Date:</label>
+        <div>
+          <span>{{ eventForm.get('date').value | date: 'longDate' }}</span>
+
+        </div>
       </div>
     </div>
 
 
     <div class="form-group">
       <div class="field">
-        <label for="location">Location:</label>
+        <label for="location" style="font-weight: bold;">Location:</label>
         <p-autoComplete formControlName="location" 
         [suggestions]="filteredLocations" 
         (completeMethod)="searchLocations($event)" 
@@ -97,14 +104,14 @@
 
     <div class="form-group">
       <div class="field">
-        <label for="price">Price:</label>
+        <label for="price" style="font-weight: bold;">Price:</label>
         <input formControlName="price" type="number" pInputText placeholder="Price" />
       </div>
     </div>
 
     <div class="form-group">
       <div class="field">
-        <label for="category">Category:</label>
+        <label for="category" style="font-weight: bold;">Category:</label>
         <p-dropdown [options]="categories" formControlName="category" placeholder="Select a Category" [showClear]="true"></p-dropdown>
       </div>
     </div>
@@ -120,7 +127,7 @@
   -->
     <div class="form-group">
       <div class="field">
-          <label for="banner">Banner:</label>
+          <label for="banner" style="font-weight: bold;">Banner:</label>
           <div class="file-input-container">
               <span class="file-input-trigger">Choose File</span>
               <input type="file" id="banner" #fileInput (change)="onFileSelection($event)">
@@ -131,8 +138,9 @@
 
     <div class="form-actions" > 
       <div class="flex flex-wrap gap-2">
-      <button pButton type="button" label="Save" icon="pi pi-check" (click)="onAddEvent(eventForm.value)"></button>
-      <button pButton type="button" label="Cancel" icon="pi pi-times" (click)="onCancel()"></button>
+      <button pButton type="button" label="Save" icon="pi pi-check" (click)="onAddEvent(eventForm.value)"  class="p-button-rounded p-button-success p-button-outlined mr-2 btnsave"></button>
+      <button pButton type="button" label="Cancel" icon="pi pi-times" (click)="onCancelAdd()" class="p-button-rounded p-button-success p-button-outlined mr-2 btncancel"></button>
+       
     </div>
   </div>
 
@@ -145,6 +153,12 @@
 
 
 
+<p-dialog header="Confirmation" [(visible)]="confirmationDialog" [modal]="true" [closable]="true" [resizable]="false">
+  <p>{{ confirmationMessage }}</p>
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" label="OK" (click)="confirmationDialog = false"></button>
+  </p-footer>
+</p-dialog>
 
 
 
@@ -172,19 +186,21 @@
 <div class="grid p-fluid">
   <div class="col-12 md:col-6">
 
-<p-dialog header="Edit Event" [(visible)]="displayEditDialog" [style]="{width: '40vw'}">
+<p-dialog header="Helloo Again!!" [(visible)]="displayEditDialog" [style]="{width: '40vw'}">
+  <h3 style="text-align: center; font-family: 'Poppins', sans-serif; color: #5784BA; font-size: 20px; padding: 5px;font-weight:Bold;">Edit Event</h3>
+
   <form [formGroup]="eventForm">
 
     <div class="form-group">
       <div class="field">
-        <label for="name">Name:</label>
+        <label for="name" style="font-weight: bold;">Name:</label>
         <input formControlName="name" type="text" pInputText placeholder="Event Name">
       </div>
     </div>
 
     <div class="form-group">
       <div class="field">
-        <label for="description">Description:</label>
+        <label for="description" style="font-weight: bold;">Description:</label>
         <textarea formControlName="description" rows="5" cols="30" pInputTextarea placeholder="Event Description"></textarea>
       </div>
     </div>
@@ -192,14 +208,14 @@
 
     <div class="form-group">
       <div class="field">
-        <label for="date">Date:</label>
+        <label for="date" style="font-weight: bold;">Date:</label>
         <p-calendar formControlName="date" [showIcon]="true" inputId="icon"></p-calendar>
       </div>
     </div>
 
     <div class="form-group">
       <div class="field">
-        <label for="location">Location:</label>
+        <label for="location" style="font-weight: bold;">Location:</label>
         <input formControlName="location" pInputText id="location" type="text" />
       </div>
     </div>
@@ -207,14 +223,14 @@
 
     <div class="form-group">
       <div class="field">
-        <label for="price">Price:</label>
+        <label for="price" style="font-weight: bold;">Price:</label>
         <input formControlName="price" type="number" pInputText placeholder="Price" />
       </div>
     </div>
 
     <div class="form-group">
       <div class="field">
-        <label for="category">Category:</label>
+        <label for="category" style="font-weight: bold;">Category:</label>
         <p-dropdown [options]="categories" formControlName="category" placeholder="Select a Category" [showClear]="true"></p-dropdown>
       </div>
     </div>
@@ -232,7 +248,7 @@
     
 
     <div class="p-field">
-      <label for="bannerData">Event Banner</label>
+      <label for="bannerData" style="font-weight: bold;">Event Banner</label>
       <input type="file" (change)="onFileSelected($event)" pInputText>
       <img *ngIf="selectedEvent?.bannerUrl" [src]="selectedEvent?.bannerUrl" alt="Event Banner" style="width:100%; margin-top:10px;">
     </div>
@@ -240,8 +256,8 @@
     <div class="form-actions">
       <div class="flex flex-wrap gap-2">
 
-      <button pButton type="button" label="Save" icon="pi pi-check" (click)="onSave()"></button>
-      <button pButton type="button" label="Cancel" icon="pi pi-times" (click)="onCancel()"></button>
+      <button pButton type="button" label="Save" icon="pi pi-check" (click)="onSave()" class="p-button-rounded p-button-success p-button-outlined mr-2 btnsave"></button>
+      <button pButton type="button" label="Cancel" icon="pi pi-times" (click)="onCancel()" class="p-button-rounded p-button-success p-button-outlined mr-2 btncancel"></button>
     </div>
   </div>
 

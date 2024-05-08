@@ -1,22 +1,22 @@
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SafeUrl } from '@angular/platform-browser';
-import { Router } from '@angular/router';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import { EventApi } from '@fullcalendar/core';
+
+import { Router } from '@angular/router';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { Observable } from 'rxjs';
-import { EventService } from '../event.service';
-
+import { EventService } from '../../event/event.service';
 
 @Component({
-  selector: 'app-event-schedular',
-  templateUrl: './event-schedular.component.html',
-  styleUrls: ['./event-schedular.component.scss']
+  selector: 'app-event-consultation',
+  templateUrl: './event-consultation.component.html',
+  styleUrl: './event-consultation.component.scss'
 })
-export class EventSchedularComponent implements OnInit {
+export class EventConsultationComponent  implements OnInit {
 
   @ViewChild('calendar') calendarComponent: FullCalendarComponent;
 
@@ -34,6 +34,7 @@ export class EventSchedularComponent implements OnInit {
   fileData: File | null = null;
   selectedLocation: string | null = null; // This will hold the selected location as a string
   filteredLocations: string[] = [];
+  nextEvent: any;
 
 
   selectedFile: File;
@@ -87,7 +88,8 @@ private loadStatus(): void
           this.loadEvents();
           this.loadStatus();
           this.loadCategories();
-          
+          this.loadNextEvent();  // Load the next event on initialization
+
         }
 
 
@@ -98,12 +100,25 @@ private loadStatus(): void
         }
   
 
-
+        loadNextEvent(): void {
+          this.eventService.getNextEvent().subscribe({
+            next: (event) => {
+              this.nextEvent = event;
+              console.log('Next event:', this.nextEvent);
+            },
+            error: (error) => console.error('Failed to load the next event:', error)
+          });
+        }
 
   loadEvents(): void 
       {
         this.eventService.retrieveAllEvents().subscribe(events => {
-          this.events = events.map(event => ({
+          this.events = events
+          .filter(event => 
+            event.status === 'APPROVED' && 
+            new Date(event.date) >= new Date(new Date().setHours(0, 0, 0, 0)) // Compare date, ignoring time
+          )
+          .map(event => ({
             idEvent: event.idEvent, 
             title: event.name,
             start: new Date(event.date),
@@ -112,13 +127,12 @@ private loadStatus(): void
             location: event.location,
             price: event.price,
             bannerUrl: event.bannerData,
-            status:event.status,
-            backgroundColor:"green"
+            backgroundColor: event.status === 'APPROVED' ? 'green' : 'grey',  // Set the event color based on status
 
           }));
-          console.log(this.events);  // Check the output in your browser's console
-          
-          
+          console.log('Events for FullCalendar:', this.events); // Check the date here
+
+
           this.calendarOptions = {
             plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
             initialView: 'dayGridMonth',
@@ -234,6 +248,15 @@ openEditDialog(event: any): void
         this.cdr.detectChanges();  // Force Angular to check for changes
     }
 
+    
+  closeAddDialog(): void 
+  {
+      console.log('Closing Edit Dialog');
+      this.displayAddDialog = false; // Consider what behavior you want here
+      this.cdr.detectChanges();  // Force Angular to check for changes
+  }
+
+
 
 
   onCancel(): void 
@@ -241,30 +264,13 @@ openEditDialog(event: any): void
       console.log('Edit Canceled');
       this.closeEditDialog();
     }
+    onCancelAdd(): void 
+    {
+      console.log('Adding Event Canceled');
+      this.closeAddDialog();
+    }
 
-onDelete(idEvent: number): void 
-  {
-      if (!idEvent) 
-        {
-          console.error('Attempted to delete an event without a valid event ID');
-          return;
-        }
 
-      if (confirm('Are you sure you want to delete this event?')) 
-        {
-          this.eventService.removeEvent(idEvent).subscribe
-            ({
-              next: () => {
-                            console.log('Event deleted successfully');
-                            this.displayDetailsDialog = false; // Close the dialog
-                            this.loadEvents(); // Refresh events, you may need to implement this depending on your setup
-                          },
-              error: error => {
-                                console.error('Error deleting event:', error);
-                              }
-          });
-        }
-}
 
 
 onFileSelected(event: any) 
@@ -301,7 +307,7 @@ onFileSelected(event: any)
 
   GoBack(): void 
     {
-      this.router.navigate(['/frontOffice/event']);
+      this.router.navigate(['/front']);
     }
 
 
@@ -322,7 +328,7 @@ onFileSelected(event: any)
       const event = {
         ...this.eventForm.value,
         date: localISODate, // Use the locally adjusted ISO string
-        status: 'APPROVED' // Reset status to 'APPROVED' on every update
+        status: 'PENDING' // Reset status to 'PENDING' on every update
 
       };
 
@@ -360,7 +366,7 @@ onFileSelected(event: any)
       formData.append('category', data.category);
       formData.append('location', data.location);
       formData.append('price', data.price.toString());
-      formData.append('status', 'APPROVED');
+      formData.append('status', 'PENDING');
   
       this.eventService.addEvent(formData).subscribe({
         next: (response) => console.log('Event created successfully!', response),
@@ -390,3 +396,5 @@ onFileSelected(event: any)
   }
   
 }
+
+

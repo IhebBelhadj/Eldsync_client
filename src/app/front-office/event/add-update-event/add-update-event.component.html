@@ -1,19 +1,20 @@
 <!-- add-update-event.component.html -->
-<h1>Add Event</h1>
-<div class="grid p-fluid">
-<div class="col-12 md:col-6">
+<h1 style="text-align: center; font-family: 'Poppins', sans-serif; color: black; font-size: 40px; padding: 20px;font-weight:Bold">
+  Add Event</h1>
+  <div class="grid p-fluid center-content">
+    <div class="col-12 md:col-6">
     <form [formGroup]="eventForm">
 
       <div class="form-group">
             <div class="field">
-        <label for="name">Name:</label>
+        <label for="name" style="font-weight: bold;">Name:</label>
         <input formControlName="name" type="text" pInputText placeholder="Event Name">
             </div>
       </div>
 
       <div class="form-group">
             <div class="field">
-        <label for="description">Description:</label>
+        <label for="description" style="font-weight: bold;">Description:</label>
         <textarea formControlName="description" rows="5" cols="30" pInputTextarea placeholder="Event Description"></textarea>
       </div>
       </div>
@@ -21,7 +22,7 @@
 
       <div class="form-group">
       <div class="field">
-          <label for="banner">Banner:</label>
+          <label for="banner" style="font-weight: bold;">Banner:</label>
           <div class="file-input-container">
               <span class="file-input-trigger">Choose File</span>
               <input type="file" id="banner" #fileInput (change)="onFileSelected($event)">
@@ -34,22 +35,23 @@
 
       <div class="form-group">
              <div class="field">
-                  <label for="date">Date:</label>
+                  <label for="date" style="font-weight: bold;">Date:</label>
                   <p-calendar formControlName="date" [showIcon]="true" inputId="icon"></p-calendar>
             </div>
       </div>
 
       <div class="form-group">
             <div class="field">
-        <label for="category">Category:</label>
+        <label for="category" style="font-weight: bold;">Category:</label>
         <p-dropdown [options]="categories" (onChange)="onCategoryChange($event.value)" placeholder="Select a Category" [showClear]="true"></p-dropdown>
         
 
       </div>
       </div>
-
+      <div class="form-group">
+        <div class="field">
+    <label  style="font-weight: bold;">Location:</label>
       <div class="card">
-        <h5>Search By Location</h5>
         <div class="grid formgrid">
           <span class="p-input-icon-left p-input-icon-right">
             <i class="pi pi-map"></i>
@@ -60,26 +62,17 @@ placeholder="Enter location"
 (onSelect)="onLocationSelect($event)"
 [dropdown]="true">
 </p-autoComplete>
-
-
-
-
-
-
-
-
-            <i class="pi pi-search"></i>
           </span>
           <div class="col-12 mb-2 lg:col-4 lg:mb-0">
-            <!-- Action buttons here -->
           </div>
         </div>
       </div>
-      
+    </div>
+  </div>
 
       <div class="form-group">
-            <div class="field">
-        <label for="price">Price:</label>
+            <div class="field" >
+        <label for="price" style="font-weight: bold;">Price:</label>
         <input formControlName="price" type="text" pInputText placeholder="Price" />
       </div>
       </div>
@@ -97,8 +90,8 @@ placeholder="Enter location"
 
       <div style="margin-top: 10px;">
             <div class="flex flex-wrap gap-2">
-        <button pButton pRipple label="Add Event" icon="pi pi-plus" iconPos="left" (click)="onSubmit(eventForm.value)" class="p-button-info"></button>
-        <button pButton pRipple label="Go Back" icon="pi pi-chevron-left" iconPos="left" (click)="goBack()" class="p-button-secondary" ></button>
+        <button pButton pRipple label="Add Event" icon="pi pi-plus" iconPos="left" (click)="onSubmit(eventForm.value)" class="p-button-rounded p-button-success p-button-outlined butonesd"></button>
+        <button pButton pRipple label="Go Back" icon="pi pi-chevron-left" iconPos="left" (click)="goBack()" class="p-button-rounded p-button-info p-button-outlined butonesdd" ></button>
         
       </div>
       </div>

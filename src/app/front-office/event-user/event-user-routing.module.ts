@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { EventConsultationComponent } from './event-consultation/event-consultation.component';
 import { EventUserAddComponent } from './event-user-add/event-user-add.component';
 import { EventUserAttendenceComponent } from './event-user-attendence/event-user-attendence.component';
 import { EventUserCalenderComponent } from './event-user-calender/event-user-calender.component';
@@ -14,6 +15,8 @@ const routes: Routes = [];
     {path:'eventUserCalender',component:EventUserCalenderComponent},
     {path:'eventAttended',component:EventUserAttendenceComponent},
     {path:'eventRecommandation',component:EventUserRecommandedComponent},
+    {path:'eventConsultation',component:EventConsultationComponent},
+
 
 
 

@@ -1,5 +1,5 @@
-<h1> Card View
-</h1>
+<h1 style="text-align: center; font-family: 'Poppins', sans-serif; color: black; font-size: 40px; padding: 20px;font-weight:Bold">
+  Events pending approval</h1>
 
 <div class="form-group">
   <div class="card">
@@ -19,9 +19,12 @@
   
 
     <div class="col-12 mb-2 lg:col-4 lg:mb-0">
-          <button pButton type="button" label="" (click)="getEventsByDateRange()" icon="pi pi-search" class="p-button-primary mr-3" ></button>
-          <button pButton type="button" label="" class="p-button-warning mr-3" icon="pi pi-arrow-left" (click)="GoBack()"></button>
-    </div>
+          <button pButton pRipple type="button" label="Search" class="p-button-rounded p-button-success p-button-text"  icon="pi pi-search"  (click)="getEventsByDateRange()" ></button>
+          <button pButton pRipple type="button" label="Reset" icon="pi pi-refresh" (click)="resetEvents()" class="p-button-rounded p-button-success p-button-text" style=" color:orangered; " ></button>
+          <button pButton pRipple type="button" label=" Newest Events" (click)="sortEventsByNewestFirst()" class="p-button-rounded p-button-success p-button-text" style=" color:black; " icon="pi pi-clock"  ></button>
+          <button pButton pRipple type="button" label="Exit" class="p-button-rounded p-button-success p-button-text"  icon="pi pi-arrow-left" style=" color:black; " (click)="GoBack()" ></button>
+
+        </div>
   </div>
 </div>
 
@@ -33,8 +36,9 @@
           <h5 class="card-title">{{ event.name }}</h5>
           <p class="card-text">{{ event.location }}</p>
           <p class="card-text"><small class="text-muted">{{ event.date | date }}</small></p>
-          <button pButton type="button" label="View Details" class="p-button-secondary mr-3" icon="pi pi-eye" (click)="showDialog(event)"></button>
-          <button pButton type="button" label="Approve" class="p-button-success" icon="pi pi-check" (click)="approveEvent(event)" *ngIf="event.status === 'PENDING'"></button>
+          <button pButton type="button" label="View Details"  class="p-button-rounded p-button-success p-button-outlined btn1 mr-2" icon="pi pi-eye" (click)="showDialog(event)"></button>
+          <button pButton type="button" label="Approve"  class="p-button-rounded p-button-success p-button-outlined btn2 mr-2" icon="pi pi-check" (click)="approveEvent(event)" *ngIf="event.status === 'PENDING'"></button>
+          <button pButton pRipple type="button"  pButton label="Reject" icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-outlined buttonnn" (click)="showDialogToDelete(event.idEvent)"  ></button>
 
         </div>
       </div>
@@ -55,6 +59,24 @@
       </div>
   </p-dialog>
   
-  
+
+
+
+<p-dialog header="Confirm Deletion" [(visible)]="displayDeleteDialog" [style]="{width: '400px'}" modal="modal" [closable]="false" [resizable]="false">
+  <div class="p-d-flex p-ai-center p-jc-center p-dir-col" style="min-height: 50px;">
+      
+      <p> <i class="pi pi-exclamation-triangle" style="font-size: 20px; color: red;"></i>  Are you sure you want to delete this event?</p>
+  </div>
+  <p-footer>
+      <button pButton type="button" label="Yes, Delete" icon="pi pi-check" class="p-button-rounded p-button-danger" (click)="confirmDelete()"></button>
+      <button pButton type="button" label="Cancel" icon="pi pi-times" class="p-button-rounded p-button-text" (click)="displayDeleteDialog = false" style="color: black;"></button>
+  </p-footer>
+</p-dialog>
+
     
-    
+<p-dialog header="Warning !" [(visible)]="displayInfoDialog" [modal]="true" [style]="{width: '50vw'}" [closable]="true" [dismissableMask]="true">
+  <p>{{ infoMessage }}</p>
+  <p-footer>
+    <button pButton type="button" label="OK" (click)="closeInfoDialog()" class="p-button-rounded p-button-danger" ></button>
+  </p-footer>
+</p-dialog>

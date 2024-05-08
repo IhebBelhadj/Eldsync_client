@@ -50,4 +50,26 @@
       }
     }
     
-    
+    .butonesdd:hover{
+      background: black; /* Example: orange to yellow gradient */
+      color: white; /* Optional: change the text color on hover */
+      border: none;
+  }
+  .butonesdd{
+      background: white; /* Example: orange to yellow gradient */
+      color: black; /* Optional: change the text color on hover */
+  width: 500px;
+    }
+
+  .btnexsit {
+    display: flex;
+    justify-content: center; /* Aligns horizontally in the center */
+    align-items: center; /* Aligns vertically in the center, useful if the container is the full page */
+
+  }
+  .butonesd:hover{
+    background: green; /* Example: orange to yellow gradient */
+    color: white; /* Optional: change the text color on hover */
+    border: none;
+}
+

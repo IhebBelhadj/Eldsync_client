@@ -14,11 +14,27 @@ export class AppMenuComponent implements OnInit {
     ngOnInit() {
         this.model = [
             {
-                label: 'Test label',
+                label: 'Dashboard',
                 items: [
-                    { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] }
+                    { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] },
+
                 ]
             },
+            {
+                label: 'Admin Space',
+                items: [
+                    { label: 'Event', icon: 'pi pi-calendar', routerLink: ['/frontOffice/event'] },
+
+                ]
+            },
+            {
+                label: 'User Space',
+                items: [
+                    { label: 'Event', icon: 'pi pi-calendar', routerLink: ['/frontOffice/eventUser'] },
+
+                ]
+            },
+            /*
             {
                 label: 'UI Components',
                 items: [
@@ -158,7 +174,7 @@ export class AppMenuComponent implements OnInit {
                         label: 'View Source', icon: 'pi pi-fw pi-search', url: ['https://github.com/primefaces/sakai-ng'], target: '_blank'
                     }
                 ]
-            }
+            }*/
         ];
     }
 }

@@ -1,5 +1,6 @@
-<div>
+<!--<div>
       <h2>Popular Events You Haven't Registered For</h2>
+
       <p-table [value]="events" *ngIf="events && events.length">
         <ng-template pTemplate="header">
           <tr>
@@ -25,4 +26,79 @@
       </p-table>
       <p *ngIf="!events || !events.length">No events available to display.</p>
     </div>
-    
+    <button pButton pRipple label="Exit" icon="pi pi-chevron-left" iconPos="left" (click)="goBack()"  class="p-button-rounded p-button-info p-button-outlined butonesdd"></button>
+
+  -->
+
+
+  
+
+
+
+
+
+
+
+  <div>
+    <h1 style="text-align: center; font-family: 'Poppins', sans-serif; color: black; font-size: 40px; padding: 20px;font-weight:Bold;margin-bottom:20px">
+      Popular Events Yet to Register</h1>
+
+    <p-table [value]="events" dataKey="idEvent" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+            <tr>
+                <th class="ths"></th> <!-- Column for expand/collapse icons -->
+                <th class="ths">Name</th>
+                <th class="ths">Action</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-event>
+            <tr>
+                <td >
+                  <button type="button" pButton pRipple (click)="event.expanded = !event.expanded" 
+                  [icon]="event.expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" 
+                  class="p-button-text p-button-rounded" style="border: none;">
+                 </button>               
+              </td>
+                <td class="tdsss">{{ event.name }}</td>
+                <td class="tdsss">
+                    <button pButton type="button" label="Register" class="p-button-rounded p-button-info p-button-outlined butonesdd" (click)="registerToEvent(event.idEvent)"></button>
+                </td>
+            </tr>
+            <tr *ngIf="event.expanded" class="event-details">
+                <td colspan="6">
+                    <div class="details">
+                      <div class="detailss">
+
+                        <img class="card-img-top" [src]="event.bannerUrl || 'assets/default-image.jpg'" alt="Banner">
+                      </div>
+                      <h5 class="titles">Event ID: </h5>
+                      <h6 class="soustitles">{{ event.idEvent }}</h6>
+                        <h5 class="titles">Description: </h5>
+                        <h6 class="soustitles">{{ event.description }}</h6>
+                        <h5 class="titles">Location:</h5>
+                        <h6 class="soustitles">{{ event.location }}</h6>
+                        <h5 class="titles">Category:</h5>
+                        <h6 class="soustitles">{{ event.category }}</h6>
+                        <h5 class="titles">Price:</h5>
+                        <h6 class="soustitles"><span style="font-weight: bold;">{{ event.price }} </span>Dinar Tunisien</h6>
+                        <h5 class="titles">Date:</h5>
+                        <h6 class="soustitles">{{ event.date | date:'fullDate' }}</h6>
+                   
+
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+    <p *ngIf="!events.length" class="no-events">No events available to display.</p>
+</div>
+<button pButton label="Exit" icon="pi pi-chevron-left" (click)="goBack()" class="p-button-rounded p-button-info p-button-outlined butonesdd"></button>
+
+<p-dialog header="Notification" [(visible)]="displayDialog" [modal]="true" [style]="{width: '40vw'}">
+  <p>{{ dialogMessage }}</p>
+  <p-footer>
+      <button type="button" pButton label="OK" (click)="hideDialog()" class="p-button-rounded p-button-success p-button-outlined tst" style="width: 200px;"></button>
+  </p-footer>
+</p-dialog>
+

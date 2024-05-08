@@ -60,7 +60,7 @@ export class EventComponent {
 
   viewEvent(eventId: number): void {
     this.selectedEvent = this.events.find(event => event.idEvent === eventId);
-    this.displayDialog = true;  // Open the dialog
+    this.displayDialog = true;  
   }
 
 
@@ -74,6 +74,10 @@ export class EventComponent {
     console.log('Filtered Events:', this.filteredEvents);
   }
   
+  refreshEvents(): void {
+    this.getEvents();  // This will refresh the events from the server
+    this.searchLocation = ''; // Optionally clear the search input
+  }
 
   deleteEvent(idEvent: number): void {
     if (confirm('Are you sure you want to delete this event?')) {

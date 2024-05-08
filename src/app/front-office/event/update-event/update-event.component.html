@@ -1,4 +1,4 @@
-<h1>Update Event</h1>
+<h1 style="text-align: center; font-family: 'Poppins', sans-serif; color: black; font-size: 40px; padding: 20px;font-weight:Bold">Event Update</h1>
   <div class="grid p-fluid">
     <div class="col-12 md:col-6">
       <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
@@ -84,8 +84,8 @@
 
         <div style="margin-top: 10px;">
           <div class="flex flex-wrap gap-2">
-            <p-button label="Update Event" type="submit" icon="pi pi-check" [disabled]="!eventForm.valid"></p-button>
-            <p-button label="Cancel" type="button" icon="pi pi-times" (click)="goBack()" class="p-button-danger"></p-button>
+            <button pButton pRipple label="Update Event" type="submit" icon="pi pi-check" [disabled]="!eventForm.valid" class="p-button-rounded p-button-success p-button-outlined butonesd"></button>
+            <button pButton pRipple label="Cancel" type="button" icon="pi pi-times" (click)="goBack()" class="p-button-rounded p-button-danger p-button-outlined butonesdd" ></button>
           </div>
         </div>
 
