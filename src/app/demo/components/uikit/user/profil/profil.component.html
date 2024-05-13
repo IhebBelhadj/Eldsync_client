@@ -1,0 +1,173 @@
+
+<section class="dashboard section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-9 col-md-8 col-12">
+        <div class="main-content">
+          <div class="dashboard-block mt-0 profile-settings-block">
+            <h3 class="block-title">Profile Settings</h3>
+            <div class="inner-block">
+              <div class="image">
+                <img
+                *ngIf="user && user.imgUrl"
+                [src]="
+                  'http://localhost:8081/api/upload-directory/' +
+                  user.imgUrl
+                "
+                alt="User Image"
+                width="100"
+                style="border-radius: 0.6rem"
+                class="tableImage"
+              />              </div>
+              <form class="profile-setting-form" method="post" action="#">
+                <div class="row">
+                  <div class="col-lg-6 col-12">
+                    <div class="form-group">
+                      <label>First Name</label>
+                      <input name="firstName" type="text" [(ngModel)]="user.firstName" />
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-12">
+                    <div class="form-group">
+                      <label>Last Name</label>
+                      <input name="lastename" type="text" [(ngModel)]="user.lasteName" />
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-12">
+                    <div class="form-group">
+                      <label>Username</label>
+                      <input name="usernames" type="text" [(ngModel)]="user.username" />
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-12">
+                    <div class="form-group">
+                      <label>Email Address</label>
+                      <input name="email" type="email" [(ngModel)]="user.email" />
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-12">
+                    <div class="form-group">
+                      <label>Username</label>
+                      <input name="phone" type="text" [(ngModel)]="user.phone" />
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-12">
+                    <div class="form-group">
+                      <label>Email Address</label>
+                      <input name="cin" type="email" [(ngModel)]="user.cin" />
+                    </div>
+                  </div>
+                  <div>
+                    <label for="gender">Gender:</label>
+                    <select id="gender" name="gender" class="form-control" [(ngModel)]="user.gender" required>
+                        <option value="MALE">MALE</option>
+                        <option value="FEMALE">FEMALE</option>
+                    </select>
+                </div>
+                <div class="col-12">
+                  <div class="form-group upload-image">
+                    <label>Profile Image*</label>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      (change)="onFileSelected($event)"
+                      #fileInput
+                      style="display: none"
+                    />
+
+                    <!-- Image preview -->
+                    <img
+                      *ngIf="imageUrl"
+                      [src]="imageUrl"
+                      alt="User Image"
+                      width="200"
+                      height="200"
+                    />
+                    <div class="row">
+                    <!-- Button to trigger file input -->
+                    <div class="col-12">
+                      <div class="form-group button mb-0">
+                        <button
+                          type="submit"
+                          class="btn"
+                          (click)="handleUpload()"
+                        >
+                          Upload Image
+                        </button>
+                      </div>
+                    </div>
+                    <!-- Button to upload the selected image -->
+                    <div class="col-12">
+                      <div class="form-group button mb-0">
+                        <button
+                          type="submit"
+                          class="btn"
+                          (click)="triggerFileInputClick()"
+                        >
+                          Choose Image
+                        </button>
+                      </div>
+                    </div>
+                    <!-- <div class="iframe-container">
+                      <iframe
+                        src="https://www.youtube.com/embed/xhl_j0Oa0A0"
+                        width="640"
+                        height="360"
+                      ></iframe>
+                    </div> -->
+                  </div>
+                  </div>
+                </div>
+                
+                  
+                  <div class="col-12">
+                    <div class="form-group button mb-0">
+                      <button type="submit" class="btn" (click)="updateProfile()">Update Profile</button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <button mat-button (click)="toggleChangePasswordArea()" class="btn">Change Password</button>
+          <div>          <button type="button" class="btn" (click)="openPaymentPopup()">Paiement</button>
+          </div>
+          <div *ngIf="showChangePasswordArea">
+          <!-- Password Change Area -->
+          <!-- password-change.component.html -->
+<!-- password-change.component.html -->
+<div class="dashboard-block password-change-block">
+  <h3 class="block-title">Change Password</h3>
+  <div class="inner-block">
+    <form class="default-form-style">
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <label>Current Password*</label>
+            <input name="currentPassword" type="password" [(ngModel)]="changePasswordRequest.currentPassword" placeholder="Enter old password" required />
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group">
+            <label>New Password*</label>
+            <input name="newPassword" type="password" [(ngModel)]="changePasswordRequest.newPassword" placeholder="Enter new password" required />
+          </div>
+        </div>
+        
+        <div class="col-12">
+          <div class="form-group button mb-0">
+            <button type="button" class="btn" (click)="changePassword()">Update Password</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+</div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

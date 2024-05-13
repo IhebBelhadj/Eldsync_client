@@ -1,0 +1,51 @@
+.calendar {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.week {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.day {
+  flex: 1;
+  text-align: center;
+  padding: 15px;
+}
+
+.highlight {
+  color : green;
+  font-weight: bold;
+}
+
+.custom-button {
+  width: 150%;
+  margin-right: 100px;
+}
+
+.color-cubes-container {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.card {
+  position: relative;
+}
+
+.color-cube {
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-right: 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.calendar-btn{
+  background-color: transparent;
+  border-color:transparent;
+  cursor: pointer;
+}

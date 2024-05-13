@@ -1,0 +1,37 @@
+<div class="container mt-2">
+  <div class="form-group">
+    <button type="button" pButton label="Exit" icon="pi pi-arrow-left" class="p-button-warning mr-2" (click)="GoHome()"></button>
+  </div>
+  <div class="form-group">
+    <table>
+      <thead>
+        <tr>
+          <th>Event Name</th>
+          <th>Date</th>
+          <th>Location</th>
+          <th>Status</th>
+          <th style="width: 200px;">Banner</th>
+          <th>Description</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let event of pastEvents">
+          <td>{{ event.name }}</td>
+          <td>{{ event.date | date:'mediumDate' }}</td>
+          <td>{{ event.location }}</td>
+          <td>{{ event.status }}</td>
+          <td><img [src]="event.bannerUrl" alt="Event Banner" class="event-banner"></td>
+          <td>{{ event.description }}</td>
+          <td class="action-cell" style="width: 200px;">
+            <button type="button" pButton label="Reschedule" icon="pi pi-calendar-plus" (click)="openReschedule(event)"></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p-dialog header="Reschedule Event" [(visible)]="showDialog" [responsive]="true" [style]="{width: '400px'}">
+      <p-calendar [(ngModel)]="selectedDate" [showIcon]="true"></p-calendar>
+      <button type="button" pButton label="Save Date" (click)="rescheduleEvent()"></button>
+    </p-dialog>
+  </div>
+</div>
