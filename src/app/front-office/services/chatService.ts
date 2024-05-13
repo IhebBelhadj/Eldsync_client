@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {BehaviorSubject, Observable, Subject} from "rxjs";
-import {Users} from "../../../../../../Pdv - Copie/Eldsync_client/src/app/demo/api/users";
-import {ChatRoom} from "../../../../../../Pdv - Copie/Eldsync_client/src/app/demo/api/chatRoom";
-import {ChatMessage} from "../../../../../../Pdv - Copie/Eldsync_client/src/app/demo/api/chatMessage";
+
+import {Users} from "../api/users";
+import {ChatMessage} from "../api/chatMessage";
+import {ChatRoom} from "../api/chatRoom";
+
 
 @Injectable({
     providedIn: 'root'

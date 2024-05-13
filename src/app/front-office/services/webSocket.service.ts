@@ -1,9 +1,11 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import * as Stomp from 'stompjs';
-import SockJS from 'sockjs-client';
+
+import * as SockJS from 'sockjs-client';
 import { BehaviorSubject, Observable, Subject } from "rxjs";
-import { Status, Users } from "../../../../../../Pdv - Copie/Eldsync_client/src/app/demo/api/users";
-import { ChatMessage } from "../../../../../../Pdv - Copie/Eldsync_client/src/app/demo/api/chatMessage";
+import {Users} from "../api/users";
+import {ChatMessage} from "../api/chatMessage";
+
 
 @Injectable({
     providedIn: 'root'

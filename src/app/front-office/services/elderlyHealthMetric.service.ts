@@ -3,9 +3,12 @@ import { Injectable } from '@angular/core';
 import { HealthMetric } from '../api/healthMetric';
 import {Observable} from "rxjs";
 
+import {VitalSigns} from "../api/vitalSigns";
+
 @Injectable()
 export class ElderlyHealthMetricService {
-    private baseUrl = 'http://localhost:8081/api/healthMetric';
+    private baseUrl = 'http://localhost:8081/api/healthmetrics';
+
     constructor(private http: HttpClient) { }
 
     getAllHealthMetrics(): Observable<HealthMetric[]> {
@@ -30,6 +33,12 @@ export class ElderlyHealthMetricService {
     createHealthAlertsForDangerousLevels(healthMetric: HealthMetric): Observable<HealthMetric> {
         return this.http.post<any>(`${this.baseUrl}/health-alerts`, healthMetric);
     }
+
+
+    getLastUpdatesForAttributes(): Observable<HealthMetric> {
+        return this.http.get<VitalSigns>(`${this.baseUrl}/latest-updates`);
+    }
+
 }
 
 

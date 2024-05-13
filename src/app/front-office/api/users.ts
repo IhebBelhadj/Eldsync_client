@@ -1,4 +1,6 @@
-import {ChatMessage} from "../../../../../../finalEldSync/Eldsync_client/src/app/front-office/api/chatMessage";
+
+import {ChatMessage} from "./chatMessage";
+
 
 export interface Users {
     nickName: string;

@@ -20,7 +20,6 @@ import { AppLayoutComponent } from "./layout/app.layout.component";
                     { path: 'pages', loadChildren: () => import('./demo/components/pages/pages.module').then(m => m.PagesModule) },
                     { path: 'frontOffice', loadChildren: () => import('./front-office/front-office.module').then(m => m.FrontOfficeModule) },
 
-
                 ]
             },
 
