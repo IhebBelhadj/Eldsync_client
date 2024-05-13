@@ -1,39 +1,93 @@
 <div class="p-6">
 
-    <div class="calendarHeader">
-        <h1 class="calendarTitle">{{calendarTitle?.month}}</h1>
-        <h3 class="calendarSubtitle">{{calendarTitle?.year}}</h3>
+  <div class="calendarHeader">
+    <div class="calendarHeaderContent">
+
+      <h1 class="calendarTitle">{{calendarTitle?.month}}</h1>
+      <h3 class="calendarSubtitle">{{calendarTitle?.year}}</h3>
+    </div>
+    <div *ngIf="emotionRates$ | async as emotionRates" class="monthStats">
+      <div class="statGroup flex align-items-center happyStats relative"
+        [style.filter]="'saturate(' + getEmotionSaturation(emotionRates.happy)  + ')'">
+
+        <p-knob [ngModel]="emotionRates.happy" #happyRateKnob [readonly]="true" strokeWidth="5" rangeColor="#ecebf2"
+          valueTemplate="" valueColor="#5ff4c8" />
+        <button pButton pRipple type="button" icon="fa-regular fa-face-laugh-beam" disabled
+          class="p-button-rounded p-button-text btnHappy btnCenter" [style]="{fontSize: '4rem'}"></button>
+
+      </div>
+
+      <div class="statGroup flex align-items-center happyStats relative"
+        [style.filter]="'saturate(' + getEmotionSaturation(emotionRates.sad)  + ')'">
+
+        <p-knob [ngModel]="emotionRates.sad" #happyRateKnob [readonly]="true" strokeWidth="5" rangeColor="#ecebf2"
+          valueTemplate="" valueColor="#a4c3fc" />
+        <button pButton pRipple type="button" icon="fa-regular fa-face-frown-open" disabled
+          class="p-button-rounded p-button-text btnSad btnCenter" [style]="{fontSize: '4rem'}"></button>
+
+      </div>
+
+      <div class="statGroup flex align-items-center happyStats relative"
+        [style.filter]="'saturate(' + getEmotionSaturation(emotionRates.loving)  + ')'">
+
+        <p-knob [ngModel]="emotionRates.loving" #happyRateKnob [readonly]="true" strokeWidth="5" rangeColor="#ecebf2"
+          valueTemplate="" valueColor="#ffc0cb" />
+        <button pButton pRipple type="button" icon="fa-regular fa-face-grin-hearts" disabled
+          class="p-button-rounded p-button-text btnLoving btnCenter" [style]="{fontSize: '4rem'}"></button>
+
+      </div>
+
+      <div class="statGroup flex align-items-center happyStats relative"
+        [style.filter]="'saturate(' + getEmotionSaturation(emotionRates.grateful)  + ')'">
+
+        <p-knob [ngModel]="emotionRates.grateful" #happyRateKnob [readonly]="true" strokeWidth="5" rangeColor="#ecebf2"
+          valueTemplate="" valueColor="#f4d95f" />
+        <button pButton pRipple type="button" icon="fa-regular fa-face-smile-beam" disabled
+          class="p-button-rounded p-button-text btnGrateful btnCenter" [style]="{fontSize: '4rem'}"></button>
+
+      </div>
+
+      <div class="statGroup flex align-items-center happyStats relative"
+        [style.filter]="'saturate(' + getEmotionSaturation(emotionRates.angry)  + ')'">
+
+        <p-knob [ngModel]="emotionRates.angry" #happyRateKnob [readonly]="true" strokeWidth="5" rangeColor="#ecebf2"
+          valueTemplate="" valueColor="#ef5b5b" />
+        <button pButton pRipple type="button" icon="fa-regular fa-face-angry" disabled
+          class="p-button-rounded p-button-text btnAngry btnCenter" [style]="{fontSize: '4rem'}"></button>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="calendarContentContainer flex w-full align-items-center gap-5">
+
+    <div class="leftHandle">
+      <button pButton pRipple type="button" icon="pi pi-angle-left" class="p-button-rounded p-button-text navigationBtn"
+        (click)="seekLeft()"></button>
     </div>
 
-    <div class="calendarContentContainer flex w-full align-items-center gap-5">
+    <full-calendar #calendar style="flex: 1;" [options]="calendarOptions" [events]="events">
+      <ng-template #eventContent let-arg>
+        <!--content here for the event template-->
+        <div [attr.data-id]="arg.event.extendedProps.idDot" class="eventContent" #selector
+          (mouseover)="onEventHover(true,selector,$event, arg.event.extendedProps)" (mouseout)="onEventHover(false)"
+          (click)="showDotDetails(arg.event.extendedProps)">
+          <div class="dotDisplay" [ngClass]="arg.event.extendedProps.emotionType+ '_dot'"></div>
 
-        <div class="leftHandle">
-            <button pButton pRipple type="button" icon="pi pi-angle-left"
-                class="p-button-rounded p-button-text navigationBtn" (click)="seekLeft()"></button>
+
         </div>
 
-        <full-calendar #calendar style="flex: 1;" [options]="calendarOptions" [events]="events">
-            <ng-template #eventContent let-arg>
-                <!--content here for the event template-->
-                <div [attr.data-id]="arg.event.extendedProps.idDot" class="eventContent" #selector
-                    (mouseover)="onEventHover(true,selector,$event, arg.event.extendedProps)"
-                    (mouseout)="onEventHover(false)" (click)="showDotDetails(arg.event.extendedProps)">
-                    <div class="dotDisplay" [ngClass]="arg.event.extendedProps.emotionType+ '_dot'"></div>
+      </ng-template>
 
+    </full-calendar>
 
-                </div>
-
-            </ng-template>
-
-        </full-calendar>
-
-        <div class="rightHandle">
-            <button pButton pRipple type="button" icon="pi pi-angle-right"
-                class="p-button-rounded p-button-text navigationBtn" (click)="seekRight()"></button>
-        </div>
+    <div class="rightHandle">
+      <button pButton pRipple type="button" icon="pi pi-angle-right"
+        class="p-button-rounded p-button-text navigationBtn" (click)="seekRight()"></button>
     </div>
+  </div>
 
-    <lifeline-dot-inspect></lifeline-dot-inspect>
+  <lifeline-dot-inspect></lifeline-dot-inspect>
 
 
 

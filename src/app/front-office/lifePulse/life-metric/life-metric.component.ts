@@ -12,9 +12,9 @@ import {ToastModule} from "primeng/toast";
 import {ToolbarModule} from "primeng/toolbar";
 import {HealthMetric} from "../../api/healthMetric";
 import {ElderlyHealthMetricService} from "../../services/elderlyHealthMetric.service";
-
 import {DatePipe, NgClass, NgIf, NgStyle} from "@angular/common";
 import {VitalSigns} from "../../api/vitalSigns";
+
 
 
 @Component({
@@ -34,10 +34,10 @@ import {VitalSigns} from "../../api/vitalSigns";
         ToolbarModule,
         NgClass,
         FormsModule,
-
         NgStyle,
         NgIf,
         DatePipe
+
 
     ],
   templateUrl: './life-metric.component.html',
@@ -54,12 +54,11 @@ export class LifeMetricComponent implements OnInit {
     healthMetric: HealthMetric[] = [];
     healthMetrics : HealthMetric = {};
     loading: boolean = true;
-
-
     healthMetricAdd: boolean = false;
     cholesterolLvlEdited: boolean = false;
     bloodGlucoseLvlEdited: boolean = false;
     weightEdited: boolean = false;
+
 
     healthMetricDeleteConfirmation: boolean= false;
     healthMetricEditConfirmation: boolean= false;
@@ -68,13 +67,13 @@ export class LifeMetricComponent implements OnInit {
     healthMetricEdit: boolean=false;
     HeightEdited: boolean= false;
 
-
     constructor(private elderlyHealthMetricService: ElderlyHealthMetricService, private service: MessageService){
 
     }
 
     ngOnInit() {
         this.loadHealthMetric();
+
 
         this.getLatestUpdates();
     }
@@ -119,6 +118,7 @@ export class LifeMetricComponent implements OnInit {
 /*add*/
     addHealthMetric(healthMetric: HealthMetric) {
         this.healthMetrics = { ...healthMetric };
+
         this.healthMetricAdd = true;
     }
 
@@ -128,6 +128,7 @@ export class LifeMetricComponent implements OnInit {
 
     saveADD() {
         console.log('Saving health metrics:', this.healthMetrics);
+
 
         /*this.healthMetrics = {};*/
         this.healthMetricAddConfirmation = true;
@@ -209,6 +210,7 @@ export class LifeMetricComponent implements OnInit {
     }
     /*safe*/
 
+
     isSafe(value: number): boolean {
         // Define safe ranges or thresholds for each metric
         const safeRanges = {
@@ -250,6 +252,7 @@ export class LifeMetricComponent implements OnInit {
     showSuccessViaToast(message: string) {
         this.service.add({ key: 'tst', severity: 'success', summary: 'Success', detail: message, life: 1000 });
     }
+
 
 
 

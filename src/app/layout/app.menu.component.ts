@@ -5,7 +5,6 @@ import { LayoutService } from './service/app.layout.service';
 import {AppConfigComponent} from "./config/app.config.component";
 import {AppMenuitemComponent} from "./app.menuitem.component";
 
-
 @Component({
     selector: 'app-menu',
     templateUrl: './app.menu.component.html'
@@ -21,7 +20,15 @@ export class AppMenuComponent implements OnInit {
             {
                 label: 'Test label',
                 items: [
-                    { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] }
+                    { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] },
+                    { label: 'Form Layo', icon: 'pi pi-fw pi-id-card', routerLink: ['/uikit/medicaments'] },
+                    { label: 'Medication', icon: 'pi pi-fw pi-table', routerLink: ['/uikit/medication'] },
+                    { label: 'Calendar', icon: 'pi pi-fw pi-table', routerLink: ['/uikit/medication/calendarMedication'] },
+                    { label: 'Task', icon: 'pi pi-fw pi-table' , routerLink: ['/uikit/task'] }
+
+
+
+
                 ]
             },
             {
@@ -170,8 +177,6 @@ export class AppMenuComponent implements OnInit {
             }
         ];
 
-
-
     }
     onLifePulseClick() {
         this.layoutService.hideMenu();
@@ -193,7 +198,5 @@ export class AppMenuComponent implements OnInit {
     hideConfigButton() {
         document.querySelector('.layout-config-button')?.classList.add('hidden');
     }
-
-
 
 }

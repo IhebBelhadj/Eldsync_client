@@ -23,8 +23,6 @@ import { AppLayoutComponent } from "./layout/app.layout.component";
                 ]
             },
 
-          //  { path: 'event', loadComponent: () => import('./front-office/event/event.module').then(m => m.EventModule) },
-            // { path: 'eventUser', loadComponent: () => import('./front-office/event-user/event-user.module').then(m => m.EventUserModule) },
             { path: 'auth', loadChildren: () => import('./demo/components/auth/auth.module').then(m => m.AuthModule) },
             { path: 'front', loadChildren: () => import('./demo/components/front/front.module').then(m => m.FrontModule) },
             { path: 'landing', loadChildren: () => import('./demo/components/landing/landing.module').then(m => m.LandingModule) },

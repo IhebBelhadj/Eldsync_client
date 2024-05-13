@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {BehaviorSubject, Observable, Subject} from "rxjs";
-
 import {Users} from "../api/users";
 import {ChatMessage} from "../api/chatMessage";
 import {ChatRoom} from "../api/chatRoom";
-
 
 @Injectable({
     providedIn: 'root'

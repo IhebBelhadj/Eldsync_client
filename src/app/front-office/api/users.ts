@@ -1,7 +1,6 @@
 
 import {ChatMessage} from "./chatMessage";
 
-
 export interface Users {
     nickName: string;
     fullName: string;

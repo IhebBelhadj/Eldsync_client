@@ -36,5 +36,6 @@ export class ElderlyVitalSignesService {
         return this.http.get<VitalSigns>(`${this.apiUrl}/latestupdates`);
     }
 
+
 }
 

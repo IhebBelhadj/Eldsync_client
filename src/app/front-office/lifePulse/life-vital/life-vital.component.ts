@@ -10,10 +10,10 @@ import {ToastModule} from "primeng/toast";
 import {ToolbarModule} from "primeng/toolbar";
 import {VitalSigns} from "../../api/vitalSigns";
 import {ElderlyVitalSignesService} from "../../services/elderlyVitalSignes.service";
-
 import {DatePipe, NgClass, NgIf, NgStyle} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {CalendarModule} from "primeng/calendar";
+
 
 
 @Component({
@@ -30,7 +30,6 @@ import {CalendarModule} from "primeng/calendar";
         ToastModule,
         ToolbarModule,
         NgStyle,
-
         DatePipe,
         NgClass,
         FormsModule,
@@ -50,28 +49,29 @@ export class LifeVitalComponent implements OnInit {
 
 @ViewChild('filter') filter!: ElementRef;
 
+
     vitalSign: VitalSigns[] = [];
+
     vitalSigns : VitalSigns = {};
     loading: boolean = true;
     vitalSigneEdit: boolean = false;
     vitalSigneDelete : boolean = false;
+
     vitalSignAdd: boolean = false;
     vitalSignsAdd: boolean = false;
     vitalSignsEdit: boolean = false;
+
     oxygenSaturationEdited: boolean = false;
     temperatureEdited: boolean = false;
     heartRateEdited: boolean = false;
     respiratoryRateEdited: boolean = false;
-
     latestUpdates: VitalSigns;
-
     constructor(private elderlyVitalSignesService: ElderlyVitalSignesService ,private service: MessageService) {
 
     }
 
     ngOnInit() {
         this.loadVitalSignes();
-
         this.getLatestUpdates();
     }
     getLatestUpdates() {
@@ -88,7 +88,6 @@ export class LifeVitalComponent implements OnInit {
         this.elderlyVitalSignesService.getAllVitalSigns().subscribe(
             vitalSignes => {
                 this.vitalSign = vitalSignes;
-
                 this.loading = false;
             },
             error => {
@@ -107,6 +106,7 @@ export class LifeVitalComponent implements OnInit {
         table.clear();
         this.filter.nativeElement.value = '';
     }
+
 
     /*add*/
     addVitalSigns(vitalSigne: VitalSigns) {
@@ -181,6 +181,7 @@ export class LifeVitalComponent implements OnInit {
     }
 
     confirmDeleteSelected() {
+
         console.log('Deleting vital sign:', this.vitalSigns);
         this.elderlyVitalSignesService.deleteVitalSigns(this.vitalSigns.id).subscribe(() => {
             this.showSuccessViaToast('Vital sign deleted successfully.');
@@ -208,6 +209,7 @@ export class LifeVitalComponent implements OnInit {
 
     /*safety*/
 
+
     isSafe(value: number | undefined): boolean {
         // Define safe ranges or thresholds for each vital sign
         const safeRanges = {
@@ -221,7 +223,6 @@ export class LifeVitalComponent implements OnInit {
         const vitalSign = value === this.vitalSigns.oxygenSaturation ? 'oxygenSaturation' :
             value === this.vitalSigns.temperature ? 'temperature' :
                 value === this.vitalSigns.respiratoryRate ? 'respiratoryRate' : '';
-
 
         // If the vital sign is known and within the safe range, return true (safe), otherwise return false (danger)
         return vitalSign && value !== undefined && value >= safeRanges[vitalSign].min && value <= safeRanges[vitalSign].max;

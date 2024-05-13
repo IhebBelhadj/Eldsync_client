@@ -1,6 +1,6 @@
 <div class="grid">
-
     <div class="col-12 lg:col-6 xl:col-4" *ngIf="latestUpdates">
+
 
         <div class="card mb-0">
             <div class="flex justify-content-between mb-3">
@@ -9,11 +9,13 @@
 
                     <div class="text-900 font-medium text-xl">{{ latestUpdates.bloodGlucoseLvl }}</div>
 
+
                 </div>
                 <div class="flex align-items-center justify-content-center bg-blue-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
                     <i class="pi pi-percentage text-blue-500 text-xl"></i>
                 </div>
             </div>
+
 
             <span class="text-green-500 font-medium">{{ latestUpdates.date | date }} </span>
             <span class="text-500">since last check</span>
@@ -21,10 +23,12 @@
     </div>
     <div class="col-12 lg:col-6 xl:col-4"  *ngIf="latestUpdates">
 
+
         <div class="card mb-0">
             <div class="flex justify-content-between mb-3">
                 <div>
                     <span class="block text-500 font-medium mb-3">Cholesterol lvl</span>
+
 
                     <div class="text-900 font-medium text-xl">{{ latestUpdates.cholesterolLvl }}</div>
 
@@ -34,24 +38,29 @@
                 </div>
             </div>
 
+
             <span class="text-green-500 font-medium">{{ latestUpdates.date | date }}</span>
             <span class="text-500">since last check</span>
         </div>
     </div>
     <div class="col-12 lg:col-6 xl:col-4" *ngIf="latestUpdates">
 
+
         <div class="card mb-0">
             <div class="flex justify-content-between mb-3">
                 <div>
                     <span class="block text-500 font-medium mb-3">Weight</span>
 
+
                     <div class="text-900 font-medium text-xl">{{ latestUpdates.weight }}</div>
+
 
                 </div>
                 <div class="flex align-items-center justify-content-center bg-cyan-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
                     <i class="pi pi-sort-amount-up-alt text-cyan-500 text-xl"></i>
                 </div>
             </div>
+
 
             <span class="text-green-500 font-medium">{{ latestUpdates.date | date }}</span>
 
@@ -64,7 +73,9 @@
             <ng-template pTemplate="left">
                 <div class="my-2">
 
+
                     <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="addHealthMetric(healthMetrics)"></button>
+
 
                 </div>
             </ng-template>
@@ -77,9 +88,7 @@
     </div>
     <div class="col-12">
         <div class="card">
-
             <h5>Elderly Life Metric</h5>
-
             <p-table #dt1 [value]="healthMetric" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-gridlines" [paginator]="true" [globalFilterFields]="['observerName', 'cholesterolLvl', 'bloodGlucoseLvl', 'weight', 'height']" responsiveLayout="scroll">
                 <ng-template pTemplate="caption">
                     <div class="flex justify-content-between flex-column sm:flex-row">
@@ -109,7 +118,6 @@
                         <td>{{patient.height}}</td>
                         <td>
                             <div class="flex">
-
                                 <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editHealthMetric(patient)"></button>
                                 <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteHealthMetric(patient)"></button>
 
@@ -129,19 +137,15 @@
                 </ng-template>
             </p-table>
         </div>
-
         <p-dialog [(visible)]="healthMetricAdd" [style]="{width: '450px'}" header="Life Metric Details" [modal]="true" class="p-fluid " >
             <ng-template pTemplate="content " >
                 <div class="field">
                     <p-calendar [showIcon]="true" inputId="date"  [(ngModel)]="healthMetrics.date" required autofocus></p-calendar>
-
-
                 </div>
                 <div class="field">
                     <label for="name">Name</label>
 
                     <input type="text" pInputText id="name" [(ngModel)]="healthMetrics.observerName" required />
-
                 </div>
                 <div class="field">
                     <label for="oxygen">Cholesterol Lvl</label>
@@ -165,7 +169,6 @@
                         <span [ngClass]="{'pi pi-flag-fill': true, 'text-green-500': isSafe(healthMetrics.weight), 'text-red-500': !isSafe(healthMetrics.weight), 'hidden': !weightEdited }"></span>
                     </div>
                 </div>
-
                 <div class="field">
                     <label for="Height">Height</label>
                     <div class="input-with-icon flex">
@@ -177,6 +180,7 @@
 
 
 
+
                 <!-- Other fields -->
             </ng-template>
             <ng-template pTemplate="footer">
@@ -184,6 +188,7 @@
                 <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveADD()"></button>
             </ng-template>
         </p-dialog>
+
 
 
 <!-- edit template -->
@@ -244,16 +249,14 @@
         <!--delete template of selected items in table -->
 
         <p-dialog [(visible)]="healthMetricDeleteConfirmation" [style]="{width: '450px'}"  [modal]="true" class="p-fluid">
-
-
             <div class="flex align-items-center justify-content-center">
                 <i class="pi pi-exclamation-triangle text-red-500 mr-3" style="font-size: 2rem"></i>
                 <span>Are you sure you want to delete selected products?</span>
             </div>
             <ng-template pTemplate="footer">
 
-                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="showErrorViaToast('Failed to delete vital sign.')"></button>
 
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="showErrorViaToast('Failed to delete vital sign.')"></button>
                 <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDeleteSelected()"></button>
             </ng-template>
 
