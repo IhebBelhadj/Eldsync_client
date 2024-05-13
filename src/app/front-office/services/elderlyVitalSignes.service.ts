@@ -31,8 +31,10 @@ export class ElderlyVitalSignesService {
     createHealthAlertsForDangerousLevels(newVitalSigns: VitalSigns): Observable<VitalSigns> {
         return this.http.post<any>(`${this.apiUrl}/health-alerts`, newVitalSigns);
     }
+
     getLatestAttributeUpdates(): Observable<VitalSigns> {
         return this.http.get<VitalSigns>(`${this.apiUrl}/latestupdates`);
     }
+
 }
 

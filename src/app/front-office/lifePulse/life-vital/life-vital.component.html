@@ -1,4 +1,5 @@
 <div class="grid">
+
     <div class="col-12 lg:col-6 xl:col-3" *ngIf="latestUpdates">
         <div class="card mb-0">
             <div class="flex justify-content-between mb-3">
@@ -51,10 +52,12 @@
 
     <!-- Heart Rate -->
     <div class="col-12 lg:col-6 xl:col-3" *ngIf="latestUpdates">
+
         <div class="card mb-0">
             <div class="flex justify-content-between mb-3">
                 <div>
                     <span class="block text-500 font-medium mb-3">Heart Rate</span>
+
                     <div class="text-900 font-medium text-xl">{{ latestUpdates.heartRate }}</div>
                 </div>
                 <div class="flex align-items-center justify-content-center bg-red-100 border-round">
@@ -66,16 +69,21 @@
         </div>
     </div>
 
+
     <div class="col-12">
         <p-toolbar styleClass="mb-4">
             <ng-template pTemplate="left">
                 <div class="my-2">
+
                     <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="addVitalSigns(vitalSigns)"></button>
+
                 </div>
             </ng-template>
 
             <ng-template pTemplate="right">
+
                 <p-fileUpload mode="basic" accept=".xls,.xlsx"  [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
+
                 <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help" (click)="dt1.exportCSV()"></button>
             </ng-template>
         </p-toolbar>
@@ -83,7 +91,9 @@
     <div class="col-12">
         <div class="card">
             <h5>Elderly Vital Signs</h5>
+
             <p-table #dt1 [value]="vitalSign" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-gridlines" [paginator]="true" [globalFilterFields]="['name', 'oxygenSaturation', 'temperature', 'bloodSugar', 'respiratoryRate']" responsiveLayout="scroll">
+
                 <ng-template pTemplate="caption">
                     <div class="flex justify-content-between flex-column sm:flex-row">
                         <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash" (click)="clear(dt1)" style="width: 50% ; margin-right: 20px"></button>
@@ -117,8 +127,10 @@
 
                         <td>
                             <div class="flex">
+
                                 <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editVitalSigns(patient)"></button>
                                 <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteVitalSigns(patient)"></button>
+
                             </div>
                         </td>
                     </tr>
@@ -137,6 +149,7 @@
         </div>
     </div>
     <!--Add template for vital signs -->
+
     <p-dialog [(visible)]="vitalSignsAdd" [style]="{width: '450px'}" header="Vital Sign Details" [modal]="true" class="p-fluid">
         <ng-template pTemplate="content">
             <div class="field">
@@ -220,19 +233,23 @@
         </ng-template>
     </p-dialog>
 
+
     <!--delete template of selected items in table -->
     <p-dialog [(visible)]="vitalSigneDelete" [style]="{width: '450px'}"  [modal]="true" class="p-fluid">
 
         <div class="flex align-items-center justify-content-center">
             <i class="pi pi-exclamation-triangle text-red-500 mr-3" style="font-size: 2rem"></i>
+
             <span>Are you sure you want to delete selected vital signs?</span>
         </div>
         <ng-template pTemplate="footer">
             <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="showErrorViaToast('Failed to delete vital sign.')"></button>
+
             <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDeleteSelected()"></button>
         </ng-template>
 
     </p-dialog>
+
     <!--edit template of selected items in table -->
     <p-dialog [(visible)]="vitalSigneEdit" [style]="{width: '450px'}"  [modal]="true" class="p-fluid">
 
@@ -259,5 +276,6 @@
         </ng-template>
 
     </p-dialog>
+
     <p-toast key="tst"></p-toast>
 </div>

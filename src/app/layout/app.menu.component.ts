@@ -1,8 +1,10 @@
+
 import {OnInit, Renderer2} from '@angular/core';
 import { Component } from '@angular/core';
 import { LayoutService } from './service/app.layout.service';
 import {AppConfigComponent} from "./config/app.config.component";
 import {AppMenuitemComponent} from "./app.menuitem.component";
+
 
 @Component({
     selector: 'app-menu',
@@ -25,6 +27,7 @@ export class AppMenuComponent implements OnInit {
             {
                 label: 'UI Components',
                 items: [
+
                     { label: 'chatSync', icon: 'pi pi-fw pi-comment', routerLink: ['/frontOffice/login'] },
                     { label: 'Life Pulse', icon: 'pi pi-fw pi-heart', routerLink: ['/frontOffice/lifePulse'] , customClick: () => this.onLifePulseClick()},
                     { label: 'Form Layout', icon: 'pi pi-fw pi-id-card', routerLink: ['/uikit/formlayout'],customClickItems: () => this.onItemClick() },
@@ -43,6 +46,7 @@ export class AppMenuComponent implements OnInit {
                     { label: 'File', icon: 'pi pi-fw pi-file', routerLink: ['/uikit/file'],customClickItems: () => this.onItemClick()  },
                     { label: 'Chart', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/uikit/charts'],customClickItems: () => this.onItemClick()  },
                     { label: 'Misc', icon: 'pi pi-fw pi-circle', routerLink: ['/uikit/misc'],customClickItems: () => this.onItemClick()  }
+
                 ]
             },
             {
@@ -167,6 +171,7 @@ export class AppMenuComponent implements OnInit {
         ];
 
 
+
     }
     onLifePulseClick() {
         this.layoutService.hideMenu();
@@ -188,6 +193,7 @@ export class AppMenuComponent implements OnInit {
     hideConfigButton() {
         document.querySelector('.layout-config-button')?.classList.add('hidden');
     }
+
 
 
 }

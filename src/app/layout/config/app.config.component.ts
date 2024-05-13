@@ -17,10 +17,12 @@ export class AppConfigComponent {
         public menuService: MenuService
     ) {}
 
+
     hideConfigButton() {
         this.showConfigButton = false;
         document.querySelector('.layout-config-button')?.classList.add('hidden');
     }
+
 
     get visible(): boolean {
         return this.layoutService.state.configSidebarVisible;

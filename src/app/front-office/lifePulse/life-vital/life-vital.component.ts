@@ -10,9 +10,11 @@ import {ToastModule} from "primeng/toast";
 import {ToolbarModule} from "primeng/toolbar";
 import {VitalSigns} from "../../api/vitalSigns";
 import {ElderlyVitalSignesService} from "../../services/elderlyVitalSignes.service";
+
 import {DatePipe, NgClass, NgIf, NgStyle} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {CalendarModule} from "primeng/calendar";
+
 
 @Component({
   selector: 'app-life-vital',
@@ -28,11 +30,13 @@ import {CalendarModule} from "primeng/calendar";
         ToastModule,
         ToolbarModule,
         NgStyle,
+
         DatePipe,
         NgClass,
         FormsModule,
         CalendarModule,
         NgIf
+
     ],
   templateUrl: './life-vital.component.html',
   styleUrl: './life-vital.component.scss',
@@ -45,6 +49,7 @@ export class LifeVitalComponent implements OnInit {
 
 
 @ViewChild('filter') filter!: ElementRef;
+
     vitalSign: VitalSigns[] = [];
     vitalSigns : VitalSigns = {};
     loading: boolean = true;
@@ -59,12 +64,14 @@ export class LifeVitalComponent implements OnInit {
     respiratoryRateEdited: boolean = false;
 
     latestUpdates: VitalSigns;
+
     constructor(private elderlyVitalSignesService: ElderlyVitalSignesService ,private service: MessageService) {
 
     }
 
     ngOnInit() {
         this.loadVitalSignes();
+
         this.getLatestUpdates();
     }
     getLatestUpdates() {
@@ -81,6 +88,7 @@ export class LifeVitalComponent implements OnInit {
         this.elderlyVitalSignesService.getAllVitalSigns().subscribe(
             vitalSignes => {
                 this.vitalSign = vitalSignes;
+
                 this.loading = false;
             },
             error => {
@@ -99,6 +107,7 @@ export class LifeVitalComponent implements OnInit {
         table.clear();
         this.filter.nativeElement.value = '';
     }
+
     /*add*/
     addVitalSigns(vitalSigne: VitalSigns) {
         this.vitalSigns = { ...vitalSigne };
@@ -198,6 +207,7 @@ export class LifeVitalComponent implements OnInit {
 
 
     /*safety*/
+
     isSafe(value: number | undefined): boolean {
         // Define safe ranges or thresholds for each vital sign
         const safeRanges = {
@@ -207,9 +217,11 @@ export class LifeVitalComponent implements OnInit {
         };
 
         // Determine which vital sign is being checked
+
         const vitalSign = value === this.vitalSigns.oxygenSaturation ? 'oxygenSaturation' :
             value === this.vitalSigns.temperature ? 'temperature' :
                 value === this.vitalSigns.respiratoryRate ? 'respiratoryRate' : '';
+
 
         // If the vital sign is known and within the safe range, return true (safe), otherwise return false (danger)
         return vitalSign && value !== undefined && value >= safeRanges[vitalSign].min && value <= safeRanges[vitalSign].max;
