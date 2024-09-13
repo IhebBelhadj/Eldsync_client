@@ -15,6 +15,6 @@ Our all in one health care solution for elders where you can setup once and get 
 
 This app is an academic project written mainly in Angular and Java Spring utilizing the microservices architecture
 > **Here is the application architecture**
-
+<img src="https://drive.google.com/uc?id=1nowPi_2-Eizuqff6gN2ovBS86GdZ4jXh" />
 
 > **Here is the class diagram for the application**
