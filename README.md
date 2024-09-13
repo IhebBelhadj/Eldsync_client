@@ -8,8 +8,9 @@ Our all in one health care solution for elders where you can setup once and get 
 
 > **Here is the application presentation**
 
-<img src="https://drive.google.com/u/0/drive-viewer/AKGpihbamP-xHwgrlDAQwRaNH0g6ENlLrr1g1qJMrbjAjYU2mP8qwVzx8kMRWMYxRW9D2Ni2iSIHqgtiz93kY7puANxQsEyxWKPqsyw=s1600-rw-v1" />
-
+<a href="https://www.canva.com/design/DAF-Sumop5o/HgjqSTzVFNVkDIJXHE5LHg/view?utm_content=DAF-Sumop5o&utm_campaign=designshare&utm_medium=link&utm_source=editor" target="_blank">
+  <img src="https://drive.google.com/uc?id=17BKiQRbPIY6fX0hYLzo7XwwPFUzF-tpg" alt="Image Link" />
+</a>
 
 ## Technical overview 
 
@@ -18,3 +19,5 @@ This app is an academic project written mainly in Angular and Java Spring utiliz
 <img src="https://drive.google.com/uc?id=1nowPi_2-Eizuqff6gN2ovBS86GdZ4jXh" />
 
 > **Here is the class diagram for the application**
+
+<img src="https://drive.google.com/uc?id=1F-OLgeubpi5FNTLDor4qCg7aOteIrMEy" />
