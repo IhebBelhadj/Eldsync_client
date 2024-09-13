@@ -1,6 +1,8 @@
-# Sakai
+# Eldsync
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.0.4.
+
+<img src="https://drive.usercontent.google.com/download?id=17BKiQRbPIY6fX0hYLzo7XwwPFUzF-tpg">
 
 ## Development server
 
