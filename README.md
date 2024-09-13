@@ -8,7 +8,7 @@ Our all in one health care solution for elders where you can setup once and get 
 
 > **Here is the application presentation**
 
-<img src="https://drive.usercontent.google.com/download?id=17BKiQRbPIY6fX0hYLzo7XwwPFUzF-tpg&export=view" />
+<img src="https://drive.google.com/u/0/drive-viewer/AKGpihbamP-xHwgrlDAQwRaNH0g6ENlLrr1g1qJMrbjAjYU2mP8qwVzx8kMRWMYxRW9D2Ni2iSIHqgtiz93kY7puANxQsEyxWKPqsyw=s1600-rw-v1" />
 
 
 ## Technical overview 
