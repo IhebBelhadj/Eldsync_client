@@ -1,0 +1,48 @@
+<p>update-user works!</p>
+<div class="col-md-7 offset-md-3">
+    <h2>{{ isEditMode ? 'Update User' : 'Add User' }}</h2>
+    <form (ngSubmit)="updateUser()">
+  
+        <div>
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" class="form-control" name="firstName" [(ngModel)]="user.firstName" required>
+        </div>
+        <div>
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" class="form-control" name="lastName" [(ngModel)]="user.lasteName" required>
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" class="form-control" [(ngModel)]="user.email" required>
+        </div>
+        <div>
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender" class="form-control" [(ngModel)]="user.gender" required>
+                <option value="MALE">MALE</option>
+                <option value="FEMALE">FEMALE</option>
+            </select>
+        </div>
+        <div>
+            <label for="role">Role:</label>
+            <select id="role" name="role" class="form-control" [(ngModel)]="user.role" required>
+                <option value="ADMIN">ADMIN</option>
+                <option value="ELDER">ELDER</option>
+                <option value="NURSE">NURSE</option>
+                <option value="DOCTOR">DOCTOR</option>
+            </select>
+        </div>
+        <div>
+            <label for="status">Status:</label>
+            <select id="status" name="status" class="form-control" [(ngModel)]="user.status" required>
+                <option value="ONLINE">ACTIVE</option>
+                <option value="OFFLINE">INACTIVE</option>
+            </select>
+        </div>
+        <div>
+            <label for="phone">Phone:</label>
+            <input type="text" id="phone" name="phone" class="form-control" [(ngModel)]="user.phone">
+        </div>
+        <button type="submit" class="btn btn-success">{{ isEditMode ? 'Update User' : 'Add User' }}</button>
+        <button (click)="navigateToList()" class="btn btn-secondary">Back to List</button>
+    </form>
+</div>

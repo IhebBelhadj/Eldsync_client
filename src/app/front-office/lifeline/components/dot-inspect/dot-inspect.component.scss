@@ -1,0 +1,76 @@
+@import '../../styles/_variables.scss';
+
+.HAPPY-tagBg {
+    ::ng-deep .p-tag {
+        background-color: $color-happy;
+        color: $black0;
+        padding: 0.5rem;
+    }
+}
+
+.SAD-tagBg {
+    ::ng-deep .p-tag {
+        background-color: $color-sad;
+        color: $black0;
+        padding: 0.5rem;
+    }
+}
+
+.LOVING-tagBg {
+    ::ng-deep .p-tag {
+        background-color: $color-loving;
+        color: $black0;
+        padding: 0.5rem;
+    }
+}
+
+.ANGRY-tagBg {
+    ::ng-deep .p-tag {
+        background-color: $color-angry;
+        color: $black0;
+        padding: 0.5rem;
+    }
+}
+
+.GRATEFUL-tagBg {
+    ::ng-deep .p-tag {
+        background-color: $color-grateful;
+        color: $black0;
+        padding: 0.5rem;
+    }
+}
+
+
+.dotInspectHeader{
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    padding: .8rem;
+
+}
+
+::ng-deep .HAPPY-panelBg {
+    background-color: $plane-happy;
+}
+
+::ng-deep .SAD-panelBg {
+    background-color: $plane-sad;
+}
+
+::ng-deep .LOVING-panelBg {
+    background-color: $plane-loving;
+}
+
+::ng-deep .ANGRY-panelBg {
+    background-color: $plane-angry;
+}
+
+::ng-deep .GRATEFUL-panelBg {
+    background-color: $plane-grateful;
+}
+
+.dotContent {
+    padding: 1rem;
+}
+
+

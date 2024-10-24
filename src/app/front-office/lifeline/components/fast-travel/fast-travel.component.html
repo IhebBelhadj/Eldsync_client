@@ -1,0 +1,17 @@
+<p-overlayPanel #op (onShow)="onPanelShow()" (onHide)="onPanelHide()">
+    <ng-template pTemplate="content">
+
+        <div class="contentWrapper p-3">
+
+            <h5>Select a date to fast travel to</h5>
+            <div class="flex align-items-center justify-content-center gap-3">
+
+                <p-calendar view="month" dateFormat="mm/yy" [(ngModel)]="pickedDate" [showWeek]="true"
+                    [showYear]="true"></p-calendar>
+
+                <button pButton class="btnDocker" type="button" label="Fast Travel" (click)="fastTravel()"></button>
+            </div>
+        </div>
+
+    </ng-template>
+</p-overlayPanel>

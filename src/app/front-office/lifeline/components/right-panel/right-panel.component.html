@@ -1,0 +1,67 @@
+<ng-container *ngIf="( rightPanelOpen$ |async ) as rightPanelOpen">
+  <p-dialog header="Create new dot" [closable]="false" [breakpoints]="{'440px': '70vw',  '1600px': '50vw'}"
+    [resizable]="true" [visible]="rightPanelOpen" position="right"
+    [style]="{ width: '25vw', overflow: 'hidden',top: '5%' }" [contentStyle]="{overflow: 'hidden'}">
+
+
+
+    <ng-container *ngIf="(rightPanelAction$ | async) as rightPanelAction">
+      <ng-template pTemplate="header">
+        <div class="flex justify-content-between align-items-center w-full">
+
+          <div *ngIf='rightPanelAction == "add"' class="inline-flex align-items-center justify-content-center gap-4">
+            <span class="font-bold white-space-nowrap">{{rightPanelAction == 'add' ? 'Create dot': ''}}</span>
+            <p-tag [ngClass]="getEmotionClass(selectedEmotion)" *ngIf="(emotionState$ | async) as emotionState">
+              <div class="flex align-items-center gap-2">
+                <span class="font-medium text-base">{{emotionState.text}}</span>
+              </div>
+            </p-tag>
+          </div>
+          <button pButton *ngIf="rightPanelAction == 'add'" pRipple type="button" icon="pi pi-trash"
+            class="p-button-rounded btnDocker" pTooltip="Remove" tooltipPosition="top"
+            (click)='initRemoveDotRequest()'></button>
+          <div *ngIf="rightPanelAction == 'show'" class="flex barContent align-items-start">
+
+
+            <p-button (click)="closePanel()" icon="pi pi-arrow-left" [rounded]="true" [text]="true"
+              severity="secondary "></p-button>
+            <div class="inline-flex align-items-center justify-content-center gap-4">
+              <p-tag [ngClass]="getEmotionClass(selectedEmotion)" *ngIf="(emotionState$ | async) as emotionState">
+                <div class="flex align-items-center gap-2">
+                  <span class="font-medium text-base">{{emotionState.text}}</span>
+                </div>
+              </p-tag>
+            </div>
+            <div class="dialWrapper">
+
+              <p-speedDial [model]="dotOptions" [radius]="40" buttonClassName="dialBtn" direction="down"
+                showIcon="pi pi-bars" hideIcon="pi pi-times"></p-speedDial>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+
+
+
+
+
+      <lifeline-dot-form *ngIf="rightPanelAction == 'add'"></lifeline-dot-form>
+      <lifeline-dot-content *ngIf="rightPanelAction == 'show'"></lifeline-dot-content>
+
+
+    </ng-container>
+  </p-dialog>
+
+</ng-container>
+
+
+<!-- <div *ngIf="(lifelineStateService.rightPanelOpen$ | async);" [@slideInOut] -->
+<!--     class="panelContentWrapper fixed top-0 right-0 w-min h-screen "> -->
+<!--     <div -->
+<!--         class="rightPanel fixed right-0 top-0 h-full flex align-items-center z-1 transition-duration-300 transition-ease-in-out"> -->
+<!--         <div class="rightPanelContent surface-50 w-full shadow-2 flex flex-column border-round-lg mx-4"> -->
+<!--             <lifeline-dot-form></lifeline-dot-form> -->
+<!---->
+<!--         </div> -->
+<!--     </div> -->
+<!-- </div> -->

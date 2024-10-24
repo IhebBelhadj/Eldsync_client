@@ -43,6 +43,7 @@ import { InputTextModule } from 'primeng/inputtext';
 			}
 		])
 	],
+	
 	declarations: [MenusComponent],
 	exports: [RouterModule]
 })

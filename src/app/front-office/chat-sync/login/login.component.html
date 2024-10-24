@@ -1,0 +1,17 @@
+
+<div class=" card user-form" id="username-page">
+    <h2>Enter Chatroom</h2>
+    <form id="usernameForm" (ngSubmit)="connect($event)">
+        <label for="nickname">Nickname:</label>
+        <input type="text" id="nickname"  [ngModelOptions]="{ standalone: true }" required [(ngModel)]="nickname">
+
+        <label for="fullname">Real Name:</label>
+        <input type="text" id="fullname"  [ngModelOptions]="{ standalone: true }" required [(ngModel)]="fullname">
+
+        <button type="submit" [routerLink]="['/uikit/chatRoom'] ">Enter Chatroom</button>
+    </form>
+</div>
+
+
+
+

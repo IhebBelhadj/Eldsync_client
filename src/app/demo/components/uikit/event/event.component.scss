@@ -1,0 +1,79 @@
+/* Global styles.css or component-specific CSS file */
+
+.event-dialog .p-dialog {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+      border: none; /* Remove border for a cleaner look */
+  }
+  
+  .event-dialog .p-dialog .p-dialog-content {
+      padding: 20px;
+      background-color: #ffffff; /* Pure white background for a clean look */
+      color: #333; /* Dark grey for contrast */
+      font-family: 'Helvetica Neue', Arial, sans-serif; /* Modern, sans-serif font */
+  }
+  
+  .event-dialog .p-dialog-header {
+      background-color: #0056b3; /* Deep blue for a professional feel */
+      color: #ffffff;
+      font-size: 1.25rem;
+      font-weight: 600; /* Semi-bold for clear headings */
+      border-top-left-radius: 6px;
+      border-top-right-radius: 6px;
+      text-transform: uppercase; /* Uppercase text for the header */
+  }
+  
+  .event-dialog .p-dialog-footer {
+      background-color: #f1f1f1; /* Light grey, softer than header */
+      padding: 10px 20px;
+      border-bottom-left-radius: 6px;
+      border-bottom-right-radius: 6px;
+  }
+  
+  .event-dialog .event-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px; /* Consistent spacing between elements */
+  }
+  
+  .event-dialog .event-content .event-image {
+      width: 100%;
+      max-height: 200px;
+      object-fit: cover;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow for images */
+  }
+  
+  .event-dialog h3, .event-dialog h4, .event-dialog h5 {
+      margin: 5px 0;
+      text-align: center;
+      font-weight: normal; /* Standard weight for body text */
+  }
+  
+  .event-dialog h3 {
+      color: #007bff; /* Slightly brighter blue for important info like location */
+  }
+  
+  .event-dialog p {
+      text-align: justify;
+      line-height: 1.6; /* Increased line height for readability */
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+      .event-dialog .p-dialog {
+          width: 85vw; /* More responsive width */
+      }
+  }
+  
+  th {
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+    text-align: center; /* Center the header titles */
+  
+    font-family: 'Times New Roman', serif;
+  }
+  tr:hover {
+    background-color: wheat;
+  }
