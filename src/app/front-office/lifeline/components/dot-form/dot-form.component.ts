@@ -224,6 +224,8 @@ export class DotFormComponent implements OnDestroy, AfterViewInit, OnInit {
           { key: 'dotCreation', severity: 'success', summary: 'Dot creation', detail: 'Successfully created dot!' }
         );
 
+        this.lifelineStateService.refreshCalendar();
+
       })
 
 

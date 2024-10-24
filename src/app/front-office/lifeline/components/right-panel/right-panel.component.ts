@@ -212,6 +212,7 @@ export class RightPanelComponent implements OnInit, OnDestroy {
       this.messageService.add(
         { key: 'dotCreation', severity: 'info', summary: 'Dot creation', detail: 'Dot deleted!' }
       );
+      this.lifelineService.refreshCalendar();
     });
     this.lifelineService.setSelectedEmotion(null);
     this.lifelineService.setSelectedEmotionIntensity(0);

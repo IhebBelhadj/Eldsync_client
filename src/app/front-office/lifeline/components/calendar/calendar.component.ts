@@ -67,6 +67,7 @@ export class CalendarComponent implements AfterViewInit, OnDestroy {
   dotSelector: ElementRef;
 
   emotionRates$: Observable<EmotionRates>;
+  calendarRefresher: Subscription;
 
   constructor(
     private crd: ChangeDetectorRef,
@@ -85,11 +86,18 @@ export class CalendarComponent implements AfterViewInit, OnDestroy {
       });
 
     this.emotionRates$ = this.lifelineData.emotionRates$;
+
+    this.calendarRefresher = this.lifelineState.calendarRefresh$.subscribe(() => {
+      this.calendarUpdate();
+    });
   }
 
   ngOnDestroy(): void {
     if (this.stateSubscription)
       this.stateSubscription.unsubscribe();
+
+    if (this.calendarRefresher)
+      this.calendarRefresher.unsubscribe();
   }
 
   seekLeft() {

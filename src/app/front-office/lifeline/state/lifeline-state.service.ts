@@ -59,6 +59,7 @@ export class LifelineStateService {
   private dotInspectData: dotInspectData;
   private cancelDotCreation: BehaviorSubject<DotCreationCancelState> =
     new BehaviorSubject<DotCreationCancelState>(DotCreationCancelState.CLEARED);
+  private calendarRefresh: Subject<void> = new Subject<void>();
 
 
   constructor(private lifelineData: LifelineDataService) {
@@ -119,6 +120,10 @@ export class LifelineStateService {
     );
   }
 
+  get calendarRefresh$(): Observable<void> {
+    return this.calendarRefresh.asObservable();
+  }
+
 
 
   // Getter for rightPanelContent
@@ -164,6 +169,10 @@ export class LifelineStateService {
     const currentState = this.stateSubject.getValue();
     const updatedState = { ...currentState, ...newState };
     this.stateSubject.next(updatedState);
+  }
+
+  refreshCalendar() {
+    this.calendarRefresh.next();
   }
 
   // Method to toggle right panel
